@@ -2,7 +2,6 @@ package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
 import com.stealth.yash.FaceRecognition.model.Professor;
 import com.stealth.yash.FaceRecognition.repository.ProfessorRepository;
-import com.stealth.yash.FaceRecognition.service.CourseService;
 import com.stealth.yash.FaceRecognition.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,7 @@ public class ProfessorSDJpaService implements ProfessorService {
 
     @Override
     public Set<Professor> findAll() {
-        Set<Professor> professors = new HashSet<>();
-        professorRepository.findAll().forEach(professors::add);
-        return professors;
+        return new HashSet<>(professorRepository.findAll());
     }
 
     @Override
@@ -37,11 +34,11 @@ public class ProfessorSDJpaService implements ProfessorService {
 
     @Override
     public void delete(Professor object) {
-professorRepository.delete(object);
+        professorRepository.delete(object);
     }
 
     @Override
     public void deleteById(Long aLong) {
-professorRepository.deleteById(aLong);
+        professorRepository.deleteById(aLong);
     }
 }

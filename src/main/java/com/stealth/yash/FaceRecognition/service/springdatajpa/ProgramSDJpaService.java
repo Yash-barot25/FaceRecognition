@@ -2,7 +2,6 @@ package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
 import com.stealth.yash.FaceRecognition.model.Program;
 import com.stealth.yash.FaceRecognition.repository.ProgramRepository;
-import com.stealth.yash.FaceRecognition.service.CourseService;
 import com.stealth.yash.FaceRecognition.service.ProgramService;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,7 @@ public class ProgramSDJpaService implements ProgramService {
 
     @Override
     public Set<Program> findAll() {
-        Set<Program> programs = new HashSet<>();
-        programRepository.findAll().forEach(programs::add);
-        return programs;
+        return new HashSet<>(programRepository.findAll());
     }
 
     @Override

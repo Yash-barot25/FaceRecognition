@@ -22,7 +22,7 @@ public class Experty {
     @Column(name = "experty")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name = "professor_id")
     private Professor professor;
 

@@ -1,10 +1,13 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -17,8 +20,15 @@ public class Program {
 
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "program_code")
-    private String id;
+    private Long id;
+
+    @Column(name = "program_length")
+    private Long length;
+
+    @Column(name = "program_rating")
+    private Long rating;
 
     @Column(name = "program_name")
     private String programName;
@@ -34,18 +44,46 @@ public class Program {
     private Campus campus;
 
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
             , mappedBy = "programs")
     private Set<Professor> professors;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "program")
+
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "program")
     private Set<Student> students;
 
-    @ManyToMany(cascade = CascadeType.ALL
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
             , mappedBy = "programs")
     private Set<Course> courses;
+
+    public void addStudent(Student student){
+        removeStudent(student);
+        this.students.add(student);
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+//        department.getPrograms().add(this);
+    }
+
+    public void removeStudent(Student student){
+        this.students.remove(student);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Program)) return false;
+        Program program = (Program) o;
+        return Objects.equals(getId(), program.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

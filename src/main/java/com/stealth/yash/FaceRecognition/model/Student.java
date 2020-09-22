@@ -1,9 +1,13 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -12,12 +16,18 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student{
+
 
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "student_id")
     private Long id;
+
+    @Lob
+    @Column(name = "image")
+    private Byte[] image;
 
     @Column(name = "first_name")
     private String firstName;
@@ -43,12 +53,35 @@ public class Student {
     @Column(name = "student_GPA")
     private Double GPA;
 
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-//    @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-//    private Set<Course> courses;
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<Course> courses;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "program_id")
     private Program program;
 
+
+    public void setProgram(Program program) {
+        this.program = program;
+        this.program.addStudent(this);
+    }
+
+    /*public void removeProgram(){
+        this.program.removeStudent(this);
+        this.program = null;
+    }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return getId().equals(student.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

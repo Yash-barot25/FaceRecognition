@@ -3,6 +3,9 @@ package com.stealth.yash.FaceRecognition.service.springdatajpa;
 import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.repository.StudentRepository;
 import com.stealth.yash.FaceRecognition.service.StudentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -12,9 +15,10 @@ import java.util.Set;
 @Service
 public class StudentSDJpaService implements StudentService {
 
+
     private final StudentRepository studentRepository;
 
-    public StudentSDJpaService(StudentRepository studentRepository) {
+   public StudentSDJpaService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -29,10 +33,14 @@ public class StudentSDJpaService implements StudentService {
     }
 
     @Override
+    public Page<Student> findPaginated(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo - 1, pageSize);
+        return studentRepository.findAll(paging);
+    }
+
+    @Override
     public Set<Student> findAll() {
-        Set<Student> students = new HashSet<>();
-        studentRepository.findAll().forEach(students::add);
-        return students;
+        return new HashSet<>(studentRepository.findAll());
     }
 
     @Override
