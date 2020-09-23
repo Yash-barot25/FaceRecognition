@@ -1,12 +1,12 @@
 package com.stealth.yash.FaceRecognition.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,27 +19,27 @@ import java.util.Set;
 public class Department {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "department_id")
     private Long id;
 
     @Column(name = "department_name")
     private String departmentName;
 
+
     @Column(name = "department_description")
     private String description;
 
-    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "institute_id")
     private Institute institute;
 
-
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "department")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Program> programs;
 
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "department")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Professor> professors;
 
 
@@ -49,6 +49,11 @@ public class Department {
         if (!(o instanceof Department)) return false;
         Department that = (Department) o;
         return getId().equals(that.getId());
+    }
+
+    public void setInstitute(Institute institute) {
+        this.institute = institute;
+
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.stealth.yash.FaceRecognition.controller;
 
-import com.stealth.yash.FaceRecognition.model.Experty;
 import com.stealth.yash.FaceRecognition.model.Professor;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
-import com.stealth.yash.FaceRecognition.service.springdatajpa.ExpertiseSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +14,14 @@ public class ProfessorController {
 
     private final ProfessorSDJpaService professorService;
     private final DepartmentSDJpaService departmentSDJpaService;
-    private final ExpertiseSDJpaService expertiseSDJpaService;
+    private final ProgramSDJpaService programSDJpaService;
+   // private final ExpertiseSDJpaService expertiseSDJpaService;
 
-    public ProfessorController(ProfessorSDJpaService professorService, DepartmentSDJpaService departmentSDJpaService, ExpertiseSDJpaService expertiseSDJpaService) {
+
+    public ProfessorController(ProfessorSDJpaService professorService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService) {
         this.professorService = professorService;
         this.departmentSDJpaService = departmentSDJpaService;
-        this.expertiseSDJpaService = expertiseSDJpaService;
+        this.programSDJpaService = programSDJpaService;
     }
 
     //shows all the professors
@@ -41,7 +42,7 @@ public class ProfessorController {
 
 
     @GetMapping({"/update/{professorId}", "/create"})
-    public String initUpdateStudentForm(@PathVariable(required = false) Long professorId, Model model) {
+    public String createOrUpdateProfessor(@PathVariable(required = false) Long professorId, Model model) {
         if (professorId != null) {
             model.addAttribute("professor", professorService.findById(professorId));
         } else {
@@ -50,6 +51,7 @@ public class ProfessorController {
         }
 
         model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
         return "professor/createOrUpdateProfessor";
     }
 
@@ -64,6 +66,7 @@ public class ProfessorController {
     @GetMapping("/delete/{professorId}")
     public String deleteStudent(@PathVariable Long professorId) {
 
+
         professorService.deleteById(professorId);
 
         return "redirect:/professors";
@@ -71,33 +74,45 @@ public class ProfessorController {
 
     //Expertise controllers
 
-    @GetMapping("/{professorId}/expertise/add")
-    public String showExpertise(@PathVariable Long professorId, Model model) {
-
-        model.addAttribute("professor", professorService.findById(professorId));
-
-        return "professor/expertise/expertise";
-
-    }
-
-    @GetMapping("/expertise/{professorId}/new")
-    public String createOrUpdateExpertise(@PathVariable(required = false) Long professorId, Model model) {
-
-
-        model.addAttribute("expertise", new Experty());
-
-        return "professor/expertise/createOrUpdateExpertise";
-
-    }
-
-    @PostMapping("/expertise/save")
-    public String saveExpertise(@ModelAttribute Experty experty, @PathVariable(required = false) Long professorId) {
-
-        Experty experty1 = expertiseSDJpaService.save(experty);
-
-        return "redirect:/" + experty1.getProfessor().getId() + "/expertise/add";
-
-    }
+//    @GetMapping("/{professorId}/expertise/add")
+//    public String showExpertise(@PathVariable Long professorId, Model model) {
+//
+//        model.addAttribute("professor", professorService.findById(professorId));
+//
+//        return "professor/expertise/expertise";
+//
+//    }
+//
+//    @GetMapping("/expertise/{professorId}/new")
+//    public String createOrUpdateExpertise(@PathVariable(required = false) Long professorId, Model model) {
+//
+//
+//        model.addAttribute("expertise", new Experty());
+//        model.addAttribute("professorId", professorId);
+//
+//        return "professor/expertise/createOrUpdateExpertise";
+//
+//    }
+//
+//    @PostMapping("/{professorId}/expertise/save")
+//    @Transactional
+//    public String saveExpertise(@ModelAttribute Experty experty, @PathVariable(required = false) Long professorId) {
+//
+//        Professor professor =  professorService.findById(professorId);
+//
+//        Experty experty1 = expertiseSDJpaService.save(experty);
+//
+//        experty1.setProfessor(professor);
+//
+//        professor.getExperties().add(experty1);
+//
+//        Professor professor1 =  professorService.save(professor);
+//
+//
+//
+//        return "redirect:/" +professor1.getId() + "/expertise/add";
+//
+//    }
 
 
 }
