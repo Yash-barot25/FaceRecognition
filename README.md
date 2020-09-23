@@ -10,3 +10,6 @@ This is a admin-protal for FACE-RECOGNITION capstone project.
 jhdsgafbkjsfnksdf
 jsdvjhdbjsbjsbfjsd
 jhdbjhsfbhjsfhjbsdghjbds
+
+samplrejbsjdbjs kjsdf
+sdkhjbsdjhhb kdsf
