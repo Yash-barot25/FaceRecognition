@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Program - Create/Update</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link rel="manifest" href="site.webmanifest">-->
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+
+
+    <!--    &lt;!&ndash; CSS here &ndash;&gt;-->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/progressbar_barfiller.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/gijgo.css}">-->
+    <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+    <!--            <link rel="stylesheet" th:href="@{/assets/css/animated-headline.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">-->
+    <!--        <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/slick.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">-->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/mdb.min.css}" rel="stylesheet">-->
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        th:insert="fragments/sidebar.html :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <!--            <nav th:replace="fragments/topbar.html :: topbar"></nav>-->
+
+
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                               aria-label="Search" aria-describedby="basic-addon2">
+                        <!--                        <div class="input-group-append">-->
+                        <button type="button" style="background-color: #0b51c5; border-radius: 20px; margin-left: 5px">
+                            Search
+                        </button>
+                        <!--                        </div>-->
+                    </div>
+                </div>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                             aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small"
+                                           placeholder="Search for..." aria-label="Search"
+                                           aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Alerts -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <!-- Counter - Alerts -->
+                            <span class="badge badge-danger badge-counter">3+</span>
+                        </a>
+                        <!-- Dropdown - Alerts -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="alertsDropdown">
+                            <h6 class="dropdown-header">
+                                Alerts Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 12, 2019</div>
+                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-success">
+                                        <i class="fas fa-donate text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 7, 2019</div>
+                                    $290.29 has been deposited into your account!
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-warning">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="small text-gray-500">December 2, 2019</div>
+                                    Spending Alert: We've noticed unusually high spending for your account.
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                        </div>
+                    </li>
+
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-1">
+                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-envelope fa-fw"></i>
+                            <!-- Counter - Messages -->
+                            <span class="badge badge-danger badge-counter">7</span>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="messagesDropdown">
+                            <h6 class="dropdown-header">
+                                Message Center
+                            </h6>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60"
+                                         alt="">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="font-weight-bold">
+                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                        problem I've been having.
+                                    </div>
+                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60"
+                                         alt="">
+                                    <div class="status-indicator"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">I have the photos that you ordered last month, how would
+                                        you like them sent to you?
+                                    </div>
+                                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60"
+                                         alt="">
+                                    <div class="status-indicator bg-warning"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Last month's report looks great, I am very happy with the
+                                        progress so far, keep up the good work!
+                                    </div>
+                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                         alt="">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div>
+                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told
+                                        me that people say this to all dogs, even if they aren't good...
+                                    </div>
+                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                        </div>
+                    </li>
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                             aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+
+            <div class="container-fluid">
+
+                <!--? slider Area Start-->
+                <section class="slider-area slider-area2">
+                    <div class="slider-active">
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-8 col-lg-11 col-md-12">
+                                        <div class="hero__caption hero__caption2">
+                                            <h1 class="text-white">Program Info
+                                            </h1>
+                                            <!-- breadcrumb Start-->
+
+                                            <!-- breadcrumb End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container">
+                    <div class="card-body text-center">
+
+                        <!-- Edit Form -->
+
+                        <!-- First row -->
+
+                        <div class="row">
+
+                            <!-- First column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label class="text-success">Program ID</label><br/>
+                                    <input type="text" class="form-control text-muted"
+                                           th:value="${program.id}" readonly>
+
+                                </div>
+                            </div>
+                            <!-- Second column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label class="text-success">Campus </label><br/>
+                                    <input type="text" class="form-control text-muted"
+                                           th:value="${program.campus}" readonly>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- First row -->
+                        <br/>
+
+                        <!-- First row -->
+
+                        <div class="row">
+                            <!-- First column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label data-error="wrong" data-success="right" class="text-success">Program
+                                        Length</label><br/>
+                                    <input type="number" class="form-control"
+                                           th:value="${program.length}" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Second column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label class="text-success">No. Of Semesters</label><br/>
+                                    <input type="number" class="form-control"
+                                           th:value="${program.numberOfSemester}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- First row -->
+                        <br/>
+
+                        <div class="row">
+                            <!-- First column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label data-error="wrong" data-success="right"
+                                           class="text-success">Rating(Out of 10)</label><br/>
+                                    <input type="number" class="form-control"
+                                           th:value="${program.rating}" readonly>
+                                </div>
+                            </div>
+
+                            <!-- Second column -->
+                            <div class="col-md-6">
+                                <div class="md-form mb-0">
+                                    <label class="text-success">Department</label><br/>
+                                    <input type="text" class="form-control"
+                                           th:value="${program.department.departmentName}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <!-- Second row -->
+                        <div class="row">
+
+                            <!-- First column -->
+                            <div class="col-md-12">
+                                <div class="md-form mb-0">
+                                    <label class="text-success">Program Name</label><br/>
+                                    <input type="text" class="form-control"
+                                           th:value="${program.programName}" readonly>
+                                </div>
+                            </div>
+                            <!-- Second column -->
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div  class="md-form mb-0">
+                                    <label   class="text-success">Program Description</label><br/>
+                                    <textarea type="text"  class="form-control"
+                                              th:text="${program.description}" rows="3" readonly> </textarea>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+
+                        <!-- Second row -->
+
+
+                        <!-- Fourth row -->
+                        <div class="row">
+                            <div class="col-md-12 text-center my-4">
+                                <a th:href="@{'/programs/update/'+ ${program.id}}"
+                                   class="btn btn-primary mr-2" role="button">
+                                    Edit
+                                    <i th:style="'margin:5px;'" class="fa fa-edit"></i>
+                                </a>
+                                <br/>
+                                <br/>
+                                <a th:href="@{/programs}">
+                                    <i th:style="'margin:5px;'" class="fas fa-arrow-alt-circle-left"></i>
+                                    GO BACK
+                                </a>
+                            </div>
+
+                        </div>
+                        <!-- Fourth row -->
+                    </div>
+
+
+                    <section class="about-area1 fix pt-10">
+                        <div class="support-wrapper align-items-center">
+                            <div class="left-content1">
+                                <div class="about-icon">
+                                    <img th:src="@{/assets/img/icon/about.svg}" alt="">
+                                </div>
+                                <!-- section tittle -->
+                                <div class="section-tittle section-tittle2 mb-55">
+                                    <div class="front-text">
+                                        <h2 class="">Learn new skills online with top educators</h2>
+                                        <p>The automated process all your website tasks. Discover tools and
+                                            techniques to engage effectively with vulnerable children and young
+                                            people.</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Techniques to engage effectively with vulnerable children and young
+                                            people.</p>
+                                    </div>
+                                </div>
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Join millions of people from around the world learning together.</p>
+                                    </div>
+                                </div>
+
+                                <div class="single-features">
+                                    <div class="features-icon">
+                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
+                                    </div>
+                                    <div class="features-caption">
+                                        <p>Join millions of people from around the world learning together. Online
+                                            learning is as easy and natural.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="right-content1">
+                                <!-- img -->
+                                <div class="right-img">
+                                    <img th:src="@{/assets/img/gallery/about3.png}" alt="">
+
+                                    <div class="video-icon">
+                                        <a class="popup-video btn-icon" target="_blank"
+                                           href="https://www.youtube.com/watch?v=YK2TM4CUMa8"><i
+                                                class="fas fa-play"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <div class="topic-area section-padding40">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-xl-7 col-lg-8">
+                                    <div class="section-tittle text-center mb-55">
+                                        <h2>Explore top subjects</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic1.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic2.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic3.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic4.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic5.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic6.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic7.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single-topic text-center mb-30">
+                                        <div class="topic-img">
+                                            <img th:src="@{/assets/img/gallery/topic8.png}" alt="">
+                                            <div class="topic-content-box">
+                                                <div class="topic-content">
+                                                    <h3><a href="#">Programing</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--? Team -->
+                    <section class="team-area section-padding40 fix">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-xl-7 col-lg-8">
+                                    <div class="section-tittle text-center mb-55">
+                                        <h2>Sheridan Alumni's</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+                                    <div class="cat-icon">
+                                        <img th:src="@{/assets/img/gallery/team1.png}" alt="">
+                                    </div>
+                                    <div class="cat-cap">
+                                        <h5><a href="services.html">Yashkumar Barot</a></h5>
+                                        <p>Java, C#, Python Expert</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+                                    <div class="cat-icon">
+                                        <img th:src="@{/assets/img/gallery/team2.png}" alt="">
+                                    </div>
+                                    <div class="cat-cap">
+                                        <h5><a href="services.html">Bhavik Jain</a></h5>
+                                        <p>Machine Learning Expert</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+                                    <div class="cat-icon">
+                                        <img th:src="@{/assets/img/gallery/team3.png}" alt="">
+                                    </div>
+                                    <div class="cat-cap">
+                                        <h5><a href="services.html">Nishit Amin</a></h5>
+                                        <p>IOT, Database Expert</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
+                                    <div class="cat-icon">
+                                        <img th:src="@{/assets/img/gallery/team4.png}" alt="">
+                                    </div>
+                                    <div class="cat-cap">
+                                        <h5><a href="services.html">Mansi</a></h5>
+                                        <p>Front-End Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                </div>
+            </div>
+            <!--Main layout-->
+            </section>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!--Footer-->
+<footer th:replace="fragments/footer.html::footer"></footer>
+<!--/.Footer-->
+
+</body>
+
+</html>

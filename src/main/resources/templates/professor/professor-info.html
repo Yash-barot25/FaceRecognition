@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Professor-INFO</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/mdb.min.css}" rel="stylesheet">-->
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        th:insert="fragments/sidebar.html :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments/topbar.html :: topbar"></nav>
+
+            <div class="container emp-profile">
+                <form
+                        th:object="${professor}"
+                        th:action="@{'/professors'}" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-img">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                     alt=""/>
+                                <div class="file btn btn-lg btn-primary">
+                                    Change Photo
+                                    <input type="file" name="file"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                <h4>
+                                    Sheridan College Professor
+                                </h4>
+                                <hr/>
+                                <h5 class="text-muted">TEAM - Stealth</h5>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                                           role="tab" aria-controls="home" aria-selected="true">About</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                                           role="tab" aria-controls="profile" aria-selected="false">Professional</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col">
+                                    <a th:href="@{'/professors/update/'+ ${professor.id}}"
+                                       class="btn btn-primary mr-2" role="button">
+                                        Edit
+                                        <i th:style="'margin:5px;'" class="fa fa-edit"></i>
+                                    </a>
+                                    <br/>
+                                    <br/>
+                                    <a th:href="@{/professors}">
+                                        <i th:style="'margin:5px;'" class="fas fa-arrow-alt-circle-left"></i>
+                                        GO BACK
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="profile-work">
+                                <p>WORK LINK</p>
+                                <a href="https://www.sheridancollege.ca/" target="_blank">Website Link</a><br/>
+                                <a href="https://www.sheridancollege.ca/" target="_blank">Portfolio</a><br/>
+                                <a href="https://www.sheridancollege.ca/" target="_blank">Bootply Profile</a>
+                                <p>Expertise</p>
+                                <a href="">Web Designer</a><br/>
+                                <a href="">Web Developer</a><br/>
+                                <a href="">WordPress</a><br/>
+                                <a href="">WooCommerce</a><br/>
+                                <a href="">PHP, .Net</a><br/>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="id">Professor ID</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="id" type="number" class="form-control text-muted"
+                                                   th:value="${professor.id}" readonly placeholder="Auto Generated">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="firstName">First Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control text-muted"
+                                                   id="firstName" th:value="${professor.firstName}" readonly
+                                                   placeholder="First Name">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="lastName">Last Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control text-muted"
+                                                   id="lastName" th:value="${professor.lastName}" readonly
+                                                   placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="phone">Phone</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="phone" type="number" class="form-control text-muted"
+                                                   th:value="${professor.phoneNumber}" readonly
+                                                   placeholder="Phone Number">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control text-muted"
+                                                   th:value="${professor.email}" readonly placeholder="Email Address">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="campus">Department</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="department" type="text" class="form-control text-muted"
+                                                   th:value="${professor.department.departmentName}" readonly
+                                                   placeholder="Department Name">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="program">Program</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="program" type="text" class="form-control text-muted"
+                                                   th:value="${professor.program.programName}" readonly
+                                                   placeholder="Department Name">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="campus">Campus</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="campus" type="text" class="form-control text-muted"
+                                                   th:value="${professor.campus}" readonly
+                                                   placeholder="Campus">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="level">Skill Level</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="level" type="text" class="form-control text-muted"
+                                                   th:value="${professor.level}" readonly placeholder="Level">
+
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="experience">Experience</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="experience" type="number" step="0.5"
+                                                   class="form-control text-muted"
+                                                   th:value="${professor.experience}" readonly placeholder="Experience">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="projects">Total Projects</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="projects" type="number" class="form-control text-muted"
+                                                   th:value="${professor.projects}" readonly
+                                                   placeholder="No Of Projects">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="availability">Availability</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input id="availability" type="text" class="form-control text-muted"
+                                                   th:value="${professor.availibility}" readonly
+                                                   placeholder="Availability">
+
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="bio">Your Bio</label><br/>
+                                        </div>
+                                        <div class="col-lg-6">
+                                                <textarea id="bio" type="text" class="form-control text-muted"
+                                                          th:value="${professor.bio}" readonly
+                                                          placeholder="BIO"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Main layout-->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!--Footer-->
+<footer th:replace="fragments/footer.html::footer"></footer>
+<!--/.Footer-->
+
+
+</body>
+</html>

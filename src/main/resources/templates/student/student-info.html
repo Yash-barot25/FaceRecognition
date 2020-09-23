@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Students-Info</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/mdb.min.css}" rel="stylesheet">-->
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        th:insert="fragments/sidebar.html :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments/topbar.html :: topbar"></nav>
+
+            <div class="container-fluid">
+
+                <!-- Section: Edit Account -->
+                <section class="section">
+                    <!-- First row -->
+                    <div class="row">
+                        <!-- First column -->
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Card -->
+                            <div class="card">
+
+                                <!-- Card image -->
+                                <div class="card-header bg-success">
+                                    <h5 class="mb-0 font-weight-bold text-warning">Edit Photo</h5>
+                                </div>
+
+                                <!-- Card image -->
+
+                                <!-- Card content -->
+                                <div class="card-body align-content-between">
+                                    <div class="col-md-6 text-center">
+                                        <img class="ml-5" src="../../static/images/guacamole400x400WithX.jpg"
+                                             th:src="@{'/recipe/' + ${student.id} + '/recipeimage'}"
+                                             width="200" height="200">
+                                    </div>
+                                    <p class="text-muted card-text ml-4"><small>Profile photo will be changed
+                                        automatically</small></p>
+                                    <div class="row text-center">
+                                        <!--                                        <input type="button" class="btn btn-info  btn-sm mr-1 ml-1" th:href="@{student.id + '/image'}">Upload New Photo</input>-->
+                                        <a th:href="@{'/upload/' + ${student.id} + '/image'}" class="btn btn-info  btn-md mr-1 ml-5 mt-1 mb-1" >Upload image</a>
+                                        <a class="btn btn-danger  btn-md mr-1 ml-1 mt-1 mb-1" >Delete</a>
+                                        <!--                                        <button class="btn btn-danger  btn-sm" th:href="@{student.id + '/image'}">Delete</button>-->
+                                    </div>
+                                </div>
+                                <!-- Card content -->
+
+
+                            </div>
+                            <!-- Card -->
+
+                        </div>
+                        <!-- First column -->
+
+                        <!-- Second column -->
+                        <div class="col-lg-8 mb-4">
+
+                            <!-- Card -->
+                            <div class="card ">
+
+                                <!-- Card image -->
+                                <div class="card-header mdb-color bg-success">
+                                    <h5 class="mb-0 font-weight-bold text-warning">Edit Account</h5>
+                                </div>
+                                <!-- Card image -->
+
+                                <!-- Card content -->
+                                <div class="card-body card-body-cascade text-center">
+
+                                    <!--                                   First row -->
+
+                                    <div class="row">
+
+                                        <!-- First column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Student ID</label><br/>
+                                                <input type="text" class="form-control text-muted"
+                                                       th:value="${student.id}" readonly>
+
+                                            </div>
+                                        </div>
+                                        <!-- Second column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Campus</label><br/>
+                                                <input type="text" class="form-control" th:value="${student.campus}"
+                                                       readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- First row -->
+                                    <br/>
+                                    <!-- First row -->
+                                    <div class="row">
+                                        <!-- First column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">First name</label><br/>
+                                                <input type="text" class="form-control " th:value="${student.firstName}"
+                                                       disabled>
+                                            </div>
+                                        </div>
+
+                                        <!-- Second column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Last name</label><br/>
+                                                <input type="text" class="form-control" th:value="${student.lastName}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- First row -->
+                                    <br/>
+                                    <!-- Second row -->
+                                    <div class="row">
+
+                                        <!-- First column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Email address</label><br/>
+                                                <input type="email" class="form-control" th:value="${student.email}"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                        <!-- Second column -->
+
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Contact No</label><br/>
+                                                <input type="number" class="form-control"
+                                                       th:value="${student.phoneNumber}" readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+
+                                        <!-- First column -->
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Current-Semester</label><br/>
+                                                <input type="number" class="form-control"
+                                                       th:value="${student.currentSemester}" readonly>
+                                            </div>
+                                        </div>
+                                        <!-- Second column -->
+
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">GPA</label><br/>
+                                                <input type="number" id="GPA" class="form-control"
+                                                       th:value="${student.GPA}" readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Second row -->
+
+                                    <br/>
+                                    <!-- Third row -->
+                                    <div class="row">
+
+                                        <!-- First column -->
+                                        <div class="col-md-12">
+                                            <div class="md-form mb-0">
+                                                <label class="text-success">Address</label><br/>
+                                                <input type="text" step="any" class="form-control validate"
+                                                       th:value="${student.address}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Third row -->
+
+
+                                    <br/>
+                                    <!-- Third row -->
+                                    <div class="row">
+
+                                        <!-- First column -->
+                                        <div class="col-md-12">
+                                            <div class="md-form mb-0">
+                                                <label for="program.programName" data-error="wrong" data-success="right"
+                                                       class="text-success">Program Name</label><br/>
+                                                <input type="text" id="program.programName"
+                                                       class="form-control validate"
+                                                       th:value="${student.program.programName}" readonly>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Third row -->
+
+                                    <!-- Fourth row -->
+                                    <div class="row">
+                                        <div class="col-md-12 text-center my-4">
+                                            <a th:href="@{'/students/update/'+ ${student.id}}"
+                                               class="btn btn-primary mr-2" role="button">
+                                                Edit
+                                                <i th:style="'margin:5px;'" class="fa fa-edit"></i>
+                                            </a>
+                                            <br/>
+                                            <br/>
+                                            <a th:href="@{/students}" >
+                                                <i th:style="'margin:5px;'" class="fas fa-arrow-alt-circle-left"></i>
+                                                GO BACK
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <!-- Fourth row -->
+                                </div>
+                                <!-- Card content -->
+
+                            </div>
+                            <!-- Card -->
+
+                        </div>
+                        <!-- Second column -->
+
+                    </div>
+                    <!-- First row -->
+
+                </section>
+                <!-- Section: Edit Account -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Main layout-->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!--Footer-->
+<footer th:replace="fragments/footer.html::footer"></footer>
+<!--/.Footer-->
+
+
+</body>
+</html>

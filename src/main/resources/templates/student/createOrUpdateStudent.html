@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Students-Update</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/mdb.min.css}" rel="stylesheet">-->
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        th:insert="fragments/sidebar.html :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments/topbar.html :: topbar"></nav>
+
+            <div class="container-fluid">
+
+                <!-- Section: Edit Account -->
+                <section class="section">
+                    <!-- First row -->
+                    <div class="row">
+                        <!-- First column -->
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Card -->
+                            <div class="card">
+
+                                <!-- Card image -->
+                                <div class="card-header bg-success">
+                                    <h5 class="mb-0 font-weight-bold text-warning">Edit Photo</h5>
+                                </div>
+
+                                <!-- Card image -->
+
+                                <!-- Card content -->
+                                <div class="card-body text-center">
+                                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" alt="User Photo"
+                                         class="z-depth-1 mb-3 mx-auto"/>
+
+                                    <p class="text-muted card-text"><small>Currently .JPG & .PNG are supported</small></p>
+                                </div>
+                            </div>
+                            <!-- Card -->
+
+                        </div>
+                        <!-- First column -->
+
+                        <!-- Second column -->
+                        <div class="col-lg-8 mb-4">
+
+                            <!-- Card -->
+                            <div class="card ">
+
+
+                                <div class="card-header mdb-color bg-success">
+                                    <h5 class="mb-0 font-weight-bold text-warning">Edit Account</h5>
+                                </div>
+
+
+                                <!-- Card content -->
+                                <div class="card-body text-center">
+
+                                    <!-- Edit Form -->
+                                    <form th:object="${student}"
+                                          th:action="@{'/students'}" method="post">
+
+                                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                                            <p>Please Correct Errors Below</p>
+                                        </div>
+                                        <!-- First row -->
+
+                                        <div class="row">
+
+                                            <!-- First column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Student ID</label><br/>
+                                                    <input type="text" class="form-control text-muted"
+                                                           th:field="*{id}" readonly placeholder="Auto Generated">
+
+                                                </div>
+                                            </div>
+                                            <!-- Second column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Campus </label><br/>
+                                                    <select class="form-control" th:field="*{campus}">
+                                                        <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.model.Campus).values()}"
+                                                                th:value="${campusValue.name()}"
+                                                                th:text="${campusValue.name()}">val
+                                                        </option>
+                                                    </select>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- First row -->
+                                        <br/>
+
+
+                                        <!-- First row -->
+                                        <div class="row">
+                                            <!-- First column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label data-error="wrong" data-success="right" class="text-success">First
+                                                        name</label><br/>
+                                                    <input type="text" class="form-control validate"
+                                                           th:field="*{firstName}">
+                                                </div>
+                                            </div>
+
+                                            <!-- Second column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Last name</label><br/>
+                                                    <input type="text" class="form-control validate"
+                                                           th:field="*{lastName}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- First row -->
+                                        <br/>
+                                        <!-- Second row -->
+                                        <div class="row">
+
+                                            <!-- First column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Email address</label><br/>
+                                                    <input type="email" class="form-control validate"
+                                                           th:field="*{email}">
+                                                </div>
+                                            </div>
+                                            <!-- Second column -->
+
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Contact No</label><br/>
+                                                    <input type="number" class="form-control validate"
+                                                           th:field="*{phoneNumber}">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <!-- Second row -->
+                                        <div class="row">
+
+                                            <!-- First column -->
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Current-Semester</label><br/>
+                                                    <input type="number" class="form-control validate"
+                                                           th:field="*{currentSemester}">
+                                                </div>
+                                            </div>
+                                            <!-- Second column -->
+
+                                            <div class="col-md-6">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">GPA</label><br/>
+                                                    <input type="number" step="any" class="form-control validate"
+                                                           th:field="*{GPA}">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Second row -->
+
+                                        <br/>
+                                        <!-- Third row -->
+                                        <div class="row">
+
+                                            <!-- First column -->
+                                            <div class="col-md-12">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Address</label><br/>
+                                                    <input type="text" step="any" class="form-control validate"
+                                                           th:field="*{address}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Third row -->
+
+                                        <br/>
+                                        <!-- Third row -->
+                                        <div class="row">
+
+                                            <!-- First column -->
+                                            <div class="col-md-12">
+                                                <div class="md-form mb-0">
+                                                    <label class="text-success">Program Name</label><br/>
+                                                    <select class="form-control" th:field="*{program}">
+                                                        <option th:each="program : ${programs}"
+                                                                th:value="${program.id}"
+                                                                th:text="${program.programName + ' (' + program.id + ')' }">
+                                                            val
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Third row -->
+
+                                        <!-- Fourth row -->
+                                        <div class="row">
+                                            <div class="col-md-12 text-center my-4">
+<!--                                                <input type="submit" value="Save"-->
+<!--                                                       class="btn btn-info btn-rounded fa fa-save">-->
+                                                <button class="btn btn-primary mr-2" role="button" type="submit">
+                                                    Save
+                                                    <i th:style="'margin:5px;'" class="fa fa-save"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- Fourth row -->
+
+                                    </form>
+                                    <!-- Edit Form -->
+
+                                </div>
+                                <!-- Card content -->
+
+                            </div>
+                            <!-- Card -->
+
+                        </div>
+                        <!-- Second column -->
+
+                    </div>
+                    <!-- First row -->
+
+                </section>
+                <!-- Section: Edit Account -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Main layout-->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!--Footer-->
+<footer th:replace="fragments/footer.html::footer"></footer>
+<!--/.Footer-->
+
+
+</body>
+</html>

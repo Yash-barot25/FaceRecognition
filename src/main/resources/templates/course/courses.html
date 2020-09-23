@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Courses</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/mdb.min.css}" rel="stylesheet">-->
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"
+        th:insert="fragments/sidebar.html :: sidebar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments/topbar.html :: topbar"></nav>
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Courses</h1>
+                    <a th:href="@{/courses/create}"
+                       class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Add Courses</a>
+                </div>
+
+                <!--Section: Cards-->
+                <section>
+
+                    <!--Grid row-->
+                    <div class="row mb-lg-2">
+
+                        <!--Grid column-->
+                        <div class="col-md-3 mb-3" th:each="course: ${courses}">
+
+                            <!--Card-->
+                            <div class="card">
+
+                                <!--Card image-->
+                                <div class="view overlay modal-header">
+                                    <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg"
+                                         class="card-img-top rounded-circle img-responsive"
+                                         style="width:100px !important; height:100px !important" width="100px"
+                                         height="100px"
+                                         alt="">
+                                    <a href="https://mdbootstrap.com/vue/" target="_blank">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+
+                                <div class="card-body">
+                                    <!--Title-->
+                                    <h5 class="card-title text-success"
+                                        th:text="${course.courseName}">
+                                        MDB
+                                        with React</h5>
+                                    <!--Text-->
+                                    <p class="grey-text" th:text="${course.description}">Name</p>
+                                    <div class="row text-center">
+                                        <a th:href="@{'/courses/get/'+ ${course.id}}"
+                                           class="btn btn-primary mr-1 mb-1 ml-1 mt-1" role="button">
+                                            View
+                                            <i th:style="'margin:2px'" class="fa fa-eye"></i>
+                                        </a>
+                                        <a th:href="@{'/courses/delete/' + ${course.id}}"
+                                           class="btn btn-primary ml-1 mr-1 mt-1 mb-1" role="button">
+                                            Delete
+                                            <i th:style="'margin:2px'" class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--/.Card-->
+
+                        </div>
+                        <!--Grid column-->
+                    </div>
+
+
+                    <!--Pagination-->
+                    <nav class="d-flex justify-content-center">
+                        <ul class="pagination pg-blue">
+
+                            <!--Arrow left-->
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">5</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </section>
+                <!--Section: Cards-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Main layout-->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!--Footer-->
+<footer th:replace="fragments/footer.html::footer"></footer>
+<!--/.Footer-->
+
+</body>
+
+</html>

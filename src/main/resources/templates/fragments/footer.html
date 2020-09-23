@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="utf-8">
+	<title>FOOTER</title>
+</head>
+
+<body id="page-top">
+
+	<!-- Footer -->
+	<footer class="sticky-footer bg-light" th:fragment="footer">
+		<div class="container my-auto">
+			<div class="copyright text-center my-auto">
+				<span>Copyright &copy; Stealth 2020</span>
+			</div>
+		</div>
+
+		<!-- SCRIPTS -->
+		<!-- Bootstrap core JavaScript-->
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+		<!-- Page level plugins -->
+		<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+
+		<!-- Page level custom scripts -->
+		<script th:src="@{/js/demo/chart-area-demo.js}"></script>
+		<script th:src="@{/js/demo/chart-pie-demo.js}"></script>
+
+	</footer>
+	<!-- End of Footer -->
+
+</body>
+
+</html>
