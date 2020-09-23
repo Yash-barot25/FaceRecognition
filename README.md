@@ -7,6 +7,9 @@ This is a admin-protal for FACE-RECOGNITION capstone project.
 -Sprng seurity
 -Thymeleaf
 
+samplrejbsjdbjs kjsdf
+sdkhjbsdjhhb kdsf
+
 jhdsgafbkjsfnksdf
 jsdvjhdbjsbjsbfjsd
 jhdbjhsfbhjsfhjbsdghjbds
