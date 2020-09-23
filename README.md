@@ -6,3 +6,7 @@ This is a admin-protal for FACE-RECOGNITION capstone project.
 -MySql Database/H2
 -Sprng seurity
 -Thymeleaf
+
+jhdsgafbkjsfnksdf
+jsdvjhdbjsbjsbfjsd
+jhdbjhsfbhjsfhjbsdghjbds
