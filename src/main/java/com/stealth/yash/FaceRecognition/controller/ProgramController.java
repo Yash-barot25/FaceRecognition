@@ -3,10 +3,13 @@ package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Program;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Controller
 @RequestMapping("/programs")
@@ -14,10 +17,12 @@ public class ProgramController {
 
     private final ProgramSDJpaService programSDJpaService;
     private final DepartmentSDJpaService departmentSDJpaService;
+    private final ProfessorSDJpaService professorSDJpaService;
 
-    public ProgramController(ProgramSDJpaService programSDJpaService, DepartmentSDJpaService departmentSDJpaService) {
+    public ProgramController(ProgramSDJpaService programSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProfessorSDJpaService professorSDJpaService) {
         this.programSDJpaService = programSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
+        this.professorSDJpaService = professorSDJpaService;
     }
 
     @GetMapping({"", "/"})
@@ -35,7 +40,7 @@ public class ProgramController {
     }
 
     @GetMapping({"/update/{programId}", "/create"})
-    public String initUpdateProgramForm(@PathVariable(required = false) Long programId, Model model) {
+    public String createOrUpdateProgram(@PathVariable(required = false) Long programId, Model model) {
         if (programId != null) {
             model.addAttribute("program", programSDJpaService.findById(programId));
         } else {
@@ -44,6 +49,7 @@ public class ProgramController {
         }
 
         model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("coordinators", professorSDJpaService.findAll());
         return "program/createOrUpdateProgram";
     }
 
@@ -61,6 +67,12 @@ public class ProgramController {
         programSDJpaService.deleteById(programId);
 
         return "redirect:/programs";
+    }
+
+    @GetMapping("/by-departmentId")
+    @ResponseBody
+    public Set<Program> getProgramsByDepartmentId(@RequestParam Long departmentId) {
+        return programSDJpaService.findProgramByDepartmentId(departmentId);
     }
 
 }

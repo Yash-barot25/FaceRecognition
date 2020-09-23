@@ -1,12 +1,12 @@
 package com.stealth.yash.FaceRecognition.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,8 +19,7 @@ import java.util.Set;
 public class Program {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "program_code")
     private Long id;
 
@@ -44,31 +43,29 @@ public class Program {
     private Campus campus;
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonBackReference
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-            , mappedBy = "programs")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "program")
     private Set<Professor> professors;
 
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "program")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "program")
     private Set<Student> students;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-            , mappedBy = "programs")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+            , mappedBy = "program")
     private Set<Course> courses;
 
-    public void addStudent(Student student){
-        removeStudent(student);
-        this.students.add(student);
-    }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-//        department.getPrograms().add(this);
-    }
+
+//    public void addStudent(Student student){
+//        removeStudent(student);
+//        this.students.add(student);
+//    }
+
 
     public void removeStudent(Student student){
         this.students.remove(student);

@@ -1,9 +1,11 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,8 +18,7 @@ import java.util.Set;
 public class Professor {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "professor_id")
     private Long id;
 
@@ -56,21 +57,18 @@ public class Professor {
     @Column(name = "professor_bio")
     private String bio;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
-    private Set<Experty> experties;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
+//    private Set<Experty> experties;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToMany( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "professor_program",
-            joinColumns = @JoinColumn(name = "professor_id"),
-            inverseJoinColumns = @JoinColumn(name = "program_id"))
-    private Set<Program> programs;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "program_id")
+    private Program program;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "professor_course", joinColumns = @JoinColumn(name = "professor_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "professor")
     private Set<Course> courses;
 
     @Override

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,8 +18,7 @@ import java.util.Set;
 public class Institute {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "institute_code")
     private Long id;
 
@@ -33,7 +31,7 @@ public class Institute {
     @Column(name = "institute_email")
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "institute")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "institute")
     Set<Department> departments;
 
     @Override

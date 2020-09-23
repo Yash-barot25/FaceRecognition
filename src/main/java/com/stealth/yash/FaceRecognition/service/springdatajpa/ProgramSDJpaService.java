@@ -42,4 +42,9 @@ public class ProgramSDJpaService implements ProgramService {
     public void deleteById(Long aLong) {
         programRepository.deleteById(aLong);
     }
+
+    @Override
+    public Set<Program> findProgramByDepartmentId(Long departmentId) {
+        return programRepository.findProgramByDepartmentId(departmentId);
+    }
 }
