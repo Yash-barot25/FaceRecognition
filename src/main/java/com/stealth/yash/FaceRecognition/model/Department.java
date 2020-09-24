@@ -1,6 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,17 +30,26 @@ public class Department {
     @Column(name = "department_description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "institute_id")
     private Institute institute;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Program> programs;
 
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Professor> professors;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private Set<Course> courses;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private Set<Student> students;
 
 
     @Override

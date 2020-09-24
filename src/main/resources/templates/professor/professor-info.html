@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
     <title>Professor-INFO</title>
 
     <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 
     <!-- Custom styles for this template-->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -37,6 +41,30 @@
 
             <!-- Topbar -->
             <nav th:replace="fragments/topbar.html :: topbar"></nav>
+
+            <div class="container">
+                <!--? slider Area Start-->
+                <section class="slider-area slider-area2">
+                    <div class="slider-active">
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-8 col-lg-11 col-md-12">
+                                        <div class="hero__caption hero__caption2">
+                                            <h1 class="text-white">Professor Update/Create
+                                            </h1>
+                                            <!-- breadcrumb Start-->
+
+                                            <!-- breadcrumb End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
             <div class="container emp-profile">
                 <form
@@ -168,7 +196,7 @@
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="campus">Department</label>
+                                            <label for="department">Department</label>
                                         </div>
                                         <div class="col-md-6">
                                             <input id="department" type="text" class="form-control text-muted"
@@ -179,13 +207,14 @@
                                     <br/>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="program">Program</label>
+                                            <label >Program</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <input id="program" type="text" class="form-control text-muted"
-                                                   th:value="${professor.program.programName}" readonly
-                                                   placeholder="Department Name">
+                                            <input  type="text" class="form-control text-muted"
+                                                   th:value="${professor.program} ? ${professor.program.programName} : 'PLEASE UPDATE PROGRAM'" readonly
+                                                   placeholder="Campus">
                                         </div>
+
                                     </div>
                                     <br/>
                                     <div class="row">

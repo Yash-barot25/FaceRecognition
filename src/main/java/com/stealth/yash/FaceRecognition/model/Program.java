@@ -1,6 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,33 +43,25 @@ public class Program {
     private Campus campus;
 
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "program")
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "program")
     private Set<Professor> professors;
 
-
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "program")
     private Set<Student> students;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}
             , mappedBy = "program")
     private Set<Course> courses;
 
 
-
-//    public void addStudent(Student student){
-//        removeStudent(student);
-//        this.students.add(student);
-//    }
-
-
-    public void removeStudent(Student student){
-        this.students.remove(student);
-    }
 
     @Override
     public boolean equals(Object o) {

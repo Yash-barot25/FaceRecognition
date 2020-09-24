@@ -1,6 +1,7 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,12 @@ public class StudentController {
 
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
+    private final DepartmentSDJpaService departmentSDJpaService;
 
-    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService) {
+    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
+        this.departmentSDJpaService = departmentSDJpaService;
     }
 
     //shows all the students
@@ -39,7 +42,7 @@ public class StudentController {
 
 
     @GetMapping({"/update/{studentId}", "/create"})
-    public String initUpdateStudentForm(@PathVariable Optional<Long> studentId, Model model) {
+    public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
         if (studentId.isPresent()){
             model.addAttribute("student",studentService.findById(studentId.get()));
         }else{
@@ -48,6 +51,7 @@ public class StudentController {
         }
 
         model.addAttribute("programs",programService.findAll());
+        model.addAttribute("departments",departmentSDJpaService.findAll());
         return "student/createOrUpdateStudent";
     }
 

@@ -41,4 +41,14 @@ public class ProfessorSDJpaService implements ProfessorService {
     public void deleteById(Long aLong) {
         professorRepository.deleteById(aLong);
     }
+
+    @Override
+    public Set<Professor> findProfessorsByProgramId(Long id) {
+        return professorRepository.findProfessorsByProgramId(id);
+    }
+
+    @Override
+    public Set<Professor> findProfessorsByDepartmentId(Long id) {
+        return professorRepository.findProfessorsByDepartmentId(id);
+    }
 }
