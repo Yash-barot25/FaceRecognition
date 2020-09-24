@@ -2,6 +2,7 @@ package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Course;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import org.springframework.stereotype.Controller;
@@ -15,12 +16,14 @@ public class CourseController {
    private final ProfessorSDJpaService professorSDJpaService;
    private final CourseSDJpaService courseSDJpaService;
    private final ProgramSDJpaService programSDJpaService;
+   private final DepartmentSDJpaService departmentSDJpaService;
 
 
-    public CourseController(ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, ProgramSDJpaService programSDJpaService) {
+    public CourseController(ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, ProgramSDJpaService programSDJpaService, DepartmentSDJpaService departmentSDJpaService) {
         this.professorSDJpaService = professorSDJpaService;
         this.courseSDJpaService = courseSDJpaService;
         this.programSDJpaService = programSDJpaService;
+        this.departmentSDJpaService = departmentSDJpaService;
     }
 
     //shows all the courses
@@ -49,6 +52,7 @@ public class CourseController {
         }
         model.addAttribute("professors",professorSDJpaService.findAll());
         model.addAttribute("programs",programSDJpaService.findAll());
+        model.addAttribute("departments",departmentSDJpaService.findAll());
         return "course/createOrUpdateCourse";
     }
 
@@ -67,5 +71,6 @@ public class CourseController {
 
         return "redirect:/courses";
     }
+
 
 }

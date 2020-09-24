@@ -42,4 +42,15 @@ public class CourseSDJpaService implements CourseService {
         courseRepository.deleteById(aLong);
 
     }
+
+    @Override
+    public Set<Course> findCoursesByProgramId(Long id) {
+        return courseRepository.findCoursesByProgramId(id);
+    }
+
+    @Override
+    public Set<Course> findCoursesByProfessorId(Long id) {
+        return courseRepository.findCoursesByProfessorId(id);
+    }
+
 }

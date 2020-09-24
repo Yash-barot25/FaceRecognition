@@ -1,7 +1,10 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 
+import com.stealth.yash.FaceRecognition.model.Course;
+import com.stealth.yash.FaceRecognition.model.Professor;
 import com.stealth.yash.FaceRecognition.model.Program;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
@@ -18,11 +21,13 @@ public class ProgramController {
     private final ProgramSDJpaService programSDJpaService;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final ProfessorSDJpaService professorSDJpaService;
+    private final CourseSDJpaService courseSDJpaService;
 
-    public ProgramController(ProgramSDJpaService programSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProfessorSDJpaService professorSDJpaService) {
+    public ProgramController(ProgramSDJpaService programSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService) {
         this.programSDJpaService = programSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.professorSDJpaService = professorSDJpaService;
+        this.courseSDJpaService = courseSDJpaService;
     }
 
     @GetMapping({"", "/"})
@@ -63,6 +68,15 @@ public class ProgramController {
 
     @GetMapping("/delete/{programId}")
     public String deleteProgram(@PathVariable Long programId) {
+
+        Set<Professor> professors = professorSDJpaService.findProfessorsByProgramId(programId);
+        for (Professor professor : professors){
+            professor.setProgram(null);
+        }
+        Set<Course> courses = courseSDJpaService.findCoursesByProgramId(programId);
+        for (Course course : courses){
+            course.setProgram(null);
+        }
 
         programSDJpaService.deleteById(programId);
 
