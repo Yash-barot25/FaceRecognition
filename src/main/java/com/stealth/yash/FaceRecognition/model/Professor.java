@@ -1,5 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,16 +61,22 @@ public class Professor {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "professor")
 //    private Set<Experty> experties;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "program_id")
     private Program program;
 
+    @JsonIgnore
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "professor")
     private Set<Course> courses;
+
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -83,6 +90,7 @@ public class Professor {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
 
 
 }

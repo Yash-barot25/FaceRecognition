@@ -1,10 +1,7 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Student;
-import com.stealth.yash.FaceRecognition.service.CourseService;
-import com.stealth.yash.FaceRecognition.service.ProfessorService;
-import com.stealth.yash.FaceRecognition.service.ProgramService;
-import com.stealth.yash.FaceRecognition.service.StudentService;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,27 +13,38 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-    private final StudentService studentService;
-    private final ProgramService programService;
-    private final ProfessorService professorService;
-    private final CourseService courseService;
+   private final InstituteSDJpaService instituteSDJpaService;
+   private final DepartmentSDJpaService departmentSDJpaService;
+   private final ProgramSDJpaService programSDJpaService;
+   private final ProfessorSDJpaService professorSDJpaService;
+   private final CourseSDJpaService courseSDJpaService;
+   private final StudentSDJpaService studentSDJpaService;
 
-    public IndexController(StudentService studentService, ProgramService programService, ProfessorService professorService, CourseService courseService) {
-        this.studentService = studentService;
-        this.programService = programService;
-        this.professorService = professorService;
-        this.courseService = courseService;
+    public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService) {
+        this.instituteSDJpaService = instituteSDJpaService;
+        this.departmentSDJpaService = departmentSDJpaService;
+        this.programSDJpaService = programSDJpaService;
+        this.professorSDJpaService = professorSDJpaService;
+        this.courseSDJpaService = courseSDJpaService;
+        this.studentSDJpaService = studentSDJpaService;
     }
 
-    @GetMapping({"/"})
+    @GetMapping({"/", "/homePage"})
     public String mainPage(Model model) {
 
-        model.addAttribute("programs", programService.findAll());
-        model.addAttribute("students", studentService.findAll());
-        model.addAttribute("professors", professorService.findAll());
-        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
+        model.addAttribute("students", studentSDJpaService.findAll());
+        model.addAttribute("professors", professorSDJpaService.findAll());
+        model.addAttribute("courses", courseSDJpaService.findAll());
+        model.addAttribute("institutes", instituteSDJpaService.findAll());
+        model.addAttribute("departments", departmentSDJpaService.findAll());
 
         return "index";
+    }
+
+    @GetMapping("/comingsoon")
+    public String comingSoon(){
+       return "comingsoon/index";
     }
 
    // @GetMapping("/getStudents/{pageNo}")
@@ -44,7 +52,7 @@ public class IndexController {
                                 Model model) {
         int pageSize = 5;
 
-        Page<Student> page = studentService.findPaginated(pageNo, pageSize);
+        Page<Student> page = studentSDJpaService.findPaginated(pageNo, pageSize);
         List<Student> listEmployees = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
