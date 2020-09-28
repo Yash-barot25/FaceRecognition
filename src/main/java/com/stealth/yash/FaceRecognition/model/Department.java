@@ -60,6 +60,10 @@ public class Department {
         return getId().equals(that.getId());
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setInstitute(Institute institute) {
         this.institute = institute;
 
@@ -68,5 +72,9 @@ public class Department {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public Long getId() {
+        return id;
     }
 }
