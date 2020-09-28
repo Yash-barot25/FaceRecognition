@@ -80,4 +80,16 @@ public class Student{
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
+    public String getId() {
+        return id.toString();
+    }
 }
