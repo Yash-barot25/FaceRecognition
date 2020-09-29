@@ -1,11 +1,13 @@
 package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
+import com.stealth.yash.FaceRecognition.exception.NotFoundException;
 import com.stealth.yash.FaceRecognition.model.Program;
 import com.stealth.yash.FaceRecognition.repository.ProgramRepository;
 import com.stealth.yash.FaceRecognition.service.ProgramService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,13 @@ public class ProgramSDJpaService implements ProgramService {
 
     @Override
     public Program findById(Long aLong) {
-        return programRepository.findById(aLong).orElse(null);
+
+        Optional<Program> optional = programRepository.findById(aLong);
+
+        if (optional.isPresent()){
+            return optional.get();
+        }
+        throw new NotFoundException("Program ID: " + aLong + " Was Not Found.");
     }
 
     @Override
