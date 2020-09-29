@@ -1,6 +1,8 @@
 package com.stealth.yash.FaceRecognition.controller;
 
+import com.stealth.yash.FaceRecognition.model.Course;
 import com.stealth.yash.FaceRecognition.model.Professor;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
@@ -8,26 +10,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @Controller
 @RequestMapping("/professors")
 public class ProfessorController {
 
-    private final ProfessorSDJpaService professorService;
+    private final ProfessorSDJpaService professorSDJpaService;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final ProgramSDJpaService programSDJpaService;
+    private final CourseSDJpaService courseSDJpaService;
    // private final ExpertiseSDJpaService expertiseSDJpaService;
 
 
-    public ProfessorController(ProfessorSDJpaService professorService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService) {
-        this.professorService = professorService;
+    public ProfessorController(ProfessorSDJpaService professorSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, CourseSDJpaService courseSDJpaService) {
+        this.professorSDJpaService = professorSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.programSDJpaService = programSDJpaService;
+        this.courseSDJpaService = courseSDJpaService;
     }
 
     //shows all the professors
     @GetMapping({"", "/"})
     public String getProfessors(Model model) {
-        model.addAttribute("professors", professorService.findAll());
+        model.addAttribute("professors", professorSDJpaService.findAll());
 
         return "professor/professors";
     }
@@ -36,7 +42,7 @@ public class ProfessorController {
     @GetMapping("/get/{professorId}")
     public String showStudentInfo(@PathVariable Long professorId, Model model) {
 
-        model.addAttribute("professor", professorService.findById(professorId));
+        model.addAttribute("professor", professorSDJpaService.findById(professorId));
         return "professor/professor-info";
     }
 
@@ -44,7 +50,7 @@ public class ProfessorController {
     @GetMapping({"/update/{professorId}", "/create"})
     public String createOrUpdateProfessor(@PathVariable(required = false) Long professorId, Model model) {
         if (professorId != null) {
-            model.addAttribute("professor", professorService.findById(professorId));
+            model.addAttribute("professor", professorSDJpaService.findById(professorId));
         } else {
             Professor professor = new Professor();
             model.addAttribute("professor", professor);
@@ -58,7 +64,7 @@ public class ProfessorController {
     @PostMapping
     public String processUpdateProfessorForm(@ModelAttribute Professor professor) {
 
-        Professor professor1 = professorService.save(professor);
+        Professor professor1 = professorSDJpaService.save(professor);
 
         return "redirect:/professors/get/" + professor1.getId();
     }
@@ -66,10 +72,21 @@ public class ProfessorController {
     @GetMapping("/delete/{professorId}")
     public String deleteStudent(@PathVariable Long professorId) {
 
+        Set<Course> courses = courseSDJpaService.findCoursesByProfessorId(professorId);
+        for (Course course : courses){
+            course.setProfessor(null);
+        }
 
-        professorService.deleteById(professorId);
+        professorSDJpaService.deleteById(professorId);
 
         return "redirect:/professors";
+    }
+
+    @GetMapping("/by-departmentId")
+    @ResponseBody
+    public Set<Professor> getProfessorsByDepartmentId(@RequestParam Long departmentId) {
+        Set<Professor> courses = professorSDJpaService.findProfessorsByDepartmentId(departmentId);
+       return  professorSDJpaService.findProfessorsByDepartmentId(departmentId);
     }
 
     //Expertise controllers

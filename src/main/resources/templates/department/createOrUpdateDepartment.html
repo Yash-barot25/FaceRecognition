@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Institute</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <title>Department - Craete/Update</title>
 
     <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 
     <!-- Custom styles for this template-->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -39,103 +43,104 @@
 
             <div class="container-fluid">
 
-                <!-- Section: Edit Account -->
-                <section class="section">
-                    <!-- First row -->
-                    <div class="row">
+                <!--? slider Area Start-->
+                <section class="slider-area slider-area2">
+                    <div class="slider-active">
+                        <!-- Single Slider -->
+                        <div class="single-slider slider-height2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-8 col-lg-11 col-md-12">
+                                        <div class="hero__caption hero__caption2">
+                                            <h1 class="text-white">Department<br/>Update/Create
+                                            </h1>
+                                            <!-- breadcrumb Start-->
 
-
-                        <!-- Card -->
-                        <div class="card ">
-
-
-                            <div class="card-header mdb-color bg-success">
-                                <h5 class="mb-0 font-weight-bold text-warning">Edit Department</h5>
+                                            <!-- breadcrumb End -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <!-- Card content -->
-                            <div class="card-body text-center">
-
-                                <!-- Edit Form -->
-                                <form th:object="${department}"
-                                      th:action="@{'/departments'}" method="post">
-
-                                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                                        <p>Please Correct Errors Below</p>
-                                    </div>
-                                    <!-- First row -->
-
-                                    <div class="row">
-
-                                        <!-- First column -->
-                                        <div class="col-md-6">
-                                            <div class="md-form mb-0">
-                                                <label class="text-success">Department ID</label><br/>
-                                                <input type="text" class="form-control text-muted"
-                                                       th:field="*{id}" readonly placeholder="Auto Generated">
-
-                                            </div>
-                                        </div>
-                                        <!-- Second column -->
-                                        <div class="col-md-6">
-                                            <div class="md-form mb-0">
-                                                <label for="instituteValue" class="text-success">Institute Name</label><br/>
-                                                <select id="instituteValue" class="form-control" th:field="*{institute}">
-                                                    <option th:each="institute : ${institutes}"
-                                                            th:value="${institute.id}"
-                                                            th:text="${institute.name}">val
-                                                    </option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- First row -->
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-12 text-center my-4">
-                                            <label for="departmentName" class="text-success">Department Name</label><br/>
-                                            <input id="departmentName" th:field="*{departmentName}" type="text" class="form-control text-muted"
-                                                   placeholder="Department Name">
-
-                                        </div>
-                                    </div>
-
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-12 text-center my-4">
-                                            <label class="text-success">Department Description</label><br/>
-                                            <input type="text" class="form-control text-muted"
-                                                   th:field="*{description}" placeholder="Department Description">
-                                        </div>
-                                    </div>
-
-                                    <!-- Fourth row -->
-                                    <div class="row">
-                                        <div class="col-md-12 text-center my-4">
-                                            <button class="btn btn-primary mr-2" role="button" type="submit">
-                                                Save
-                                                <i th:style="'margin:5px;'" class="fa fa-save"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!-- Fourth row -->
-
-                                </form>
-                                <!-- Edit Form -->
-
-                            </div>
-                            <!-- Card content -->
-
                         </div>
-                        <!-- Card -->
+                    </div>
+                </section>
 
+                <div class="container">
+                    <div class="card-body text-center">
+                        <!-- Edit Form -->
+                        <form th:object="${department}"
+                              th:action="@{'/departments'}" method="post">
+
+                            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                                <p>Please Correct Errors Below</p>
+                            </div>
+                            <!-- First row -->
+
+                            <div class="row">
+
+                                <!-- First column -->
+                                <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                        <label class="text-success">Department ID</label><br/>
+                                        <input type="text" class="form-control text-muted"
+                                               th:field="*{id}" readonly placeholder="Auto Generated">
+
+                                    </div>
+                                </div>
+                                <!-- Second column -->
+                                <div class="col-md-6">
+                                    <div class="md-form mb-0">
+                                        <label for="instituteValue" class="text-success">Institute Name</label><br/>
+                                        <select id="instituteValue" class="form-control" th:field="*{institute}">
+                                            <option th:each="institute : ${institutes}"
+                                                    th:value="${institute.id}"
+                                                    th:text="${institute.name}">val
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- First row -->
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12 text-center my-4">
+                                    <label for="departmentName" class="text-success">Department Name</label><br/>
+                                    <input id="departmentName" th:field="*{departmentName}" type="text"
+                                           class="form-control text-muted"
+                                           placeholder="Department Name">
+
+                                </div>
+                            </div>
+
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12 text-center my-4">
+                                    <label class="text-success">Department Description</label><br/>
+                                    <textarea rows="3" type="text" class="form-control text-muted"
+                                              th:field="*{description}" placeholder="Department Description"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Fourth row -->
+                            <div class="row">
+                                <div class="col-md-12 text-center my-4">
+                                    <button class="btn btn-primary mr-2" role="button" type="submit">
+                                        Save
+                                        <i th:style="'margin:5px;'" class="fa fa-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Fourth row -->
+
+                        </form>
+                        <!-- Edit Form -->
 
                     </div>
-                    <!-- First row -->
 
-                </section>
-                <!-- Section: Edit Account -->
+
+                </div>
+                <!--Main layout-->
 
             </div>
         </div>

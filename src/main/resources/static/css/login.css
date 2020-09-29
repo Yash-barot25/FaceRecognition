@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+body {
+    background-image: url("/img/backgroundAdmin.jpg");
+}
+
+.form-control{
+    border-radius:20px;
+}

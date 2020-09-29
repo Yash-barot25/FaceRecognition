@@ -1,6 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,17 +30,26 @@ public class Department {
     @Column(name = "department_description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn(name = "institute_id")
     private Institute institute;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Program> programs;
 
-
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Set<Professor> professors;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private Set<Course> courses;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private Set<Student> students;
 
 
     @Override
@@ -51,6 +60,10 @@ public class Department {
         return getId().equals(that.getId());
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setInstitute(Institute institute) {
         this.institute = institute;
 
@@ -59,5 +72,9 @@ public class Department {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public Long getId() {
+        return id;
     }
 }

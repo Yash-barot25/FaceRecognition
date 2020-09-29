@@ -1,5 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,20 +38,20 @@ public class Course {
     @Column(name = "course_description")
     private String description;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "course_id")
     private Professor professor;
 
-
-//
-//    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}
-//            , mappedBy = "courses")
-//    private Set<Student> students;
-
-
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "program_id")
     private Program program;
+
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "department_id")
+    private Department department;
 
 
     @Override
@@ -61,8 +62,32 @@ public class Course {
         return Objects.equals(getId(), course.getId());
     }
 
+    public Program getProgram() {
+        return program;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public String getId() {
+        return id.toString();
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 }

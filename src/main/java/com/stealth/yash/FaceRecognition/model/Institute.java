@@ -1,5 +1,6 @@
 package com.stealth.yash.FaceRecognition.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,12 +26,21 @@ public class Institute {
     @Column(name = "institute_name")
     private String name;
 
+    @Lob
     @Column(name = "institute_address")
     private String address;
 
     @Column(name = "institute_email")
     private String email;
 
+    @Lob
+    @Column(name = "institute_description")
+    private String description;
+
+    @Column(name = "institute_contact_number")
+    private String contactNumber;
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "institute")
     Set<Department> departments;
 
@@ -45,5 +55,13 @@ public class Institute {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
