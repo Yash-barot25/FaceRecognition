@@ -48,6 +48,7 @@ public class Student{
     @Enumerated(value = EnumType.STRING)
     private Campus campus;
 
+
     @Column(name = "student_GPA")
     private Double GPA;
 

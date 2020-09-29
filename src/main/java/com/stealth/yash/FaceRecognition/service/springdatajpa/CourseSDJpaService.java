@@ -1,11 +1,13 @@
 package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
+import com.stealth.yash.FaceRecognition.exception.NotFoundException;
 import com.stealth.yash.FaceRecognition.model.Course;
 import com.stealth.yash.FaceRecognition.repository.CourseRepository;
 import com.stealth.yash.FaceRecognition.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,12 @@ public class CourseSDJpaService implements CourseService {
 
     @Override
     public Course findById(Long aLong) {
-        return courseRepository.findById(aLong).orElse(null);
+        Optional<Course> courseOptional = courseRepository.findById(aLong);
+
+        if (courseOptional.isPresent()){
+            return courseOptional.get();
+        }
+        throw new NotFoundException("Course ID: " + aLong + " Was Not Found.");
     }
 
     @Override

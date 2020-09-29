@@ -53,7 +53,7 @@ public class DepartmentController {
         return "department/createOrUpdateDepartment";
     }
 
-    @PostMapping("")
+    @PostMapping
     public String processUpdateProgramForm(@ModelAttribute Department department) {
 
        Department department1 = departmentSDJpaService.save(department);

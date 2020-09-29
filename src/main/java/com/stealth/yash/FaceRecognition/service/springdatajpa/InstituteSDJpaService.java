@@ -1,11 +1,13 @@
 package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
+import com.stealth.yash.FaceRecognition.exception.NotFoundException;
 import com.stealth.yash.FaceRecognition.model.Institute;
 import com.stealth.yash.FaceRecognition.repository.InstituteRepository;
 import com.stealth.yash.FaceRecognition.service.InstituteService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,14 @@ public class InstituteSDJpaService implements InstituteService {
 
     @Override
     public Institute findById(Long aLong) {
-        return instituteRepository.findById(aLong).orElse(null);
+
+        Optional<Institute> instituteOptional = instituteRepository.findById(aLong);
+
+        if (instituteOptional.isPresent()){
+            return instituteOptional.get();
+        }
+        throw new NotFoundException("Institute ID: " + aLong + " Was Not Found.");
+
     }
 
     @Override

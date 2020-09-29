@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/institutes")
 public class InstituteController {
@@ -38,6 +40,8 @@ public class InstituteController {
 
     @GetMapping({"", "/"})
     public String getInstitutes(Model model) {
+
+
         model.addAttribute("institutes", instituteSDJpaService.findAll());
 
         return "institute/institutes";
@@ -45,6 +49,7 @@ public class InstituteController {
 
     @GetMapping("/get/{instituteId}")
     public String showProgramInfo(@PathVariable Long instituteId, Model model) {
+
 
         model.addAttribute("institute", instituteSDJpaService.findById(instituteId));
         return "institute/institute-info";
