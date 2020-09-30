@@ -3,20 +3,16 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Login Admin</title>
 </head>
 <body>
-<div class="container">
+<img class="wave" src="img/backgroundAdmin.png">
+<!--<div class="container">
 
 
     <div class="card bg-light border-success mb-3"
@@ -53,6 +49,44 @@
 
         </div>
 
+    </div>
+</div>-->
+
+<div class="container">
+    <div class="img">
+        <img src="img/adminSideView.png">
+    </div>
+    <div class="login-content">
+        <form class="user" method="post" th:action="@{/login}">
+            <h4 class="title">Welcome Admin!</h4>
+            <div th:if="${param.error}">
+                <div style="color:red;">Invalid email or password.</div>
+            </div>
+            <div th:if="${param.logout}">
+                <div style="color:red;">You have been logged out.</div>
+            </div>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+
+                    <input type="text" name="username" placeholder="Admin Email">
+                </div>
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+
+                    <input type="password" name="password" placeholder="Admin Password" >
+                </div>
+            </div>
+
+            <input type="submit" name="login-submit" class="btn" value="Login">
+            <a th:href="@{/}">Not an Admin?</a>
+        </form>
     </div>
 </div>
 

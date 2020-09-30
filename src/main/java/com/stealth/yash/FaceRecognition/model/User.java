@@ -47,12 +47,6 @@ public class User {
     @NonNull
     private byte enabled;
 
-
-    @ManyToMany(cascade=CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Role> roles = new ArrayList<Role>();
-
     public String getUsername() {
         return username;
     }
@@ -84,7 +78,10 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-
+    @ManyToMany(cascade=CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Role> roles = new ArrayList<Role>();
 
 
 }

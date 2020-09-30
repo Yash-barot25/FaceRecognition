@@ -2,6 +2,7 @@ package com.stealth.yash.FaceRecognition.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@Order(1)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		http.authorizeRequests()
 		.antMatchers("/user/**","/student**","/comingsoon**","/course**","/department**","/fragments**" ,"/institute**","/professor**","/program**").hasRole("ADMIN")
-		.antMatchers("/", "/js/**", "/css/**", "/images/**", "/**").permitAll()
+		.antMatchers("/", "/js/**", "/css/**", "/images/**","/studentLogin","/profile**","/**").permitAll()
 		 .antMatchers("/h2-console/**").permitAll()
 		 .anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").defaultSuccessUrl("/user",true).permitAll().

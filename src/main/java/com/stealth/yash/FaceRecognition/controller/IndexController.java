@@ -62,6 +62,11 @@ public class IndexController {
     }
 
 
+    @GetMapping("/loginStudent")
+    public String loginStudent(){
+        return "studentLogin";
+    }
+
     @GetMapping("/comingsoon")
     public String comingSoon(){
        return "comingsoon/index";
@@ -71,10 +76,8 @@ public class IndexController {
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 Model model) {
         int pageSize = 5;
-
         Page<Student> page = studentSDJpaService.findPaginated(pageNo, pageSize);
         List<Student> listEmployees = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());

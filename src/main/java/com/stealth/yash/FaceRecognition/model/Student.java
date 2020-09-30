@@ -48,6 +48,10 @@ public class Student{
     @Enumerated(value = EnumType.STRING)
     private Campus campus;
 
+    @Column(name = "stud_pass_email")
+    private String stuPasswordEmail;
+
+
 
     @Column(name = "student_GPA")
     private Double GPA;
@@ -62,6 +66,83 @@ public class Student{
     @JoinColumn(name = "department_id")
     private Department department;
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Long getCurrentSemester() {
+        return currentSemester;
+    }
+
+    public void setCurrentSemester(Long currentSemester) {
+        this.currentSemester = currentSemester;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+
+    public Double getGPA() {
+        return GPA;
+    }
+
+    public void setGPA(Double GPA) {
+        this.GPA = GPA;
+    }
+
+    public Program getProgram() {
+        return program;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+
 
     public void setProgram(Program program) {
         this.program = program;
@@ -75,7 +156,13 @@ public class Student{
         Student student = (Student) o;
         return getId().equals(student.getId());
     }
+    public String getStuPasswordEmail() {
+        return stuPasswordEmail;
+    }
 
+    public void setStuPasswordEmail(String stuPasswordEmail) {
+        this.stuPasswordEmail = stuPasswordEmail;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(getId());
@@ -89,7 +176,11 @@ public class Student{
         this.image = image;
     }
 
-    public String getId() {
-        return id.toString();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

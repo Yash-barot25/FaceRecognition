@@ -8,7 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Optional;
+import java.util.Properties;
+import java.util.Random;
+import javax.mail.Transport;
 
 @Controller
 @RequestMapping("/students")
@@ -41,6 +47,7 @@ public class StudentController {
     }
 
 
+
     @GetMapping({"/update/{studentId}", "/create"})
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
         if (studentId.isPresent()){
@@ -55,12 +62,58 @@ public class StudentController {
         return "student/createOrUpdateStudent";
     }
 
+    public String generatePassword(){
+        String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+              String password = "";
+        int maxlength = 8;
+        for (int i=0; i<maxlength; i++){
+            Random rand = new Random();
+            int index = rand.nextInt(str.length());
+            password += str.charAt(index);
+        }
+        return password;
+    }
+
+    public String emailPasswordToUser (String to, String password){
+
+        String from = "stealtht90@gmail.com";
+        String pass = "Sheridan123";
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,to);
+            message.setSubject("Login Password - Stealth Admin");
+            message.setText("Your password to access Stealth Admin Portal : " +password + "\n\n\nKind Regards,\n Team Stealth");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+        return password;
+
+    }
+
+
     @PostMapping
     public String processUpdateStudentForm(@ModelAttribute Student student) {
-
-       Student student1 = studentService.save(student);
-
-       return "redirect:/students/get/" + student1.getId();
+        student.setStuPasswordEmail(generatePassword());
+       student = studentService.save(student);
+       emailPasswordToUser(student.getEmail(),student.getStuPasswordEmail());
+       return "redirect:/students/get/" + student.getId();
     }
 
     @GetMapping("/delete/{studentId}")
