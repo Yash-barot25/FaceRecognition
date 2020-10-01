@@ -60,7 +60,7 @@
                                         <!-- Button -->
                                         <li class="button-header margin-left "><a
                                                 href="https://www.sheridancollege.ca/" class="btn">Join</a></li>
-                                        <li class="button-header"><a href="login.html" class="btn btn3">Log in</a>
+                                        <li class="button-header"><a th:href="@{/login}" class="btn btn3">Log in</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -151,7 +151,11 @@
                     <h2 class="contact-title">Get in Touch</h2>
                 </div>
                 <div class="col-lg-8">
-                    <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                    <form class="form-contact contact_form" action=”mailto:yash250619@gmail.com”
+
+                          method=”POST”
+
+                          enctype=”multipart/form-data”  id="contactForm" novalidate="novalidate">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">

@@ -81,6 +81,9 @@ public class Student{
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @Column(name = "stud_pass_email")
+    private String stuPasswordEmail;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
