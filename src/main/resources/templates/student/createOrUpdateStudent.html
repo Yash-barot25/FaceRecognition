@@ -125,6 +125,7 @@
 
                                                 <!-- First column -->
                                                 <div class="col-md-6">
+
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Student ID</label><br/>
                                                         <input type="text" class="form-control text-muted"
@@ -154,22 +155,38 @@
                                             <!-- First row -->
                                             <div class="row">
                                                 <!-- First column -->
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('firstName')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label data-error="wrong" data-success="right"
                                                                class="text-success">First
                                                             name</label><br/>
                                                         <input type="text" class="form-control validate"
                                                                th:field="*{firstName}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('firstName')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('firstName')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
 
                                                 <!-- Second column -->
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('lastName')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Last name</label><br/>
                                                         <input type="text" class="form-control validate"
                                                                th:field="*{lastName}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('lastName')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('lastName')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -179,20 +196,36 @@
                                             <div class="row">
 
                                                 <!-- First column -->
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('email')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Email address</label><br/>
                                                         <input type="email" class="form-control validate"
                                                                th:field="*{email}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('email')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('email')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                                 <!-- Second column -->
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('phoneNumber')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Contact No</label><br/>
                                                         <input type="number" class="form-control validate"
                                                                th:field="*{phoneNumber}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('phoneNumber')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('phoneNumber')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
 
                                                     </div>
                                                 </div>
@@ -203,20 +236,36 @@
                                             <div class="row">
 
                                                 <!-- First column -->
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('currentSemester')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Current-Semester</label><br/>
                                                         <input type="number" class="form-control validate"
                                                                th:field="*{currentSemester}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('currentSemester')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('currentSemester')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                                 <!-- Second column -->
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group"
+                                                     th:class="${#fields.hasErrors('GPA')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">GPA</label><br/>
                                                         <input type="number" step="any" class="form-control validate"
                                                                th:field="*{GPA}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('GPA')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('GPA')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
 
                                                     </div>
                                                 </div>
@@ -228,11 +277,19 @@
                                             <div class="row">
 
                                                 <!-- First column -->
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 form-group"
+                                                     th:class="${#fields.hasErrors('address')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Address</label><br/>
                                                         <input type="text" step="any" class="form-control validate"
                                                                th:field="*{address}">
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('address')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('address')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,21 +300,25 @@
                                             <div class="row">
 
                                                 <!-- First column -->
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 form-group"
+                                                     th:class="${#fields.hasErrors('department')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Department Name</label><br/>
-                                                        <select id="department" class="form-control" th:field="*{department}">
-
-                                                            <!--/*@thymesVar id="departmentName" type="com.stealth.yash.FaceRecognition.model.Department"*/-->
-                                                            <!--/*@thymesVar id="departmentName" type="com.stealth.yash.FaceRecognition.model.Student"*/-->
+                                                        <select id="department" class="form-control"
+                                                                th:field="*{department}">
                                                             <option th:each="departmentVal : ${departments}"
                                                                     th:value="${departmentVal.id}"
                                                                     th:text="${departmentVal.departmentName}"></option>
 
 
-
-
                                                         </select>
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('department')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('department')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -267,7 +328,8 @@
                                             <div class="row">
 
                                                 <!-- First column -->
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 form-group"
+                                                     th:class="${#fields.hasErrors('program')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Program Name</label><br/>
                                                         <select id="program" class="form-control" th:field="*{program}">
@@ -277,6 +339,13 @@
                                                                 val
                                                             </option>
                                                         </select>
+                                                        <span class="help-block"
+                                                              th:if="${#fields.hasErrors('program')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('program')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -336,18 +405,18 @@
     document.getElementById("department").selectedIndex = -1;
     document.getElementById("program").selectedIndex = -1;
 
-    $(document).ready(function(){
-        $("#department").on('change',function(e){
+    $(document).ready(function () {
+        $("#department").on('change', function (e) {
             loadProgramsByDepartmentId(this.value)
         });
     });
 
-    loadProgramsByDepartmentId=(departmentId)=>{
-        $.get( "/programs/by-departmentId", { departmentId: departmentId } )
-            .done(function( data ) {
+    loadProgramsByDepartmentId = (departmentId) => {
+        $.get("/programs/by-departmentId", {departmentId: departmentId})
+            .done(function (data) {
                 console.log(data)
-                let options='';
-                for(let d=0; d < data.length;d++){
+                let options = '';
+                for (let d = 0; d < data.length; d++) {
                     options += `<option value="${data[d].id}">${data[d].programName}</option>`;
                 }
                 $("#program").html(options);
