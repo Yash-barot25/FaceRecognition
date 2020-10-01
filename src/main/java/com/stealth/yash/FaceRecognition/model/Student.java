@@ -63,12 +63,6 @@ public class Student{
     @JoinColumn(name = "department_id")
     private Department department;
 
-
-    public void setProgram(Program program) {
-        this.program = program;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,15 +76,5 @@ public class Student{
         return Objects.hash(getId());
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
 
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public String getId() {
-        return id.toString();
-    }
 }

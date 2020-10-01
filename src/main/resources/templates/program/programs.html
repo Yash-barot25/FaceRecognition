@@ -57,41 +57,72 @@
                     </div>
                 </div>
                 <!--Section: Cards-->
+
                 <section>
 
 
-                <div class="container">
-                    <section>
-                        <div>
-                            <div class="card border-dark mb-6" style="max-width: 36rem;" th:each="program : ${programs}">
-                                <div class="card-body text-success">
-                                    <h5 class="card-title text-center" th:text="${program.programName}">Success card title</h5><hr>
-                                    <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg" class="card-img-top"><hr>
-                                    <p class="card-text" th:text="${program.description}">build on the card title and make up the bulk of the card's content.</p>
-                                    <div class="restaurant-name">
-                                        <p>Ratings: <span th:text="${program.rating}"></span> / 10</p>
-                                    </div>
-                                    <a th:href="@{'/programs/get/'+ ${program.id}}" class="btn btn-dark">View
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <a th:href="@{'/programs/delete/' + ${program.id}}" class="btn btn-dark">Delete
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                    <div class="row wow fadeIn border mb-2" th:each="program : ${programs}">
+                            <!--Grid column-->
+                            <div class="col-lg-5 col-xl-4 mb-4">
+                                <!--Featured image-->
+                                <div class="view overlay rounded z-depth-1">
+                                    <img src="https://www.sheridancollege.ca/-/media/images/www/campuses/hmc/mississauga-campus-sheridan-college.ashx?mw=767&hash=82A862134D5512B01E0C2A2B8147C86E72E2BA93"
+                                         class="img-fluid" alt="">
                                 </div>
-                            </div><br>
-                      
-                        </div>
-                    </section>
-                   
-                  
-                                    </div>
+                            </div>
+                            <!--Grid column-->
 
+                            <!--Grid column-->
+                            <div class="col-lg-7 col-xl-7 ml-xl-4 mb-4">
+                                <h3 class="mb-3 font-weight-bold dark-grey-text">
+                                    <strong th:text="${program.programName}">Web Push notifications</strong>
+                                </h3>
+                                <p class="grey-text" th:text="${program.description}">Push messaging provides a simple
+                                    and effective way to re-engage with your users and in
+                                    this tutorial
+                                    you'll learn how to add push notifications to your web app</p>
+                                <div class="restaurant-name">
+                                    <p>Ratings: <span th:text="${program.rating}"></span> / 10</p>
                                 </div>
+
+                                <a th:href="@{'/programs/get/'+ ${program.id}}" class="btn btn-dark">View
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a th:href="@{'/programs/delete/' + ${program.id}}" class="btn btn-dark">Delete
+                                    <i class="fa fa-trash"></i>
+                                </a>
 
                             </div>
-                        </div>
-                        <!-- Single -->
+                            <!--Grid column-->
                     </div>
+
+
+                    <!--                    <div class="row mb-lg-2">-->
+                    <!--                        <div class="card border-dark col-md-6 mb-1"-->
+                    <!--                             th:each="program : ${programs}">-->
+                    <!--                            <div class="card-body text-success">-->
+                    <!--                                <h5 class="card-title text-center" th:text="${program.programName}">Success card-->
+                    <!--                                    title</h5>-->
+                    <!--                                <hr>-->
+                    <!--                                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg"-->
+                    <!--                                     class="card-img-top">-->
+                    <!--                                <hr>-->
+                    <!--                                <p class="card-text" th:text="${program.description}">build on the card title and-->
+                    <!--                                    make up the bulk of the card's content.</p>-->
+                    <!--                                <div class="restaurant-name">-->
+                    <!--                                    <p>Ratings: <span th:text="${program.rating}"></span> / 10</p>-->
+                    <!--                                </div>-->
+                    <!--                                <a th:href="@{'/programs/get/'+ ${program.id}}" class="btn btn-dark">View-->
+                    <!--                                    <i class="fa fa-eye"></i>-->
+                    <!--                                </a>-->
+                    <!--                                <a th:href="@{'/programs/delete/' + ${program.id}}" class="btn btn-dark">Delete-->
+                    <!--                                    <i class="fa fa-trash"></i>-->
+                    <!--                                </a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                        <br>-->
+
+                    <!--                    </div>-->
 
 
                     <!--Pagination-->

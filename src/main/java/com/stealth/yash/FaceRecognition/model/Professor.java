@@ -76,8 +76,6 @@ public class Professor {
     private Set<Course> courses;
 
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,19 +90,4 @@ public class Professor {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Program getProgram() {
-        return program;
-    }
-
-    public void setProgram(Program program) {
-        this.program = program;
-    }
 }

@@ -63,120 +63,73 @@
                     <div class="row mb-lg-2 wow fadeIn">
 
                         <!--Grid column-->
-<!--                        <div class="col-md-3 mb-3" th:each="professor: ${professors}">-->
-                            <div class="card border-dark mb-4" style="max-width: 27rem;" th:each="professor: ${professors}">
-                                <div class="card-body text-dark">
-                                    <h5 class="card-title text-center"><b th:text="${professor.firstName}"></b> <b th:text="${professor.lastName}"></b></h5>
-                                    <hr>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" style="max-width: 18rem;">
-                                    <hr>
-                                    <p class="card-text">Contact: <i th:text="${professor.phoneNumber}"></i></p>
-                                    <p class="card-text">Email: <i th:text="${professor.email}"></i></p>
-                                    <a th:href="@{'/professors/get/'+ ${professor.id}}"
-                                       class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
-                                        View
-                                        <i th:style="'margin:2px'" class="fa fa-eye"></i>
-                                    </a>
-                                    <a th:href="@{'/professors/delete/' + ${professor.id}}"
-                                       class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">
-                                        Delete
-                                        <i th:style="'margin:2px'" class="fa fa-trash"></i>
-                                    </a>
-                                </div>
+                        <!--                        <div class="col-md-3 mb-3" th:each="professor: ${professors}">-->
+                        <div class="card border-dark mb-4 mr-4 ml-4" style="max-width: 27rem;" th:each="professor: ${professors}">
+                            <div class="card-body text-dark">
+                                <h5 class="card-title text-center"><b th:text="${professor.firstName}"></b> <b
+                                        th:text="${professor.lastName}"></b></h5>
+                                <hr>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                                     style="max-width: 18rem;">
+                                <hr>
+                                <p class="card-text">Contact: <i th:text="${professor.phoneNumber}"></i></p>
+                                <p class="card-text">Email: <i th:text="${professor.email}"></i></p>
+                                <a th:href="@{'/professors/get/'+ ${professor.id}}"
+                                   class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
+                                    View
+                                    <i th:style="'margin:2px'" class="fa fa-eye"></i>
+                                </a>
+                                <a th:href="@{'/professors/delete/' + ${professor.id}}"
+                                   class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">
+                                    Delete
+                                    <i th:style="'margin:2px'" class="fa fa-trash"></i>
+                                </a>
                             </div>
-                            <!--Card-->
-<!--                            <div class="card">-->
-
-<!--                                &lt;!&ndash;Card image&ndash;&gt;-->
-<!--                                <div class="view overlay modal-header">-->
-<!--                                    <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg"-->
-<!--                                         class="card-img-top rounded-circle img-responsive"-->
-<!--                                         style="width:100px !important; height:100px !important" width="100px"-->
-<!--                                         height="100px"-->
-<!--                                         alt="">-->
-<!--                                    <a href="https://mdbootstrap.com/vue/" target="_blank">-->
-<!--                                        <div class="mask rgba-white-slight"></div>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-
-<!--                                <div class="card-body">-->
-<!--                                    &lt;!&ndash;Title&ndash;&gt;-->
-<!--                                    <h5 class="card-title text-success"-->
-<!--                                        th:text="${professor.firstName.toUpperCase() + ' '+ professor.lastName.toUpperCase()}">-->
-<!--                                        MDB-->
-<!--                                        with React</h5>-->
-<!--                                    &lt;!&ndash;Text&ndash;&gt;-->
-<!--                                    <p class="grey-text" th:text="${professor.id}">Name</p>-->
-<!--                                    <p class="grey-text" th:text="${professor.department.departmentName}"></p>-->
-
-<!--                                    <div class="row text-center">-->
-<!--                                        <a th:href="@{'/professors/get/'+ ${professor.id}}"-->
-<!--                                           class="btn btn-primary mr-1 mb-1 ml-1 mt-1" role="button">-->
-<!--                                            View-->
-<!--                                            <i  class="fa fa-eye mr-1"></i>-->
-<!--                                        </a>-->
-<!--                                        <a th:href="@{'/professors/delete/' + ${professor.id}}"-->
-<!--                                           class="btn btn-primary ml-1 mr-1 mt-1 mb-1" role="button">-->
-<!--                                            Delete-->
-<!--                                            <i class="fa fa-trash mr-1"></i>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                    <div class="row text-center">-->
-<!--                                        <a href="#"-->
-<!--                                           class="btn btn-primary ml-1 mr-1 mt-1 mb-1" role="button">-->
-<!--                                            ADD Expertise-->
-<!--                                            <i class="fa fa-trash mr-1"></i>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                            </div>-->
-                            <!--/.Card-->
-
-
                         </div>
-                        <!--Grid column-->
+
+
                     </div>
+                    <!--Grid column-->
 
 
-<!--                    &lt;!&ndash;Pagination&ndash;&gt;-->
-<!--                    <nav class="d-flex justify-content-center wow fadeIn">-->
-<!--                        <ul class="pagination pg-blue">-->
+                    <!--Pagination-->
+                    <nav class="d-flex justify-content-center wow fadeIn">
+                        <ul class="pagination pg-blue">
 
-<!--                            &lt;!&ndash;Arrow left&ndash;&gt;-->
-<!--                            <li class="page-item disabled">-->
-<!--                                <a class="page-link" href="#" aria-label="Previous">-->
-<!--                                    <span aria-hidden="true">&laquo;</span>-->
-<!--                                    <span class="sr-only">Previous</span>-->
-<!--                                </a>-->
-<!--                            </li>-->
+                            <!--Arrow left-->
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
 
-<!--                            <li class="page-item active">-->
-<!--                                <a class="page-link" href="#">1-->
-<!--                                    <span class="sr-only">(current)</span>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#">2</a>-->
-<!--                            </li>-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#">3</a>-->
-<!--                            </li>-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#">4</a>-->
-<!--                            </li>-->
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#">5</a>-->
-<!--                            </li>-->
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">5</a>
+                            </li>
 
-<!--                            <li class="page-item">-->
-<!--                                <a class="page-link" href="#" aria-label="Next">-->
-<!--                                    <span aria-hidden="true">&raquo;</span>-->
-<!--                                    <span class="sr-only">Next</span>-->
-<!--                                </a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </nav>-->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
 
                 </section>
                 <!--Section: Cards-->

@@ -253,7 +253,7 @@
                                                 <label class="text-success">Program</label>
 
                                                 <input type="text" class="form-control text-muted"
-                                                       th:value="${student.program} ? ${student.program.programName} : 'PLEASE UPDATE PROGRAM'"
+                                                       th:text="${student.program} ? ${student.program.programName} : 'PLEASE UPDATE PROGRAM'"
                                                        readonly    placeholder="Campus">
                                             </div>
 
