@@ -1,11 +1,13 @@
 package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
+import com.stealth.yash.FaceRecognition.exception.NotFoundException;
 import com.stealth.yash.FaceRecognition.model.Department;
 import com.stealth.yash.FaceRecognition.repository.DepartmentRepository;
 import com.stealth.yash.FaceRecognition.service.DepartmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,13 @@ public class DepartmentSDJpaService implements DepartmentService {
 
     @Override
     public Department findById(Long aLong) {
-        return departmentRepository.findById(aLong).orElse(null);
+
+        Optional<Department> optional = departmentRepository.findById(aLong);
+
+        if (optional.isPresent()){
+            return optional.get();
+        }
+        throw new NotFoundException("Department ID: " + aLong + " Was Not Found.");
     }
 
     @Override

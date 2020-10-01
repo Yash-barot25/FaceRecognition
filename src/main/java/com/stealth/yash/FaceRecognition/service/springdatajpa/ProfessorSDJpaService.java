@@ -1,11 +1,13 @@
 package com.stealth.yash.FaceRecognition.service.springdatajpa;
 
+import com.stealth.yash.FaceRecognition.exception.NotFoundException;
 import com.stealth.yash.FaceRecognition.model.Professor;
 import com.stealth.yash.FaceRecognition.repository.ProfessorRepository;
 import com.stealth.yash.FaceRecognition.service.ProfessorService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -24,7 +26,13 @@ public class ProfessorSDJpaService implements ProfessorService {
 
     @Override
     public Professor findById(Long aLong) {
-        return professorRepository.findById(aLong).orElse(null);
+
+        Optional<Professor> optional = professorRepository.findById(aLong);
+
+        if (optional.isPresent()){
+            return optional.get();
+        }
+        throw new NotFoundException("Professor ID: " + aLong + " Was Not Found.");
     }
 
     @Override

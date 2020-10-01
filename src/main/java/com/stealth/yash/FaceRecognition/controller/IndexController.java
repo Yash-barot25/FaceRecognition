@@ -29,18 +29,62 @@ public class IndexController {
         this.studentSDJpaService = studentSDJpaService;
     }
 
-    @GetMapping({"/", "/homePage"})
-    public String mainPage(Model model) {
+    @GetMapping
+    public String showMainPage(){
+        return "index";
 
-        model.addAttribute("programs", programSDJpaService.findAll());
-        model.addAttribute("students", studentSDJpaService.findAll());
-        model.addAttribute("professors", professorSDJpaService.findAll());
-        model.addAttribute("courses", courseSDJpaService.findAll());
+    }
+
+    @GetMapping("/contact")
+    public String contactUs(){
+        return "contact";
+
+    }
+
+    @GetMapping("/about")
+    public String aboutUs(){
+        return "about";
+
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model){
+
         model.addAttribute("institutes", instituteSDJpaService.findAll());
         model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
+        model.addAttribute("professors", professorSDJpaService.findAll());
+        model.addAttribute("courses", courseSDJpaService.findAll());
+        model.addAttribute("students", studentSDJpaService.findAll());
 
-        return "index";
+
+        return "dashboard";
     }
+//
+//    @GetMapping("/user")
+//    public String mainPage(Model model, Authentication authentication) {
+//
+//        String name = authentication.getName();
+//        List<String> roles = new ArrayList<String>();
+//        for (GrantedAuthority ga: authentication.getAuthorities()) {
+//            roles.add(ga.getAuthority());
+//        }
+//        model.addAttribute("name", name);
+//        model.addAttribute("roles", roles);
+//        model.addAttribute("programs", programSDJpaService.findAll());
+//        model.addAttribute("students", studentSDJpaService.findAll());
+//        model.addAttribute("professors", professorSDJpaService.findAll());
+//        model.addAttribute("courses", courseSDJpaService.findAll());
+//        model.addAttribute("institutes", instituteSDJpaService.findAll());
+//        model.addAttribute("departments", departmentSDJpaService.findAll());
+//
+//        return "user/index";
+//    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
 
     @GetMapping("/comingsoon")
     public String comingSoon(){

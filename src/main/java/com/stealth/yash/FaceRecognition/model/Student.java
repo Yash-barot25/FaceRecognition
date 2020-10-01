@@ -27,6 +27,7 @@ public class Student{
     @Column(name = "image")
     private Byte[] image;
 
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -47,6 +48,7 @@ public class Student{
 
     @Enumerated(value = EnumType.STRING)
     private Campus campus;
+
 
     @Column(name = "student_GPA")
     private Double GPA;
@@ -78,5 +80,17 @@ public class Student{
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public Byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(Byte[] image) {
+        this.image = image;
+    }
+
+    public String getId() {
+        return id.toString();
     }
 }

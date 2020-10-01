@@ -50,6 +50,14 @@
                             class="fas fa-download fa-sm text-white-50"></i> Add Courses</a>
                 </div>
 
+                <div class="row justify-content-center" th:if="${courses.size()} == 0">
+                    <div class="col-xl-7 col-lg-8">
+                        <div class="section-tittle text-center mb-55">
+                            <h2>SORRY...! <br/>We Don't Have Any Courses At This Moment</h2>
+                        </div>
+                    </div>
+                </div>
+
                 <!--Section: Cards-->
                 <section>
 
