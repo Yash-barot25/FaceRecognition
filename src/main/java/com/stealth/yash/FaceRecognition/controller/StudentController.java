@@ -4,12 +4,16 @@ import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequestMapping("/students")
 public class StudentController {
@@ -56,7 +60,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public String processUpdateStudentForm(@ModelAttribute Student student) {
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            return "student/createOrUpdateStudent";
+        }
 
        Student student1 = studentService.save(student);
 
