@@ -27,6 +27,7 @@ public class Student{
     @Column(name = "image")
     private Byte[] image;
 
+
     @Column(name = "first_name")
     private String firstName;
 

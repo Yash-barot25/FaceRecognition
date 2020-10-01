@@ -3,30 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Programs</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <link rel="manifest" href="site.webmanifest">-->
+    <meta name="author" content="">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <title>Programs</title>
 
-
-    <!--    &lt;!&ndash; CSS here &ndash;&gt;-->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/slicknav.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/flaticon.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/progressbar_barfiller.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/gijgo.css}">-->
-    <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}">
-    <!--        <link rel="stylesheet" th:href="@{/assets/css/animated-headline.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">-->
-    <!--        <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.min.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/themify-icons.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/slick.css}">-->
-    <!--    <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}">-->
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-
+    <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
@@ -54,368 +38,111 @@
         <div id="content">
 
             <!-- Topbar -->
-                        <nav th:replace="fragments/topbar.html :: topbar"></nav>
-
-
+            <nav th:replace="fragments/topbar.html :: topbar"></nav>
 
             <div class="container-fluid">
-                <div class="container bg-warning">
-                    <section class="slider-area ">
-                        <div class="slider-active">
-                            <!-- Single Slider -->
-                            <div class="single-slider slider-height d-flex align-items-center">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-xl-6 col-lg-7 col-md-12">
-                                            <div class="hero__caption">
-                                                <h1 data-animation="fadeInLeft" data-delay="0.2s">Harvard for <br>
-                                                    Animation
-                                                </h1>
-                                                <p data-animation="fadeInLeft" data-delay="0.4s">Join Sheridan Build
-                                                    Your
-                                                    skills,
-                                                    knowledge</p>
-                                                <a href="https://www.sheridancollege.ca/" class="btn btn-info"
-                                                   data-animation="fadeInLeft" data-delay="0.7s" target="_blank">Join Us
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
 
-                    <div class="services-area">
-                        <div class="container">
-                            <div class="row justify-content-sm-center">
-                                <div class="col-lg-4 col-md-6 col-sm-8">
-                                    <div class="single-services mb-30">
-                                        <div class="features-icon">
-                                            <img th:src="@{/assets/img/icon/icon1.svg}" alt="">
-                                        </div>
-                                        <div class="features-caption">
-                                            <h3>120 programs</h3>
-                                            <p> five faculties including 26-degree programs.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-8">
-                                    <div class="single-services mb-30">
-                                        <div class="features-icon">
-                                            <img th:src="@{/assets/img/icon/icon2.svg}" alt="">
-                                        </div>
-                                        <div class="features-caption">
-                                            <h3>Expert instructors</h3>
-                                            <p>Some best out of best faculties...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-sm-8">
-                                    <div class="single-services mb-30">
-                                        <div class="features-icon">
-                                            <img th:src="@{/assets/img/icon/icon3.svg}" alt="">
-                                        </div>
-                                        <div class="features-caption">
-                                            <h3>Lots of india's to spend time with</h3>
-                                            <p>Also indian food...hehehe</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-2">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Programs</h1>
                     <a th:href="@{/programs/create}"
                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Add Program</a>
+                            class="fas fa-download fa-sm text-white-50"></i> Add Programs</a>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" th:if="${programs.size()} == 0">
                     <div class="col-xl-7 col-lg-8">
                         <div class="section-tittle text-center mb-55">
-                            <h2>Our featured Programs</h2>
+                            <h2>SORRY...! <br/>We Don't Have Any Programs At This Moment</h2>
                         </div>
                     </div>
                 </div>
-
                 <!--Section: Cards-->
+                <section>
 
-                <div class="container">
-                    <section>
-                        <div class="row mb-lg-2">
-                            <!-- Single -->
-                            <div class="properties col-sm-12 col-md-6 col-lg-6" th:each="program : ${programs}">
-                                <div class="card-img-top">
-                                    <div>
-                                        <a href="#"><img th:src="@{/assets/img/gallery/featured1.png}" alt=""></a>
-                                    </div>
-                                    <div class="properties__caption">
-                                        <p></p>
-                                        <h3><a href="#" th:text="${program.programName}">Fundamental of UX for
-                                            Application design</a></h3>
-                                        <p th:text="${program.description}">The automated process all your website
-                                            tasks. Discover tools and
-                                            techniques
-                                            to engage
-                                            effectively with vulnerable children and young people.
+                    <!--Grid row-->
+                    <div class="row mb-lg-2">
+                        <!-- Single -->
+                        <div class="properties col-sm-12 col-md-6 col-lg-6" th:each="program : ${programs}">
+                            <div class="card-img-top">
+                                <div>
+                                    <a href="#"><img th:src="@{/assets/img/gallery/featured1.png}" alt=""></a>
+                                </div>
+                                <div class="properties__caption">
+                                    <p></p>
+                                    <h3><a href="#" th:text="${program.programName}">
+                                        Application design</a></h3>
+                                    <p th:text="${program.description}">description
 
-                                        </p>
-                                        <div class="properties__footer d-flex justify-content-between align-items-center">
-                                            <div class="restaurant-name">
-                                                <p>Ratings(Out of 10): <span th:text="${program.rating}"></span></p>
-                                            </div>
+                                    </p>
+                                    <div class="properties__footer d-flex justify-content-between align-items-center">
+                                        <div class="restaurant-name">
+                                            <p>Ratings(Out of 10): <span th:text="${program.rating}"></span></p>
                                         </div>
-                                        <div class="card-body text-center">
+                                    </div>
+                                    <div class="card-body text-center">
 
-                                            <a th:href="@{'/programs/get/'+ ${program.id}}"
-                                               class="border-btn border-btn2 bg-warning">View</a>
-                                            <a th:href="@{'/programs/delete/'+ ${program.id}}" href="#"
-                                               class="border-btn border-btn2 bg-warning">Delete</a>
-                                            <!--                                            <a href="#" class="border-btn border-btn2 bg-warning">View</a>-->
-                                            <!--                                            <a href="#" class="border-btn border-btn2 bg-warning">Delete</a>-->
-
-                                        </div>
-
+                                        <a th:href="@{'/programs/get/'+ ${program.id}}"
+                                           class="border-btn border-btn2 bg-warning">View</a>
+                                        <a th:href="@{'/programs/delete/'+ ${program.id}}" href="#"
+                                           class="border-btn border-btn2 bg-warning">Delete</a>
                                     </div>
 
                                 </div>
-                            </div>
-                            <!-- Single -->
-                        </div>
-                    </section>
-                    <section class="about-area1 fix pt-10">
-                        <div class="support-wrapper align-items-center">
-                            <div class="left-content1">
-                                <div class="about-icon">
-                                    <img th:src="@{/assets/img/icon/about.svg}" alt="">
-                                </div>
-                                <!-- section tittle -->
-                                <div class="section-tittle section-tittle2 mb-55">
-                                    <div class="front-text">
-                                        <h2 class="">Learn new skills online with top educators</h2>
-                                        <p>The automated process all your website tasks. Discover tools and
-                                            techniques to engage effectively with vulnerable children and young
-                                            people.</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Techniques to engage effectively with vulnerable children and young
-                                            people.</p>
-                                    </div>
-                                </div>
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Join millions of people from around the world learning together.</p>
-                                    </div>
-                                </div>
 
-                                <div class="single-features">
-                                    <div class="features-icon">
-                                        <img th:src="@{/assets/img/icon/right-icon.svg}" alt="">
-                                    </div>
-                                    <div class="features-caption">
-                                        <p>Join millions of people from around the world learning together. Online
-                                            learning is as easy and natural.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="right-content1">
-                                <!-- img -->
-                                <div class="right-img">
-                                    <img th:src="@{/assets/img/gallery/about3.png}" alt="">
-
-                                    <div class="video-icon">
-                                        <a class="popup-video btn-icon" target="_blank"
-                                           href="https://www.youtube.com/watch?v=YK2TM4CUMa8"><i
-                                                class="fas fa-play"></i></a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                    </section>
-
-
-                    <div class="topic-area section-padding40">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-xl-7 col-lg-8">
-                                    <div class="section-tittle text-center mb-55">
-                                        <h2>Explore top subjects</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic1.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic2.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic3.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic4.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic5.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic6.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic7.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="single-topic text-center mb-30">
-                                        <div class="topic-img">
-                                            <img th:src="@{/assets/img/gallery/topic8.png}" alt="">
-                                            <div class="topic-content-box">
-                                                <div class="topic-content">
-                                                    <h3><a href="#">Programing</a></h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Single -->
                     </div>
 
 
-                    <!--? Team -->
-                    <section class="team-area section-padding40 fix">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-xl-7 col-lg-8">
-                                    <div class="section-tittle text-center mb-55">
-                                        <h2>Sheridan Topper's</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                    <div class="cat-icon">
-                                        <img th:src="@{/assets/img/gallery/team1.png}" alt="">
-                                    </div>
-                                    <div class="cat-cap">
-                                        <h5><a href="services.html">Yashkumar Barot</a></h5>
-                                        <p>Java, C#, Python Expert</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                    <div class="cat-icon">
-                                        <img th:src="@{/assets/img/gallery/team1.png}" alt="">
-                                    </div>
-                                    <div class="cat-cap">
-                                        <h5><a href="services.html">Bhavik Jain</a></h5>
-                                        <p>Machine Learning Expert</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                    <div class="cat-icon">
-                                        <img th:src="@{/assets/img/gallery/team1.png}" alt="">
-                                    </div>
-                                    <div class="cat-cap">
-                                        <h5><a href="services.html">Nishit Amin</a></h5>
-                                        <p>IOT, Database Expert</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6 text-center">
-                                    <div class="cat-icon">
-                                        <img th:src="@{/assets/img/gallery/team4.png}" alt="">
-                                    </div>
-                                    <div class="cat-cap">
-                                        <h5><a href="services.html">Mansi</a></h5>
-                                        <p>Front-End Expert</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <!--Pagination-->
+                    <nav class="d-flex justify-content-center">
+                        <ul class="pagination pg-blue">
 
+                            <!--Arrow left-->
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
 
-                </div>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">5</a>
+                            </li>
 
-                <!--Main layout-->
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </section>
+                <!--Section: Cards-->
             </div>
         </div>
     </div>
 </div>
 
+
+<!--Main layout-->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
