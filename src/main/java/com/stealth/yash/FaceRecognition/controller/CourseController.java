@@ -5,10 +5,15 @@ import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+@Slf4j
 @Controller
 @RequestMapping("/courses")
 public class CourseController {
@@ -56,8 +61,13 @@ public class CourseController {
         return "course/createOrUpdateCourse";
     }
 
-    @PostMapping
-    public String processUpdateCourseForm(@ModelAttribute Course course) {
+    @PostMapping("")
+    public String processUpdateCourseForm(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            return "course/createOrUpdateCourse";
+        }
 
         Course course1 = courseSDJpaService.save(course);
 

@@ -3,12 +3,16 @@ package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Institute;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.InstituteSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequestMapping("/institutes")
 public class InstituteController {
@@ -69,7 +73,14 @@ public class InstituteController {
     }
 
     @PostMapping("")
-    public String processUpdateProgramForm(@ModelAttribute Institute institute) {
+    public String processUpdateProgramForm(@Valid @ModelAttribute("institute") Institute institute, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()){
+
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            return "institute/createOrUpdateInstitute";
+
+        }
 
         Institute institute1 = instituteSDJpaService.save(institute);
 

@@ -6,12 +6,16 @@ import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 
+@Slf4j
 @Controller
 @RequestMapping("/professors")
 public class ProfessorController {
@@ -61,8 +65,13 @@ public class ProfessorController {
         return "professor/createOrUpdateProfessor";
     }
 
-    @PostMapping
-    public String processUpdateProfessorForm(@ModelAttribute Professor professor) {
+    @PostMapping("")
+    public String processUpdateProfessorForm(@Valid @ModelAttribute("professor") Professor professor, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            return "professor/createOrUpdateProfessor";
+        }
 
         Professor professor1 = professorSDJpaService.save(professor);
 

@@ -159,17 +159,15 @@
                                                      th:class="${#fields.hasErrors('firstName')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label data-error="wrong" data-success="right"
-                                                               class="text-success">First
-                                                            name</label><br/>
+                                                               class="text-success">First name</label><br/>
                                                         <input type="text" class="form-control validate"
                                                                th:field="*{firstName}">
-                                                        <span class="help-block"
-                                                              th:if="${#fields.hasErrors('firstName')}">
+                                                        <span class="help-block" th:if="${#fields.hasErrors('firstName')}">
                                                                 <ul>
                                                                     <li class="text-danger" th:each="err : ${#fields.errors('firstName')}"
                                                                         th:text="${err}"/>
                                                                 </ul>
-                                                          </span>
+                                                        </span>
                                                     </div>
                                                 </div>
 

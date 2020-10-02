@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Getter
@@ -22,12 +24,15 @@ public class Course {
     @Column(name = "course_code")
     private Long id;
 
+    @NotBlank(message = "Course name can't be blank")
     @Column(name = "course_name")
     private String courseName;
 
+    @NotNull(message = "Enter your credits!")
     @Column(name = "course_credit")
     private Double credit;
 
+    @NotNull(message = "Enter your semester!")
     @Column(name = "course_offered_in_semester")
     private Integer semester;
 
@@ -35,6 +40,7 @@ public class Course {
     private Campus campus;
 
     @Lob
+    @NotBlank(message = "Enter the course description!")
     @Column(name = "course_description")
     private String description;
 

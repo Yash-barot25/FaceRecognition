@@ -87,13 +87,19 @@
                                     </div>
                                 </div>
                                 <!-- Second column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6"
+                                     th:class="${#fields.hasErrors('name')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
-                                        <label class="text-success">Institute Name</label><br/>
-
+                                        <label data-error="wrong" data-success="right"
+                                               class="text-success">Institute Name</label><br/>
                                         <input type="text" class="form-control text-muted"
                                                th:field="*{name}" placeholder="Institute Name">
-
+                                        <span class="help-block" th:if="${#fields.hasErrors('name')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('name')}"
+                                                    th:text="${err}" />
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -102,11 +108,19 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('address')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Institute Address</label><br/>
                                         <input type="text" class="form-control validate"
                                                th:field="*{address}" placeholder="Institute Address">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('address')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('address')}"
+                                                    th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
@@ -115,11 +129,19 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('email')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Institute Email</label><br/>
                                         <input type="email" class="form-control validate"
                                                th:field="*{email}" placeholder="Institute Email">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('email')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('email')}"
+                                                    th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
@@ -129,11 +151,19 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('contactNumber')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Institute Contact Number</label><br/>
                                         <input type="text" class="form-control validate"
                                                th:field="*{contactNumber}" placeholder="Institute Contact Number">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('contactNumber')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('contactNumber')}"
+                                                    th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
@@ -144,12 +174,20 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('description')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Institute Description</label><br/>
                                         <textarea rows="4" type="text" class="form-control validate"
                                                   th:field="*{description}"
                                                   placeholder="Institute Description"></textarea>
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('description')}">
+                                                                <ul>
+                                                                    <li class="text-danger" th:each="err : ${#fields.errors('description')}"
+                                                                        th:text="${err}"/>
+                                                                </ul>
+                                                          </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
@@ -165,8 +203,6 @@
                             </div>
                         </form>
                     </div>
-
-
                 </div>
                 <!--Main layout-->
 
