@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,21 +31,29 @@ public class Professor {
     @Column(name = "image")
     private String imageURL;
 
+    @NotBlank(message = "first name can't be blank")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank(message = "last name can't be blank")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull(message = "Enter your experience")
     @Column(name = "professor_experience")
     private Double experience;
 
+    @NotNull(message = "Enter your projects")
     @Column(name = "professor_projects")
     private Long projects;
 
+    @NotBlank(message = "Email ID please!")
+    @Email
     @Column(name = "professor_email")
     private String email;
 
+    @NotBlank(message = "Phone number can't be blank")
+    @Size(min = 10, max = 12, message = "Number must be between 10 to 12 numbers long")
     @Column(name = "professor_contact_number")
     private String phoneNumber;
 
@@ -55,6 +67,7 @@ public class Professor {
     private Availibility availibility;
 
     @Lob
+    @Size(min = 5, max = 150, message = "Enter your bio")
     @Column(name = "professor_bio")
     private String bio;
 

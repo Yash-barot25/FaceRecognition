@@ -125,21 +125,35 @@
 
                             <div class="row">
                                 <!-- First column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6"
+                                     th:class="${#fields.hasErrors('length')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label data-error="wrong" data-success="right" class="text-success">Program
                                             Length</label><br/>
                                         <input type="number" class="form-control validate"
                                                th:field="*{length}" maxlength="10">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('length')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('length')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
 
                                 <!-- Second column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6"
+                                     th:class="${#fields.hasErrors('numberOfSemester')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">No. Of Semesters</label><br/>
                                         <input type="number" class="form-control validate"
                                                th:field="*{numberOfSemester}">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('numberOfSemester')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('numberOfSemester')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -148,12 +162,18 @@
 
                             <div class="row">
                                 <!-- First column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6" th:class="${#fields.hasErrors('rating')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label data-error="wrong" data-success="right"
                                                class="text-success">Rating(Out of 10)</label><br/>
                                         <input type="number" class="form-control validate"
                                                th:field="*{rating}" max="10">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('rating')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('rating')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
 
@@ -178,23 +198,34 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12" th:class="${#fields.hasErrors('programName')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Program Name</label><br/>
                                         <input type="text" class="form-control validate"
                                                th:field="*{programName}">
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('programName')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('programName')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
                             </div>
                             <br/>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" th:class="${#fields.hasErrors('description')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Program Description</label><br/>
                                         <textarea rows="3" type="text" class="form-control validate"
                                                   th:field="*{description}"></textarea>
-
+                                        <span class="help-block"
+                                              th:if="${#fields.hasErrors('description')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

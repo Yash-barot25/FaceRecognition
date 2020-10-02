@@ -43,8 +43,8 @@ public class Student{
     private String email;
 
     @NotBlank(message = "Contact-Number can't be blank")
-    @Size(min = 10, max = 15, message
-            = "Contact-Number must be between 10 and 15 Digits")
+    @Size(min = 10, max = 12, message
+            = "Contact-Number must be between 10 and 12 Digits")
     @Column(name = "student_contact_number")
     private String phoneNumber;
 

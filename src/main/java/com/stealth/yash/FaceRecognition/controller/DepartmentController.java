@@ -5,12 +5,16 @@ import com.stealth.yash.FaceRecognition.model.Department;
 import com.stealth.yash.FaceRecognition.model.Institute;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.InstituteSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 
+@Slf4j
 @Controller
 @RequestMapping("/departments")
 public class DepartmentController {
@@ -53,8 +57,15 @@ public class DepartmentController {
         return "department/createOrUpdateDepartment";
     }
 
-    @PostMapping
-    public String processUpdateProgramForm(@ModelAttribute Department department) {
+    @PostMapping("")
+    public String processUpdateProgramForm(@Valid @ModelAttribute("department") Department department, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()){
+
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            return "department/createOrUpdateDepartment";
+
+        }
 
        Department department1 = departmentSDJpaService.save(department);
 

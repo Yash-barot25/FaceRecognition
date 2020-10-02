@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,10 +24,11 @@ public class Department {
     @Column(name = "department_id")
     private Long id;
 
+    @NotBlank(message = "Department name can't be blank")
     @Column(name = "department_name")
     private String departmentName;
 
-
+    @NotBlank(message = "Description can't be blank")
     @Column(name = "department_description")
     private String description;
 
