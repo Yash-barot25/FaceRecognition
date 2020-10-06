@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -24,9 +25,8 @@ public class Student{
     @Column(name = "student_id")
     private Long id;
 
-    @Lob
     @Column(name = "image")
-    private Byte[] image;
+    private String image;
 
 
     @NotBlank(message = "first name can't be blank")
@@ -43,8 +43,8 @@ public class Student{
     private String email;
 
     @NotBlank(message = "Contact-Number can't be blank")
-    @Size(min = 10, max = 15, message
-            = "Contact-Number must be between 10 and 15 Digits")
+    @Size(min = 10, max = 12, message
+            = "Contact-Number must be between 10 and 12 Digits")
     @Column(name = "student_contact_number")
     private String phoneNumber;
 
@@ -98,4 +98,11 @@ public class Student{
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

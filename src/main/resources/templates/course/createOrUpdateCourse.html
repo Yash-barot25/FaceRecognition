@@ -127,21 +127,33 @@
 
                             <div class="row">
                                 <!-- First column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6"
+                                     th:class="${#fields.hasErrors('semester')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label data-error="wrong" data-success="right" class="text-success">Course
                                             Offered In Semester</label><br/>
                                         <input type="number" class="form-control validate"
                                                th:field="*{semester}" maxlength="10">
+                                        <span class="help-block" th:if="${#fields.hasErrors('semester')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('semester')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
 
                                 <!-- Second column -->
-                                <div class="col-md-6">
+                                <div class="col-md-6"
+                                     th:class="${#fields.hasErrors('credit')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Course Credit</label><br/>
                                         <input type="number" class="form-control validate"
                                                th:field="*{credit}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('credit')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('credit')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -151,11 +163,17 @@
                             <div class="row">
 
                                 <!-- First column -->
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('courseName')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Course Name</label><br/>
                                         <input type="text" class="form-control validate"
                                                th:field="*{courseName}">
+                                        <span class="help-block" th:if="${#fields.hasErrors('courseName')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('courseName')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <!-- Second column -->
@@ -221,12 +239,17 @@
                             <!-- Second column -->
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12"
+                                     th:class="${#fields.hasErrors('description')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <div class="md-form mb-0">
                                         <label class="text-success">Course Description</label><br/>
                                         <textarea rows="3" type="text" class="form-control validate"
                                                   th:field="*{description}"></textarea>
-
+                                        <span class="help-block" th:if="${#fields.hasErrors('description')}">
+                                            <ul>
+                                                <li class="text-danger" th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -525,7 +548,6 @@
                 }
                 $("#program").html(options);
             });
-
     }
 
     loadProfessorsByDepartmentId = (departmentId) => {
@@ -538,12 +560,8 @@
                 }
                 $("#professor").html(options);
             });
-
     }
-
     /*]]>*/
 </script>
-
 </body>
-
 </html>

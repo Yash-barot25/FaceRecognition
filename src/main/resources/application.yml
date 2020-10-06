@@ -1,0 +1,5 @@
+amazonProperties:
+  endpointUrl: https://s3.ca-central-1.amazonaws.com
+  accessKey: AKIAZOEIQOANPMYV2LUJ
+  secretKey: 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
+  bucketName: uploaded-faces-stealth

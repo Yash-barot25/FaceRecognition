@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
-    <title>Department - Craete/Update</title>
+    <title>Department - Create/Update</title>
 
     <!-- Custom fonts for this template-->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -104,21 +104,34 @@
                             <!-- First row -->
                             <br/>
                             <div class="row">
-                                <div class="col-md-12 text-center my-4">
+                                <div class="col-md-12 text-center my-4"
+                                     th:class="${#fields.hasErrors('departmentName')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <label for="departmentName" class="text-success">Department Name</label><br/>
                                     <input id="departmentName" th:field="*{departmentName}" type="text"
                                            class="form-control text-muted"
                                            placeholder="Department Name">
-
+                                    <span class="help-block" th:if="${#fields.hasErrors('departmentName')}">
+                                        <ul>
+                                            <li class="text-danger" th:each="err : ${#fields.errors('departmentName')}"
+                                                th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
                             </div>
 
                             <br/>
                             <div class="row">
-                                <div class="col-md-12 text-center my-4">
+                                <div class="col-md-12 text-center my-4"
+                                     th:class="${#fields.hasErrors('description')}  ? 'col-md-12 form-group has-error' : 'col-md-12 form-group'">
                                     <label class="text-success">Department Description</label><br/>
                                     <textarea rows="3" type="text" class="form-control text-muted"
                                               th:field="*{description}" placeholder="Department Description"></textarea>
+                                    <span class="help-block" th:if="${#fields.hasErrors('description')}">
+                                        <ul>
+                                            <li class="text-danger" th:each="err : ${#fields.errors('description')}"
+                                                th:text="${err}"/>
+                                        </ul>
+                                    </span>
                                 </div>
                             </div>
 
