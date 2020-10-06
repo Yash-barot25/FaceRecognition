@@ -8,12 +8,16 @@ import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 
+@Slf4j
 @Controller
 @RequestMapping("/programs")
 public class ProgramController {
@@ -54,12 +58,20 @@ public class ProgramController {
         }
 
         model.addAttribute("departments", departmentSDJpaService.findAll());
-        model.addAttribute("coordinators", professorSDJpaService.findAll());
+
         return "program/createOrUpdateProgram";
     }
 
     @PostMapping("")
-    public String processUpdateProgramForm(@ModelAttribute Program program) {
+    public String processUpdateProgramForm(@Valid @ModelAttribute("program") Program program, BindingResult bindingResult, Model model) {
+
+
+        if (bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("departments", departmentSDJpaService.findAll());
+            return "professor/createOrUpdateProfessor";
+        }
+
 
         Program program1 = programSDJpaService.save(program);
 

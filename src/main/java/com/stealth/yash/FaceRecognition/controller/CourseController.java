@@ -62,10 +62,13 @@ public class CourseController {
     }
 
     @PostMapping("")
-    public String processUpdateCourseForm(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult) {
+    public String processUpdateCourseForm(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("professors",professorSDJpaService.findAll());
+            model.addAttribute("programs",programSDJpaService.findAll());
+            model.addAttribute("departments",departmentSDJpaService.findAll());
             return "course/createOrUpdateCourse";
         }
 
