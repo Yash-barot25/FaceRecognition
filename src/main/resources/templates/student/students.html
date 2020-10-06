@@ -75,11 +75,13 @@
                                     <h5 class="card-title text-center text-dark"><b th:text="${student.firstName}"></b>
                                         <b th:text="${student.lastName}"></b></h5>
                                     <hr>
-                                    <img src="https://i.pinimg.com/originals/a2/10/04/a210046e1e342298ec2f4dfb8f991103.jpg"
+                                    <img src="https://previews.123rf.com/images/jemastock/jemastock1609/jemastock160906920/63284303-boy-cartoon-student-back-to-school-education-and-childhood-theme-colorful-design-vector-illustration.jpg"
                                          class="rounded img-thumbnail">
                                     <hr>
-                                    <p class="card-text" th:text="${student.phoneNumber}"></p>
-                                    <p class="card-text" th:text="${student.campus}"></p>
+                                    Campus:<p class="card-text" th:text="${student.campus}"></p>
+                                    Email:<p class="card-text" th:text="${student.email}"></p>
+                                   Contact no: <p class="card-text" th:text="${student.phoneNumber}"></p>
+
                                     <a th:href="@{'/students/get/'+ ${student.id}}"
                                        class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
                                         View

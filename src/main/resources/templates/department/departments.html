@@ -66,32 +66,34 @@
                     <div class="row mb-lg-2">
 
                         <!--Grid column-->
-
-                        <div class="card border-dark col-md-6 mb-1"
-                             th:each="department: ${departments}">
-                            <div class="card-body text-success">
-                                <h3 class="card-title text-center" th:text="${department.departmentName}">Success card
-                                    title</h3>
-                                <hr>
-                                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-vue.jpg"
-                                     class="card-img-top">
-                                <hr>
-                                <h5>Description: </h5><hr/>
-                                <p class="card-text" th:text="${department.description}">Some quick example text to
-                                    build on the card title and make up the bulk of the card's content.</p>
-                                <a th:href="@{'/departments/get/'+ ${department.id}}"
-                                   class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
-                                    View
-                                    <i th:style="'margin:2px'" class="fa fa-eye"></i>
-                                </a>
-                                <a th:href="@{'/departments/delete/' + ${department.id}}"
-                                   class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">
-                                    Delete
-                                    <i th:style="'margin:2px'" class="fa fa-trash"></i>
-                                </a>
+                        <div class=" col col-md-6 mb-4"  th:each="department: ${departments}">
+                            <div class="card border-dark"
+                                >
+                                <div class="card-body">
+                                    <h3 class="card-title text-center" th:text="${department.departmentName}">Success
+                                        card
+                                        title</h3>
+                                    <hr>
+                                    <img src="https://explore.sheridancollege.ca/-/media/images/experience/landing-page/mississauga-campus-sheridan.ashx?h=790&la=en&mw=950&w=950&hash=C046C6557C12FE98B75C845F3C4487B4950D4E68"
+                                         class="card-img-top">
+                                    <hr>
+                                    <h5>Description: </h5>
+                                    <hr/>
+                                    <p class="card-text" th:text="${department.description}">Some quick example text to
+                                        build on the card title and make up the bulk of the card's content.</p>
+                                    <a th:href="@{'/departments/get/'+ ${department.id}}"
+                                       class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
+                                        View
+                                        <i th:style="'margin:2px'" class="fa fa-eye"></i>
+                                    </a>
+                                    <a th:href="@{'/departments/delete/' + ${department.id}}"
+                                       class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">
+                                        Delete
+                                        <i th:style="'margin:2px'" class="fa fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                     <!--/.Card-->
 

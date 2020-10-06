@@ -68,11 +68,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model  model) {
 
         if (bindingResult.hasErrors()){
 
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("programs",programService.findAll());
+            model.addAttribute("departments",departmentSDJpaService.findAll());
             return "student/createOrUpdateStudent";
         }
 
