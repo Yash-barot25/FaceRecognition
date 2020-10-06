@@ -85,17 +85,15 @@
                                 <!-- Card content -->
                                 <div class="card-body align-content-between">
                                     <div class="col-md-6 text-center">
-                                        <img class="ml-5" src="../../static/images/guacamole400x400WithX.jpg"
-                                             th:src="@{'/recipe/' + ${student.id} + '/recipeimage'}"
-                                             width="200" height="200">
+                                        <img class="ml-5"
+                                            th:src="${userImage}" width="200" height="200">
                                     </div>
-                                    <p class="text-muted card-text ml-4"><small>Profile photo will be changed
-                                        automatically</small></p>
+                                    <p class="text-muted card-text ml-4"><small>Profile photo</small></p>
                                     <div class="row text-center">
                                         <!--                                        <input type="button" class="btn btn-info  btn-sm mr-1 ml-1" th:href="@{student.id + '/image'}">Upload New Photo</input>-->
-                                        <a th:href="@{'/upload/' + ${student.id} + '/image'}"
-                                           class="btn btn-info  btn-md mr-1 ml-5 mt-1 mb-1">Upload image</a>
-                                        <a class="btn btn-danger  btn-md mr-1 ml-1 mt-1 mb-1">Delete</a>
+<!--                                        <a th:href="@{'/upload/' + ${student.id} + '/image'}"-->
+<!--                                           class="btn btn-info  btn-md mr-1 ml-5 mt-1 mb-1">Upload image</a>-->
+<!--                                        <a class="btn btn-danger  btn-md mr-1 ml-1 mt-1 mb-1">Delete</a>-->
                                         <!--                                        <button class="btn btn-danger  btn-sm" th:href="@{student.id + '/image'}">Delete</button>-->
                                     </div>
                                 </div>

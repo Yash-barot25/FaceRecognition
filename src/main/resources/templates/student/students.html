@@ -59,7 +59,7 @@
                 </div>
 
                 <!--Section: Cards-->
-                <section>
+                <section >
 
                     <!--Grid row-->
                     <div class="row mb-lg-3">
@@ -75,7 +75,7 @@
                                     <h5 class="card-title text-center text-dark"><b th:text="${student.firstName}"></b>
                                         <b th:text="${student.lastName}"></b></h5>
                                     <hr>
-                                    <img src="https://i.pinimg.com/originals/a2/10/04/a210046e1e342298ec2f4dfb8f991103.jpg"
+                                    <img th:src="${student.image}"
                                          class="rounded img-thumbnail">
                                     <hr>
                                     <p class="card-text" th:text="${student.phoneNumber}"></p>

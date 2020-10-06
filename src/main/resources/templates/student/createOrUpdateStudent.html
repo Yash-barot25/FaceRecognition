@@ -84,11 +84,8 @@
 
                                     <!-- Card content -->
                                     <div class="card-body text-center">
-                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
-                                             alt="User Photo"
-                                             class="z-depth-1 mb-3 mx-auto"/>
 
-                                        <p class="text-muted card-text"><small>Currently .JPG & .PNG are
+                                        <p class="text-muted card-text"><small>Currently .PNG Images are
                                             supported</small></p>
                                     </div>
                                 </div>
@@ -114,7 +111,7 @@
 
                                         <!-- Edit Form -->
                                         <form th:object="${student}"
-                                              th:action="@{'/students'}" method="post">
+                                              th:action="@{'/students'}" method="post" enctype="multipart/form-data" >
 
                                             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                                                 <p>Please Correct Errors Below</p>
@@ -122,7 +119,14 @@
                                             <!-- First row -->
 
                                             <div class="row">
+                                                <div class="col-md-6">
 
+                                                    <div class="md-form mb-0">
+                                                        <label class="text-success">Upload Photo</label><br/>
+                                                        <input type="file" name="file">
+
+                                                    </div>
+                                                </div>
                                                 <!-- First column -->
                                                 <div class="col-md-6">
 

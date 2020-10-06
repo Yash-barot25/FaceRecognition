@@ -66,6 +66,14 @@ public class Institute {
         return getId().equals(institute.getId());
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getId());
