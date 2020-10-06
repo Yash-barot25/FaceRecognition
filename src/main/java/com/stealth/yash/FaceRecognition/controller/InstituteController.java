@@ -1,8 +1,12 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 
+import com.stealth.yash.FaceRecognition.model.AWSClient;
 import com.stealth.yash.FaceRecognition.model.Institute;
+import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.service.StudentService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.InstituteSDJpaService;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +22,13 @@ import java.util.Optional;
 public class InstituteController {
 
     private final InstituteSDJpaService instituteSDJpaService;
+    private final StudentSDJpaService studentSDJpaService;
+    private AWSClient amclient;
 
-    public InstituteController(InstituteSDJpaService instituteSDJpaService) {
+    public InstituteController(AWSClient amclient,StudentSDJpaService studentSDJpaService,InstituteSDJpaService instituteSDJpaService) {
         this.instituteSDJpaService = instituteSDJpaService;
+        this.amclient = amclient;
+        this.studentSDJpaService = studentSDJpaService;
     }
 
 //    @GetMapping("/get")
@@ -89,9 +97,7 @@ public class InstituteController {
 
     @GetMapping("/delete/{instituteId}")
     public String deleteInstitute(@PathVariable Long instituteId){
-
         instituteSDJpaService.deleteById(instituteId);
-
         return "redirect:/institutes";
     }
 }

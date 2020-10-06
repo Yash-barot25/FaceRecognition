@@ -1,14 +1,17 @@
 package com.stealth.yash.FaceRecognition.controller;
 
+import com.stealth.yash.FaceRecognition.model.AWSClient;
 import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -17,6 +20,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -29,16 +34,22 @@ public class StudentController {
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
     private final DepartmentSDJpaService departmentSDJpaService;
+    private final AWSClient amclient;
+    String faceid="";
 
-    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
+    public StudentController(AWSClient amclient,StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
+        this.amclient = amclient;
     }
 
     //shows all the students
     @GetMapping({"", "/"})
     public String getStudents(Model model) {
+//        Student student = new Student();
+//        String image = studentService.findById(student.getId()).getImage();
+//        model.addAttribute("userImage",image);
         model.addAttribute("students", studentService.findAll());
 
         return "student/students";
@@ -46,8 +57,10 @@ public class StudentController {
 
     //shows selected student
     @GetMapping("/get/{studentId}")
-    public String showStudentInfo(@PathVariable Long studentId, Model model) {
-
+    public String showStudentInfo(@PathVariable Long studentId, Model model) throws UnsupportedEncodingException {
+        Student student = new Student();
+        String image = studentService.findById(studentId).getImage();
+        model.addAttribute("userImage",image);
         model.addAttribute("student", studentService.findById(studentId));
         return "student/student-info";
     }
@@ -61,24 +74,30 @@ public class StudentController {
             Student student = new Student();
             model.addAttribute("student", student);
         }
-
         model.addAttribute("programs",programService.findAll());
         model.addAttribute("departments",departmentSDJpaService.findAll());
         return "student/createOrUpdateStudent";
     }
 
-    @PostMapping
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()){
-
+    @PostMapping(consumes = "multipart/form-data")
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
+        if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
             return "student/createOrUpdateStudent";
+
         }
 
-        student.setStuPasswordEmail(generatePassword());
-       Student student1 = studentService.save(student);
-        emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
+        if(!file.getContentType().equalsIgnoreCase("image/png")){
+                System.out.println("Not a Proper Image type!!!");
+        }else {
+            student1.setImage(amclient.uploadFile(file));
+            student1.setStuPasswordEmail(generatePassword());
+            student1 = studentService.save(student1);
+            String imagetoindex = studentService.findById(student1.getId()).getImage();
+            String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
+            faceid= amclient.addfacetoawscollection(indexingimage);
+            // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
+        }
 
        return "redirect:/students/get/" + student1.getId();
     }
@@ -127,17 +146,14 @@ public class StudentController {
             me.printStackTrace();
         }
         return password;
-
     }
-
-
-
 
     @GetMapping("/delete/{studentId}")
     public String deleteStudent(@PathVariable Long studentId){
-
+        Student student = new Student();
+        this.amclient.removeFile(studentService.findById(studentId).getImage());
+        this.amclient.deletefacefromawscollection(faceid);
         studentService.deleteById(studentId);
-
         return "redirect:/students";
     }
 

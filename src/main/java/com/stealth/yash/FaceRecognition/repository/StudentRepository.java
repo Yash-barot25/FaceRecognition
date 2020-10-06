@@ -11,6 +11,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     List<Student> findAllByLastNameLike(String lastName);
 
+    Student findByImage(String image);
 
 
 
