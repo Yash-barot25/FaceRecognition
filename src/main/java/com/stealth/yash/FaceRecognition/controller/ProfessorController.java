@@ -66,10 +66,12 @@ public class ProfessorController {
     }
 
     @PostMapping("")
-    public String processUpdateProfessorForm(@Valid @ModelAttribute("professor") Professor professor, BindingResult bindingResult) {
+    public String processUpdateProfessorForm(@Valid @ModelAttribute("professor") Professor professor, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("departments", departmentSDJpaService.findAll());
+            model.addAttribute("programs", programSDJpaService.findAll());
             return "professor/createOrUpdateProfessor";
         }
 
