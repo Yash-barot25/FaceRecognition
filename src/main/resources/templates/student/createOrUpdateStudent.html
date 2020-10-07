@@ -362,11 +362,11 @@
                                                 <div class="col-md-12 form-group">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Access Fob IDs:</label><br/>
-                                                        <select id="accesskey" class="form-control" th:field="*{accesskey}"
+                                                        <select id="accesskey" class="form-control" th:field="*{accessKey}"
                                                                 name="accessfobid">
-                                                            <option th:each="accesskey : ${accesskeys}"
-                                                                    th:value="${accesskey.id}"
-                                                                    th:text="${accesskey.accessfobid}"></option>
+                                                            <option th:each="accessKey : ${accessKeys}"
+                                                                    th:value="${accessKey.id}"
+                                                                    th:text="${accessKey.accessfobid}"></option>
 
                                                         </select>
                                                     </div>
