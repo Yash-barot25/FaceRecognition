@@ -77,15 +77,15 @@ public class AWSClient {
         client.deleteObject(new DeleteObjectRequest(bucketName, getFileName));
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile, String uuid) {
 
         Student student = new Student();
         String fileUrl = "";
         try {
             File file = convertToFile(multipartFile);
-            String time = DateTime.now().toString() + ".jpg";
-            fileUrl = endpointUrl + "/" + bucketName + "/" + time ;
-            uploadtoS3(time, file);
+            String fobid = uuid + ".jpg";
+            fileUrl = endpointUrl + "/" + bucketName + "/" + uuid ;
+            uploadtoS3(fobid, file);
             file.delete();
 
         } catch (Exception e) {

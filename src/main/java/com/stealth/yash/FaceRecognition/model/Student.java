@@ -84,6 +84,9 @@ public class Student{
     @Column(name = "stud_pass_email")
     private String stuPasswordEmail;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stud_access_id", referencedColumnName = "access_Id")
+    private AccessKey accesskey;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

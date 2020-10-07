@@ -1,12 +1,14 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.AWSClient;
+import com.stealth.yash.FaceRecognition.model.AccessKey;
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.repository.AccessRepository;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.AccessSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -34,14 +36,18 @@ public class StudentController {
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
     private final DepartmentSDJpaService departmentSDJpaService;
+    private final AccessSDJpaService accessSDJpaService;
+    private AccessRepository accessRepository;
     private final AWSClient amclient;
     String faceid="";
 
-    public StudentController(AWSClient amclient,StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
+    public StudentController(AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, AccessSDJpaService accessSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
+
         this.amclient = amclient;
+        this.accessSDJpaService = accessSDJpaService;
     }
 
     //shows all the students
@@ -68,19 +74,24 @@ public class StudentController {
 
     @GetMapping({"/update/{studentId}", "/create"})
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
+      AccessKey accessKey = new AccessKey();
+      Student student = new Student();
         if (studentId.isPresent()){
             model.addAttribute("student",studentService.findById(studentId.get()));
         }else{
-            Student student = new Student();
+
             model.addAttribute("student", student);
         }
+
+
         model.addAttribute("programs",programService.findAll());
         model.addAttribute("departments",departmentSDJpaService.findAll());
+        model.addAttribute("accesskeys",accessSDJpaService.findAll());
         return "student/createOrUpdateStudent";
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1,BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
             return "student/createOrUpdateStudent";
@@ -90,7 +101,9 @@ public class StudentController {
         if(!file.getContentType().equalsIgnoreCase("image/png")){
                 System.out.println("Not a Proper Image type!!!");
         }else {
-            student1.setImage(amclient.uploadFile(file));
+            AccessKey accessKey = new AccessKey();
+            String fob = student1.getAccesskey().getAccessfobid();
+            student1.setImage(amclient.uploadFile(file,fob));
             student1.setStuPasswordEmail(generatePassword());
             student1 = studentService.save(student1);
             String imagetoindex = studentService.findById(student1.getId()).getImage();
