@@ -84,7 +84,7 @@ public class AWSClient {
         try {
             File file = convertToFile(multipartFile);
             String fobid = uuid + ".jpg";
-            fileUrl = endpointUrl + "/" + bucketName + "/" + uuid ;
+            fileUrl = endpointUrl + "/" + bucketName + "/" + fobid ;
             uploadtoS3(fobid, file);
             file.delete();
 
