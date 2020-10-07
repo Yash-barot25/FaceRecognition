@@ -58,11 +58,12 @@ public class DepartmentController {
     }
 
     @PostMapping("")
-    public String processUpdateProgramForm(@Valid @ModelAttribute("department") Department department, BindingResult bindingResult) {
+    public String processUpdateProgramForm(@Valid @ModelAttribute("department") Department department, BindingResult bindingResult , Model model) {
 
         if(bindingResult.hasErrors()){
 
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("institutes",instituteSDJpaService.findAll() );
             return "department/createOrUpdateDepartment";
 
         }
