@@ -1,7 +1,9 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.AWSClient;
+import com.stealth.yash.FaceRecognition.model.AccessKey;
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.AccessSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
@@ -20,9 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -31,24 +31,33 @@ public class StudentController {
 
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
+    private final AccessSDJpaService accessSDJpaService;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final AWSClient amclient;
     String faceid="";
 
-    public StudentController(AWSClient amclient,StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
+    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService, AccessSDJpaService accessSDJpaService, DepartmentSDJpaService departmentSDJpaService, AWSClient amclient) {
         this.studentService = studentService;
         this.programService = programService;
+        this.accessSDJpaService = accessSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.amclient = amclient;
     }
 
     //shows all the students
     @GetMapping({"", "/"})
-    public String getStudents(Model model) {
-        model.addAttribute("students", studentService.findAll());
+    public String getStudents(Model model, @RequestParam(value = "value" , required = false, defaultValue = "" ) String val) {
+
+        if (val != null && !val.trim().isEmpty()){
+            List<Student> student = studentService.searchStudent( val);
+            model.addAttribute("students",studentService.searchStudent( val));
+        }else{
+            model.addAttribute("students", studentService.findAll());
+        }
 
         return "student/students";
     }
+
 
     //shows selected student
     @GetMapping("/get/{studentId}")
@@ -71,32 +80,39 @@ public class StudentController {
         }
         model.addAttribute("programs",programService.findAll());
         model.addAttribute("departments",departmentSDJpaService.findAll());
+        Set<AccessKey> accessKeys = accessSDJpaService.findAll();
+        accessKeys.removeIf(accessKey1 -> studentService.findAccessFobIds().contains(accessKey1.getAccessfobid()));
+
+
+        model.addAttribute("accessKeys", accessKeys);
         return "student/createOrUpdateStudent";
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file) {
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("programs",programService.findAll());
+            model.addAttribute("departments",departmentSDJpaService.findAll());
             return "student/createOrUpdateStudent";
 
         }
 
-        if (!file.getContentType().equalsIgnoreCase("image/png")) {
+        if (!Objects.requireNonNull(file.getContentType()).equalsIgnoreCase("image/png")) {
             System.out.println("Not a Proper Image type!!!");
         } else {
 
-            String fob = student1.getAccessKey().getAccessfobid();
-            student1.setImage(amclient.uploadFile(file, fob));
-            student1.setStuPasswordEmail(generatePassword());
-            student1 = studentService.save(student1);
-            String imagetoindex = studentService.findById(student1.getId()).getImage();
+            String fob = student.getAccessKey().getAccessfobid();
+            student.setImage(amclient.uploadFile(file, fob));
+            student.setStuPasswordEmail(generatePassword());
+           Student savedStudent = studentService.save(student);
+            String imagetoindex = studentService.findById(savedStudent.getId()).getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
             faceid = amclient.addfacetoawscollection(indexingimage);
             // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
         }
 
-        return "redirect:/students/get/" + student1.getId();
+        return "redirect:/students/get/" + student.getId();
     }
 
 
