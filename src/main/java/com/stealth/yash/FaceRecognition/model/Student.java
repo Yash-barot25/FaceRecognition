@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -84,6 +83,9 @@ public class Student{
     @Column(name = "stud_pass_email")
     private String stuPasswordEmail;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stud_access_id", referencedColumnName = "access_Id")
+    private AccessKey accessKey;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

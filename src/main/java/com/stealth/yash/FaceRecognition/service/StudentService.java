@@ -12,4 +12,6 @@ public interface StudentService extends CrudService<Student, Long> {
     List<Student> findAllByLastNameLike(String lastName);
 
     Page<Student> findPaginated(int pageNo, int pageSize);
+
+    List<String> findAccessFobIds();
 }
