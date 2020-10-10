@@ -46,6 +46,11 @@ public class StudentSDJpaService implements StudentService {
     }
 
     @Override
+    public List<Student> searchStudent(String value) {
+        return studentRepository.searchStudent(value);
+    }
+
+    @Override
     public Set<Student> findAll() {
         return new HashSet<>(studentRepository.findAll());
     }

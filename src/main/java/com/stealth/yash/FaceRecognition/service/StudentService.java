@@ -14,4 +14,6 @@ public interface StudentService extends CrudService<Student, Long> {
     Page<Student> findPaginated(int pageNo, int pageSize);
 
     List<String> findAccessFobIds();
+
+    List<Student> searchStudent(String value);
 }
