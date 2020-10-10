@@ -219,7 +219,7 @@
                                                      th:class="${#fields.hasErrors('phoneNumber')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Contact No</label><br/>
-                                                        <input type="number" class="form-control validate"
+                                                        <input type="text" class="form-control validate"
                                                                th:field="*{phoneNumber}">
                                                         <span class="help-block"
                                                               th:if="${#fields.hasErrors('phoneNumber')}">

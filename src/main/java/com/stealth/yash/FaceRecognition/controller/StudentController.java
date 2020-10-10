@@ -6,7 +6,6 @@ import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaSer
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -47,9 +45,6 @@ public class StudentController {
     //shows all the students
     @GetMapping({"", "/"})
     public String getStudents(Model model) {
-//        Student student = new Student();
-//        String image = studentService.findById(student.getId()).getImage();
-//        model.addAttribute("userImage",image);
         model.addAttribute("students", studentService.findAll());
 
         return "student/students";
