@@ -75,26 +75,28 @@ public class StudentController {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
-        if(bindingResult.hasErrors()){
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file) {
+        if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
             return "student/createOrUpdateStudent";
 
         }
 
-        if(!file.getContentType().equalsIgnoreCase("image/png")){
-                System.out.println("Not a Proper Image type!!!");
-        }else {
-            student1.setImage(amclient.uploadFile(file));
+        if (!file.getContentType().equalsIgnoreCase("image/png")) {
+            System.out.println("Not a Proper Image type!!!");
+        } else {
+
+            String fob = student1.getAccessKey().getAccessfobid();
+            student1.setImage(amclient.uploadFile(file, fob));
             student1.setStuPasswordEmail(generatePassword());
             student1 = studentService.save(student1);
             String imagetoindex = studentService.findById(student1.getId()).getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
-            faceid= amclient.addfacetoawscollection(indexingimage);
+            faceid = amclient.addfacetoawscollection(indexingimage);
             // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
         }
 
-       return "redirect:/students/get/" + student1.getId();
+        return "redirect:/students/get/" + student1.getId();
     }
 
 
