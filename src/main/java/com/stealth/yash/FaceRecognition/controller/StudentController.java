@@ -23,10 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -117,7 +114,6 @@ public class StudentController {
             String fob = student1.getAccessKey().getAccessfobid();
             student1.setImage(amclient.uploadFile(file, fob));
             student1.setStuPasswordEmail(generatePassword());
-
             student1 = studentService.save(student1);
             String imagetoindex = studentService.findById(student1.getId()).getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
@@ -175,8 +171,10 @@ public class StudentController {
     @GetMapping("/delete/{studentId}")
     public String deleteStudent(@PathVariable Long studentId) {
         Student student = new Student();
+        AccessKey accessss = new AccessKey();
         this.amclient.removeFile(studentService.findById(studentId).getImage());
         this.amclient.deletefacefromawscollection(faceid);
+
         studentService.deleteById(studentId);
         return "redirect:/students";
     }
