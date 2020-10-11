@@ -1,3 +1,9 @@
+/**
+ ************************** FACIAL RECOGNITION - CAPSTONE ************************
+ * This Controller is responsible for handling index page requests
+ * @author  STEALTH
+ *
+ */
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Student;
@@ -23,6 +29,15 @@ public class IndexController {
    private final CourseSDJpaService courseSDJpaService;
    private final StudentSDJpaService studentSDJpaService;
 
+
+    /**
+     * This is a student constructor
+     * @param instituteSDJpaService this is an object of type InstituteSDJpaService service
+     * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
+     * @param programSDJpaService - an object of type ProgramSDJpaService service
+     * @param studentSDJpaService - an object of type StudentSDJpaService service
+     */
+
     public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService) {
         this.instituteSDJpaService = instituteSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
@@ -32,24 +47,37 @@ public class IndexController {
         this.studentSDJpaService = studentSDJpaService;
     }
 
+    /**
+     * This method shows main page
+     * @return index page
+     */
     @GetMapping({"/", "", "/index"})
     public String showMainPage(){
         return "index";
 
     }
-
+    /**
+     * This method displays contact information
+     * @return contact web page
+     */
     @GetMapping("/contact")
     public String contactUs(){
         return "contact";
 
     }
-
+    /**
+     * This method displays information about us
+     * @return about web page
+     */
     @GetMapping("/about")
     public String aboutUs(){
         return "about";
 
     }
-
+    /**
+     * This method directs to login page
+     * @return login web page
+     */
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -70,6 +98,12 @@ public class IndexController {
 //        return "dashboard";
 //    }
 
+    /**
+     * This method shows main page
+     * @param model an object of type model
+     * @param authentication an object of type Authentication
+     * @return index page
+     */
     @GetMapping("/user")
     public String mainPage(Model model, Authentication authentication) {
 
@@ -90,11 +124,21 @@ public class IndexController {
         return "user/index";
     }
 
+    /**
+     * This method displays coming soon section on Index page
+     * @return index page
+     */
     @GetMapping("/comingsoon")
     public String comingSoon(){
        return "comingsoon/index";
     }
 
+    /**
+     * This method manages pagination
+     * @param pageNo an object of type int
+     * @param model an object of type Model
+     * @return students web page
+     */
    // @GetMapping("/getStudents/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 Model model) {

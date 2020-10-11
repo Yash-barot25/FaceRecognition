@@ -1,3 +1,11 @@
+/**
+ * ************************** FACIAL RECOGNITION - CAPSTONE************************
+ * Controller - StudentController
+ * This Controller is responsible for handling any request that is related to Students.
+ * @author  STEALTH
+ *
+ */
+
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.AWSClient;
@@ -26,9 +34,14 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 
+// Causes lombok to generate a logger field
 @Slf4j
+// Indicates that this class serves the role of a controller
 @Controller
+// Will create the base URI /students for which the controller will be used
 @RequestMapping("/students")
+
+
 public class StudentController {
 
     private final StudentSDJpaService studentService;
@@ -37,6 +50,13 @@ public class StudentController {
     private final AWSClient amclient;
     String faceid="";
 
+    /**
+     * This is a student constructor
+     * @param amclient this is an object of type AWSClient model
+     * @param studentService - an object of type StudentSDJpaService service
+     * @param programService - an object of type ProgramSDJpaService service
+     * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
+     */
     public StudentController(AWSClient amclient,StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
@@ -44,7 +64,11 @@ public class StudentController {
         this.amclient = amclient;
     }
 
-    //shows all the students
+    /**
+     * This method shows all the students
+     * @param model - an object of type Model
+     * @return student view
+     */
     @GetMapping({"", "/"})
     public String getStudents(Model model) {
 //        Student student = new Student();
@@ -55,7 +79,13 @@ public class StudentController {
         return "student/students";
     }
 
-    //shows selected student
+
+    /**
+     * This method shows selected student
+     * @param studentId an object for studentID of type Long
+     * @param model an object of Model type
+     * @return info of a particular student
+     */
     @GetMapping("/get/{studentId}")
     public String showStudentInfo(@PathVariable Long studentId, Model model) throws UnsupportedEncodingException {
         Student student = new Student();
@@ -65,7 +95,12 @@ public class StudentController {
         return "student/student-info";
     }
 
-
+    /**
+     * This method creates or updates student
+     * @param studentId an object for studentID of type Long
+     * @param model an object of Model type
+     * @return creteOrUpdateStudent web page
+     */
     @GetMapping({"/update/{studentId}", "/create"})
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
         if (studentId.isPresent()){
@@ -79,6 +114,13 @@ public class StudentController {
         return "student/createOrUpdateStudent";
     }
 
+    /**
+     * This method processes the data in Student Update form
+     * @param student1 an object of Student model
+     * @param bindingResult object of interface BindingResult
+     * @param file object of a Multipart file
+     * @return updated student info
+     */
     @PostMapping(consumes = "multipart/form-data")
     public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
         if(bindingResult.hasErrors()){
@@ -103,7 +145,11 @@ public class StudentController {
     }
 
 
-
+    /**
+     * This method generated password
+     * @return the generated password
+     *
+     */
     public String generatePassword(){
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = "";
@@ -116,6 +162,12 @@ public class StudentController {
         return password;
     }
 
+    /**
+     * This method emails passwords to users
+     * @param to an object of type String
+     * @param password an object of type String
+     * @return user's password
+     */
     public String emailPasswordToUser (String to, String password){
 
         String from = "stealtht90@gmail.com";
@@ -148,6 +200,11 @@ public class StudentController {
         return password;
     }
 
+    /**
+     * This method deletes a student
+     * @param studentId an object of type Long
+     * @return Students web page
+     */
     @GetMapping("/delete/{studentId}")
     public String deleteStudent(@PathVariable Long studentId){
         Student student = new Student();

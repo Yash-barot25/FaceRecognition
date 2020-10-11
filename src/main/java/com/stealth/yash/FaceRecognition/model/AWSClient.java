@@ -1,3 +1,9 @@
+/**
+ ************************** FACIAL RECOGNITION - CAPSTONE ************************
+ * Model - AWSClient
+ * @author  STEALTH
+ *
+ */
 package com.stealth.yash.FaceRecognition.model;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -31,9 +37,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
-
+//Put on any field to make lombok build a standard getter.
 @Getter
+//Put on any field to make lombok build a standard setter.
 @Setter
+//Indicates that this class is a "Service",
 @Service
 public class AWSClient {
 
@@ -50,6 +58,7 @@ public class AWSClient {
     private String accessKey;
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
+
 
     @PostConstruct
     private void initializeAmazon() {
