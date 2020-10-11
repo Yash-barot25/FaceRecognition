@@ -1,12 +1,11 @@
 package com.stealth.yash.FaceRecognition.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,19 +22,24 @@ public class Program {
     @Column(name = "program_code")
     private Long id;
 
+    @NotNull(message = "Program length can't be blank")
     @Column(name = "program_length")
     private Long length;
 
+    @NotNull(message = "Ratings can't be blank")
     @Column(name = "program_rating")
     private Long rating;
 
+    @NotBlank(message = "Program name can't be blank")
     @Column(name = "program_name")
     private String programName;
 
+    @NotNull(message = "Please enter the number of semesters")
     @Column(name = "num_of_semester")
     private Integer numberOfSemester;
 
     @Lob
+    @NotBlank(message = "Program description can't be blank")
     @Column(name = "program_description")
     private String description;
 

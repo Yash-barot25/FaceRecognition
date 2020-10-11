@@ -67,20 +67,38 @@ public class StudentController {
         return "student/createOrUpdateStudent";
     }
 
+//    @PostMapping
+//    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
+//
+//        if (bindingResult.hasErrors()){
+//
+//            bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+//            return "student/createOrUpdateStudent";
+//        }
+//
+//        student.setStuPasswordEmail(generatePassword());
+//       Student student1 = studentService.save(student);
+//        emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
+//
+//       return "redirect:/students/get/" + student1.getId();
+//    }
+
     @PostMapping
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult) {
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model  model) {
 
         if (bindingResult.hasErrors()){
 
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("programs",programService.findAll());
+            model.addAttribute("departments",departmentSDJpaService.findAll());
             return "student/createOrUpdateStudent";
         }
 
         student.setStuPasswordEmail(generatePassword());
-       Student student1 = studentService.save(student);
+        Student student1 = studentService.save(student);
         emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
 
-       return "redirect:/students/get/" + student1.getId();
+        return "redirect:/students/get/" + student1.getId();
     }
 
 
