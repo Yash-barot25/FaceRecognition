@@ -14,7 +14,6 @@ import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaSer
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +28,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 // Causes lombok to generate a logger field
 @Slf4j
@@ -47,6 +43,7 @@ public class StudentController {
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
     private final DepartmentSDJpaService departmentSDJpaService;
+    private final ProgramSDJpaService programSDJpaService;
     private final AWSClient amclient;
     String faceid="";
 
@@ -56,12 +53,14 @@ public class StudentController {
      * @param studentService - an object of type StudentSDJpaService service
      * @param programService - an object of type ProgramSDJpaService service
      * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
+     * @param programSDJpaService - an object of type ProgramSDJpaService service
      */
-    public StudentController(AWSClient amclient,StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService) {
+    public StudentController(AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.amclient = amclient;
+        this.programSDJpaService = programSDJpaService;
     }
 
     /**
@@ -70,11 +69,16 @@ public class StudentController {
      * @return student view
      */
     @GetMapping({"", "/"})
-    public String getStudents(Model model) {
-//        Student student = new Student();
-//        String image = studentService.findById(student.getId()).getImage();
-//        model.addAttribute("userImage",image);
-        model.addAttribute("students", studentService.findAll());
+    public String getStudents(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
+
+        if (val != null && !val.trim().isEmpty()) {
+            List<Student> student = studentService.searchStudent(val);
+            model.addAttribute("students", studentService.searchStudent(val));
+        } else {
+            model.addAttribute("students", studentService.findAll());
+        }
+        model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
 
         return "student/students";
     }
@@ -116,40 +120,43 @@ public class StudentController {
 
     /**
      * This method processes the data in Student Update form
-     * @param student1 an object of Student model
+     * @param student an object of Student model
      * @param bindingResult object of interface BindingResult
      * @param file object of a Multipart file
      * @return updated student info
      */
     @PostMapping(consumes = "multipart/form-data")
-    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student1, BindingResult bindingResult,@RequestPart(value = "file") MultipartFile file) {
-        if(bindingResult.hasErrors()){
+    public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file, Model model) {
+        if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
+            model.addAttribute("programs", programService.findAll());
+            model.addAttribute("departments", departmentSDJpaService.findAll());
             return "student/createOrUpdateStudent";
 
         }
+        Student savedStudent = null;
+        if (!Objects.requireNonNull(file.getContentType()).equalsIgnoreCase("image/png")) {
+            System.out.println("Not a Proper Image type!!!");
+        } else {
 
-        if(!file.getContentType().equalsIgnoreCase("image/png")){
-                System.out.println("Not a Proper Image type!!!");
-        }else {
-            student1.setImage(amclient.uploadFile(file));
-            student1.setStuPasswordEmail(generatePassword());
-            student1 = studentService.save(student1);
-            String imagetoindex = studentService.findById(student1.getId()).getImage();
+            String fob = student.getAccessKey().getAccessfobid();
+            student.setImage(amclient.uploadFile(file, fob));
+            student.setStuPasswordEmail(generatePassword());
+             savedStudent = studentService.save(student);
+            String imagetoindex = studentService.findById(savedStudent.getId()).getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
-            faceid= amclient.addfacetoawscollection(indexingimage);
+            faceid = amclient.addfacetoawscollection(indexingimage);
             // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
         }
-
-       return "redirect:/students/get/" + student1.getId();
+        assert savedStudent != null;
+        return "redirect:/students/get/" + savedStudent.getId();
     }
 
-
-    /**
-     * This method generated password
-     * @return the generated password
-     *
-     */
+        /**
+         * This method generated password
+         * @return the generated password
+         *
+         */
     public String generatePassword(){
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = "";

@@ -128,7 +128,7 @@ public class CourseController {
 
         courseSDJpaService.deleteById(courseId);
 
-        return "redirect:/courses";
+        return "redirect:/courses/";
     }
 
 
