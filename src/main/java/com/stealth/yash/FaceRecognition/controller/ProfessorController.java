@@ -63,7 +63,7 @@ public class ProfessorController {
         return "professor/professors";
     }
 
-\
+
     /**
      * This method shows selected professor
      * @param professorId an object of type Long
