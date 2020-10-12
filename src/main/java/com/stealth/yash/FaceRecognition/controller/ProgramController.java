@@ -58,20 +58,17 @@ public class ProgramController {
         }
 
         model.addAttribute("departments", departmentSDJpaService.findAll());
-
+        model.addAttribute("coordinators", professorSDJpaService.findAll());
         return "program/createOrUpdateProgram";
     }
 
     @PostMapping("")
-    public String processUpdateProgramForm(@Valid @ModelAttribute("program") Program program, BindingResult bindingResult, Model model) {
-
+    public String processUpdateProgramForm(@Valid @ModelAttribute("program") Program program, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
-            model.addAttribute("departments", departmentSDJpaService.findAll());
-            return "professor/createOrUpdateProfessor";
+            return "program/createOrUpdateProgram";
         }
-
 
         Program program1 = programSDJpaService.save(program);
 
