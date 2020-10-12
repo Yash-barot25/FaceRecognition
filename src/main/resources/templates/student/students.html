@@ -52,19 +52,55 @@
                 </div>
 
                 <div class="row">
-                    <div class="col col-lg-8 col-md-6">
-                    <form th:action="@{/students/}" method="get">
-                        <div class="input-group">
-                            <input type="text" th:name="value" class="form-control bg-light border-0 small" placeholder="Search for student by Student ID or first name or last name or email or Phone Number"
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                    <div class="col col-lg-10 col-md-5">
+                        <form th:action="@{/students/}" method="get">
+                            <div class="input-group">
+                                <input type="text" th:name="value" class="form-control bg-light border-0 small"
+                                       placeholder="Search for student by Student ID or first name or last name or email or Phone Number"
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
                     </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <span class="col-3">
+                    <h4>Sort Students By:</h4>
+                    </span>
+                    <form th:action="@{/students/}" method="get" class="col-md-3">
+                        <select id="campus" class="form-control">
+                            <option value="no filter" selected>No Campus Filter</option>
+                            <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.model.Campus).values()}"
+                                    th:value="${campusValue.name()}"
+                                    th:text="${campusValue.name()}">val
+                            </option>
+                        </select>
+                    </form>
+                    <form th:action="@{/students/}" method="get" class="col-md-3">
+                        <select id="department" class="form-control">
+                            <option value="no filter" selected>No Department Filter</option>
+                            <option th:each="departmentVal : ${departments}"
+                                    th:value="${departmentVal.id}"
+                                    th:text="${departmentVal.departmentName}"></option>
+
+
+                        </select>
+                    </form>
+                    <form th:action="@{/students/}" method="get" class="col-md-3">
+                        <select id="program" class="form-control">
+                            <!--                                <option th:each="programVal : ${programs}"-->
+                            <!--                                        th:value="${programVal.id}"-->
+                            <!--                                        th:text="${programVal.programName}"></option>-->
+
+
+                        </select>
+                    </form>
+
                 </div>
                 <hr/>
 
@@ -83,7 +119,7 @@
                     <div class="row mb-lg-3">
 
                         <!--Grid column-->
-                        <div class="col-md-3 mb-3" th:each="student: ${students}">
+                        <div class="col-md-3 mb-3 student-card" th:each="student: ${students}">
 
                             <!--Card-->
                             <div class="card border-dark mb-4">
@@ -93,11 +129,15 @@
                                     <h5 class="card-title text-center text-dark"><b th:text="${student.firstName}"></b>
                                         <b th:text="${student.lastName}"></b></h5>
                                     <hr>
-                                    <img th:src="${student.image}"
+                                    <img th:src="${student.image}" height="200px" width="200px"
+                                         style="max-height: 200px; max-width: 200px"
                                          class="rounded img-thumbnail">
                                     <hr>
                                     <p class="card-text" th:text="${student.phoneNumber}"></p>
-                                    <p class="card-text" th:text="${student.campus}"></p>
+                                    <p class="card-text campus" th:text="${student.campus}"></p>
+                                    <p class="card-text department" th:text="${student.department.id}"
+                                       hidden="true"></p>
+                                    <p class="card-text program" th:text="${student.program.id}" hidden="true"></p>
                                     <a th:href="@{'/students/get/'+ ${student.id}}"
                                        class="btn btn-dark mr-1 mb-1 ml-1 mt-1" role="button">
                                         View
@@ -177,6 +217,71 @@
 <!--Footer-->
 <footer th:replace="fragments/footer.html::footer"></footer>
 <!--/.Footer-->
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+
+    loadProgramsByDepartmentId = (departmentId) => {
+        $.get("/programs/by-departmentId", {departmentId: departmentId})
+            .done(function (data) {
+                console.log(data)
+                let options = '';
+                for (let d = 0; d < data.length; d++) {
+                    options += `<option value="${data[d].id}">${data[d].programName}</option>`;
+                }
+                $("#program").html(options);
+            });
+
+    }
+
+
+    $(document).ready(function () {
+        $("#campus").on("change", function () {
+            const value = $(this).val().toLowerCase();
+            if (value === "no filter") {
+                $(".row .student-card").show()
+
+            } else {
+                $(".row .student-card").filter((index, elem) => {
+                    $(elem).toggle($(elem).find(".campus").html().toLowerCase().includes(value))
+                });
+            }
+
+        });
+
+        $("#department").on("change", function () {
+            const value = $(this).val().toLowerCase();
+
+            if (value === "no filter") {
+                $('#program').html(`<option>Select depertment first</option>`);
+
+                $(".row .student-card").show()
+
+            } else {
+
+                $(".row .student-card").filter((index, elem) => {
+                    $(elem).toggle($(elem).find(".department").html().toLowerCase().includes(value))
+                });
+
+                loadProgramsByDepartmentId(this.value)
+            }
+        });
+
+        $("#program").on("change", function () {
+            const value = $(this).val().toLowerCase();
+
+            $(".row .student-card").filter((index, elem) => {
+                $(elem).toggle($(elem).find(".program").html().toLowerCase().includes(value))
+            });
+
+        });
+    });
+
+
+    /*]]>*/
+</script>
+
 
 </body>
 
