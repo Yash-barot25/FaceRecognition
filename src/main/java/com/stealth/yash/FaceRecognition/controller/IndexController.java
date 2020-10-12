@@ -56,20 +56,6 @@ public class IndexController {
 
     }
 
-//    @GetMapping("/dashboard")
-//    public String showDashboard(Model model){
-//
-//        model.addAttribute("institutes", instituteSDJpaService.findAll());
-//        model.addAttribute("departments", departmentSDJpaService.findAll());
-//        model.addAttribute("programs", programSDJpaService.findAll());
-//        model.addAttribute("professors", professorSDJpaService.findAll());
-//        model.addAttribute("courses", courseSDJpaService.findAll());
-//        model.addAttribute("students", studentSDJpaService.findAll());
-//
-//
-//        return "dashboard";
-//    }
-
     @GetMapping("/user")
     public String mainPage(Model model, Authentication authentication) {
 

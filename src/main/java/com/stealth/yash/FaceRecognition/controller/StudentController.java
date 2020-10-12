@@ -33,27 +33,31 @@ public class StudentController {
     private final ProgramSDJpaService programService;
     private final AccessSDJpaService accessSDJpaService;
     private final DepartmentSDJpaService departmentSDJpaService;
+    private final ProgramSDJpaService programSDJpaService;
     private final AWSClient amclient;
-    String faceid="";
+    String faceid = "";
 
-    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService, AccessSDJpaService accessSDJpaService, DepartmentSDJpaService departmentSDJpaService, AWSClient amclient) {
+    public StudentController(StudentSDJpaService studentService, ProgramSDJpaService programService, AccessSDJpaService accessSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, AWSClient amclient) {
         this.studentService = studentService;
         this.programService = programService;
         this.accessSDJpaService = accessSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
+        this.programSDJpaService = programSDJpaService;
         this.amclient = amclient;
     }
 
     //shows all the students
     @GetMapping({"", "/"})
-    public String getStudents(Model model, @RequestParam(value = "value" , required = false, defaultValue = "" ) String val) {
+    public String getStudents(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
 
-        if (val != null && !val.trim().isEmpty()){
-            List<Student> student = studentService.searchStudent( val);
-            model.addAttribute("students",studentService.searchStudent( val));
-        }else{
+        if (val != null && !val.trim().isEmpty()) {
+            List<Student> student = studentService.searchStudent(val);
+            model.addAttribute("students", studentService.searchStudent(val));
+        } else {
             model.addAttribute("students", studentService.findAll());
         }
+        model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
 
         return "student/students";
     }
@@ -64,7 +68,7 @@ public class StudentController {
     public String showStudentInfo(@PathVariable Long studentId, Model model) throws UnsupportedEncodingException {
         Student student = new Student();
         String image = studentService.findById(studentId).getImage();
-        model.addAttribute("userImage",image);
+        model.addAttribute("userImage", image);
         model.addAttribute("student", studentService.findById(studentId));
         return "student/student-info";
     }
@@ -72,14 +76,14 @@ public class StudentController {
 
     @GetMapping({"/update/{studentId}", "/create"})
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
-        if (studentId.isPresent()){
-            model.addAttribute("student",studentService.findById(studentId.get()));
-        }else{
+        if (studentId.isPresent()) {
+            model.addAttribute("student", studentService.findById(studentId.get()));
+        } else {
             Student student = new Student();
             model.addAttribute("student", student);
         }
-        model.addAttribute("programs",programService.findAll());
-        model.addAttribute("departments",departmentSDJpaService.findAll());
+        model.addAttribute("programs", programService.findAll());
+        model.addAttribute("departments", departmentSDJpaService.findAll());
         Set<AccessKey> accessKeys = accessSDJpaService.findAll();
         accessKeys.removeIf(accessKey1 -> studentService.findAccessFobIds().contains(accessKey1.getAccessfobid()));
 
@@ -92,8 +96,8 @@ public class StudentController {
     public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file, Model model) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
-            model.addAttribute("programs",programService.findAll());
-            model.addAttribute("departments",departmentSDJpaService.findAll());
+            model.addAttribute("programs", programService.findAll());
+            model.addAttribute("departments", departmentSDJpaService.findAll());
             return "student/createOrUpdateStudent";
 
         }
@@ -105,7 +109,7 @@ public class StudentController {
             String fob = student.getAccessKey().getAccessfobid();
             student.setImage(amclient.uploadFile(file, fob));
             student.setStuPasswordEmail(generatePassword());
-           Student savedStudent = studentService.save(student);
+            Student savedStudent = studentService.save(student);
             String imagetoindex = studentService.findById(savedStudent.getId()).getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
             faceid = amclient.addfacetoawscollection(indexingimage);
@@ -116,12 +120,11 @@ public class StudentController {
     }
 
 
-
-    public String generatePassword(){
+    public String generatePassword() {
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = "";
         int maxlength = 8;
-        for (int i=0; i<maxlength; i++){
+        for (int i = 0; i < maxlength; i++) {
             Random rand = new Random();
             int index = rand.nextInt(str.length());
             password += str.charAt(index);
@@ -129,7 +132,7 @@ public class StudentController {
         return password;
     }
 
-    public String emailPasswordToUser (String to, String password){
+    public String emailPasswordToUser(String to, String password) {
 
         String from = "stealtht90@gmail.com";
         String pass = "Sheridan123";
@@ -147,22 +150,21 @@ public class StudentController {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.setRecipients(Message.RecipientType.TO,to);
+            message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Login Password - Stealth Admin");
-            message.setText("Your password to access Stealth Admin Portal : " +password + "\n\n\nKind Regards,\n Team Stealth");
+            message.setText("Your password to access Stealth Admin Portal : " + password + "\n\n\nKind Regards,\n Team Stealth");
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }
-        catch (MessagingException me) {
+        } catch (MessagingException me) {
             me.printStackTrace();
         }
         return password;
     }
 
     @GetMapping("/delete/{studentId}")
-    public String deleteStudent(@PathVariable Long studentId){
+    public String deleteStudent(@PathVariable Long studentId) {
         Student student = new Student();
         this.amclient.removeFile(studentService.findById(studentId).getImage());
         this.amclient.deletefacefromawscollection(faceid);
