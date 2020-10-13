@@ -24,7 +24,7 @@ public interface StudentService extends CrudService<Student, Long> {
     // query method for finding student by image
     Page<Student> findPaginated(int pageNo, int pageSize);
 
-    List<String> findAccessFobIds();
+
 
     List<Student> searchStudent(String value);
 }
