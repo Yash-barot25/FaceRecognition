@@ -173,7 +173,7 @@ public class StudentController {
         int maxlength = 8;
         for (int i=0; i<maxlength; i++){
             Random rand = new Random();
-            int index = rand.nexnt(str.length());
+            int index = rand.nexInt(str.length());
             password += str.charAt(index);
         }
         return password;
