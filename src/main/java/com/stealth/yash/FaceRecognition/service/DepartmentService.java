@@ -1,19 +1,13 @@
-/**
- ************************** FACIAL RECOGNITION - CAPSTONE ************************
- *
- *  @author  STEALTH
- *
-DepartmentService interface extending CRUDService
- * @param <Department> to manage the department entity
- * @param <Long> Resource id type
- *
- */
 package com.stealth.yash.FaceRecognition.service;
 
 import com.stealth.yash.FaceRecognition.model.Department;
 
-//starts
+import java.util.List;
+
 public interface DepartmentService extends CrudService<Department, Long> {
 
+    Department findByDepartmentName(String name);
+    List<Department> findAllByDepartmentNameLike(String name);
+    List<Department> searchDepartment(String value);
+    Department findByDescription(String name);
 }
-//ends

@@ -10,6 +10,7 @@ package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Department;
 import com.stealth.yash.FaceRecognition.model.Institute;
+import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.InstituteSDJpaService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 
@@ -57,9 +59,16 @@ public class DepartmentController {
      * @return departments web page
      */
     @GetMapping({"", "/"})
-    public String getDepartments(Model model) {
-        model.addAttribute("departments", departmentSDJpaService.findAll());
+    public String getDepartments(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
 
+        if (val != null && !val.trim().isEmpty()) {
+            List<Department> student = departmentSDJpaService.searchDepartment(val);
+            model.addAttribute("departments", departmentSDJpaService.searchDepartment(val));
+        } else {
+            model.addAttribute("departments", departmentSDJpaService.findAll());
+        }
+
+        model.addAttribute("institutes", instituteSDJpaService.findAll());
         return "department/departments";
     }
 

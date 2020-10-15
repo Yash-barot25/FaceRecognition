@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 // Causes lombok to generate a logger field
 @Slf4j
@@ -55,8 +56,17 @@ public class CourseController {
      * @return courses web page
      */
     @GetMapping({"", "/"})
-    public String getCourses(Model model) {
-        model.addAttribute("courses", courseSDJpaService.findAll());
+    public String getCourses(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
+
+        if (val != null && !val.trim().isEmpty()) {
+            List<Course> course = courseSDJpaService.searchCourse(val);
+            model.addAttribute("courses", courseSDJpaService.searchCourse(val));
+        } else {
+            model.addAttribute("courses", courseSDJpaService.findAll());
+        }
+        model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
+
         return "course/courses";
     }
 

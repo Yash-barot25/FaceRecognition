@@ -1,26 +1,24 @@
-/**
- ************************** FACIAL RECOGNITION - CAPSTONE ************************
- * Repository - Professor
- * An interface with name ProfessorRepository that extends JpaRepository class
- * Two parameters are passed.
- * Professor represents the type of entity it manages
- * Long represents type of the ID field
- * @author  STEALTH
- *
- */
 package com.stealth.yash.FaceRecognition.repository;
 
 import com.stealth.yash.FaceRecognition.model.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Set;
 
-//start interface
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
-    // query method for finding professors by programID
     Set<Professor> findProfessorsByProgramId(Long id);
-    // query method for finding professors by departmentID
     Set<Professor> findProfessorsByDepartmentId(Long id);
+    Professor findByFirstName(String name);
+    List<Professor> findAllByFirstNameLike(String firstname);
+    Professor findByLastName(String name);
+    List<Professor> findAllByLastNameLike(String lastname);
+    Professor findByEmail(String email);
+    Professor findByPhoneNumber(String number);
+
+    @Query(value = "select  p from Professor p where p.firstName like %:val% or  p.lastName like %:val% or p.email like %:val% or p.phoneNumber like %:val% or p.id = :val")
+    List<Professor> searchProgram(@Param("val") String value);
 }
-//end interface

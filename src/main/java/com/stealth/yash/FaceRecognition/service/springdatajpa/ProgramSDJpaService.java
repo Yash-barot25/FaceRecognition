@@ -14,6 +14,7 @@ import com.stealth.yash.FaceRecognition.service.ProgramService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 //indicates that this class is a service
@@ -34,6 +35,21 @@ public class ProgramSDJpaService implements ProgramService {
      * find all programs from repository
      * @return set containing programs
      */
+    @Override
+    public Program findByProgramName(String name) {
+        return programRepository.findByProgramName(name);
+    }
+
+    @Override
+    public List<Program> findAllByProgramNameLike(String name) {
+        return programRepository.findAllByProgramNameLike(name);
+    }
+
+    @Override
+    public List<Program> searchProgram(String value) {
+        return programRepository.searchProgram(value);
+    }
+
     @Override
     public Set<Program> findAll() {
         return new HashSet<>(programRepository.findAll());

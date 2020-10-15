@@ -69,10 +69,10 @@
 --  (2501,89 ),
 --  (2502,78 ),
 --  (2503,85 );
---
+
 --
 -- insert ignore into student(first_name, department_id, program_id) values ('yash', null, null);
-# INSERT IGNORE INTO User(useremail,username, encrypted_Password, enabled) VALUES ('stealth@gmail.com','Stealth Security', '$2a$10$1ltibqiyyBJMJQ4hqM7f0OusP6np/IHshkYc4TjedwHnwwNChQZCy', 1);
-# INSERT IGNORE INTO Role(rolename) VALUES ('ROLE_ADMIN');
-# INSERT IGNORE INTO User_Roles(users_id, roles_id) VALUES(1, 1);
+-- INSERT IGNORE INTO User(useremail,username, encrypted_Password, enabled) VALUES ('stealth@gmail.com','Stealth Security', '$2a$10$1ltibqiyyBJMJQ4hqM7f0OusP6np/IHshkYc4TjedwHnwwNChQZCy', 1);
+--  INSERT IGNORE INTO Role(rolename) VALUES ('ROLE_ADMIN');
+--  INSERT IGNORE INTO User_Roles(users_id, roles_id) VALUES(1, 1);
 drop database if exists mydata;

@@ -11,6 +11,7 @@ package com.stealth.yash.FaceRecognition.controller;
 import com.stealth.yash.FaceRecognition.model.Course;
 import com.stealth.yash.FaceRecognition.model.Professor;
 import com.stealth.yash.FaceRecognition.model.Program;
+import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.CourseSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProfessorSDJpaService;
@@ -22,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 // Causes lombok to generate a logger field
@@ -58,8 +60,14 @@ public class ProgramController {
      * @return program web page
      */
     @GetMapping({"", "/"})
-    public String getPrograms(Model model) {
-        model.addAttribute("programs", programSDJpaService.findAll());
+    public String getPrograms(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
+
+        if (val != null && !val.trim().isEmpty()) {
+            List<Program> program = programSDJpaService.searchProgram(val);
+            model.addAttribute("programs", programSDJpaService.searchProgram(val));
+        } else {
+            model.addAttribute("programs", programSDJpaService.findAll());
+        }
 
         return "program/programs";
     }
