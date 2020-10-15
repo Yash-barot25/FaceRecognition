@@ -89,6 +89,8 @@ public class Student{
     //Specifies mapped column
     @Column(name = "student_current_semester")
     private Long currentSemester;
+    @Column(name = "face_id_aws")
+    private String faceIdAWS;
 
     // Specifies that campus should be persisted as a enumerated type
     @Enumerated(value = EnumType.STRING)

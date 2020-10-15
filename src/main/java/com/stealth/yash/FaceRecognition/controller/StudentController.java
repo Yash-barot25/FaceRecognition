@@ -9,7 +9,10 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.AWSClient;
+import com.stealth.yash.FaceRecognition.model.AccessKey;
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.repository.AccessRepository;
+import com.stealth.yash.FaceRecognition.service.springdatajpa.AccessSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
@@ -42,10 +45,11 @@ public class StudentController {
 
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
+    private final AccessRepository accessRepository;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final ProgramSDJpaService programSDJpaService;
     private final AWSClient amclient;
-    String faceid="";
+    private  final AccessSDJpaService accessSDJpaService;
 
     /**
      * This is a student constructor
@@ -54,13 +58,17 @@ public class StudentController {
      * @param programService - an object of type ProgramSDJpaService service
      * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
      * @param programSDJpaService - an object of type ProgramSDJpaService service
+     * @param studentSDJpaService
+     * @param accessSDJpaService
      */
-    public StudentController(AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService) {
+    public StudentController(AccessRepository accessRepository,AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, StudentSDJpaService studentSDJpaService, AccessSDJpaService accessSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.amclient = amclient;
         this.programSDJpaService = programSDJpaService;
+        this.accessSDJpaService = accessSDJpaService;
+        this.accessRepository = accessRepository;
     }
 
     /**
@@ -115,6 +123,7 @@ public class StudentController {
         }
         model.addAttribute("programs",programService.findAll());
         model.addAttribute("departments",departmentSDJpaService.findAll());
+        model.addAttribute("accessKeys",accessRepository.findAccessFobs() );
         return "student/createOrUpdateStudent";
     }
 
@@ -140,12 +149,14 @@ public class StudentController {
         } else {
 
             String fob = student.getAccessKey().getAccessfobid();
-            student.setImage(amclient.uploadFile(file, fob));
+            student.setImage(amclient.uploadFile(file,fob));
             student.setStuPasswordEmail(generatePassword());
-             savedStudent = studentService.save(student);
-            String imagetoindex = studentService.findById(savedStudent.getId()).getImage();
+            String imagetoindex = student.getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
-            faceid = amclient.addfacetoawscollection(indexingimage);
+            String faceid = amclient.addfacetoawscollection(indexingimage);
+            student.setFaceIdAWS(faceid);
+            savedStudent = studentService.save(student);
+
             // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
         }
         assert savedStudent != null;
@@ -213,11 +224,14 @@ public class StudentController {
      * @return Students web page
      */
     @GetMapping("/delete/{studentId}")
-    public String deleteStudent(@PathVariable Long studentId){
+    public String deleteStudent(@PathVariable Long studentId, AccessKey accessKey){
         Student student = new Student();
         this.amclient.removeFile(studentService.findById(studentId).getImage());
-        this.amclient.deletefacefromawscollection(faceid);
+        this.amclient.deletefacefromawscollection(studentService.findById(studentId).getFaceIdAWS());
+        String fobid = studentService.findById(studentId).getAccessKey().getAccessfobid();
         studentService.deleteById(studentId);
+        accessKey.setAccessfobid(fobid);
+        accessSDJpaService.save(accessKey);
         return "redirect:/students";
     }
 

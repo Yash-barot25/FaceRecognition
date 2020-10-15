@@ -63,10 +63,7 @@ public class StudentSDJpaService implements StudentService {
      * find all students from repository
      * @return set containing students
      */
-    @Override
-    public List<String> findAccessFobIds() {
-        return studentRepository.findAccessFobIds();
-    }
+
 
     @Override
     public List<Student> searchStudent(String value) {
