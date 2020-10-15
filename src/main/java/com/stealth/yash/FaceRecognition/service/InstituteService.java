@@ -1,19 +1,14 @@
-/**
- ************************** FACIAL RECOGNITION - CAPSTONE ************************
- *
- *  @author  STEALTH
- *
-InstituteService interface extending CRUDService
- * @param <Institute> to manage the institute entity
- * @param <Long> Resource id type
- *
- */
 package com.stealth.yash.FaceRecognition.service;
 
 import com.stealth.yash.FaceRecognition.model.Institute;
+import com.stealth.yash.FaceRecognition.model.Student;
+import org.springframework.data.domain.Page;
 
-//interface starts
+import java.util.List;
+
 public interface InstituteService extends CrudService<Institute, Long> {
 
+    Institute findByName(String name);
+    List<Institute> findAllByNameLike(String name);
+    List<Institute> searchInstitute(String value);
 }
-//interface ends

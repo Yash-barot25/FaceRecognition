@@ -58,6 +58,22 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col col-lg-12 col-md-6">
+                        <form th:action="@{/courses/}" method="get">
+                            <div class="input-group">
+                                <input type="text" th:name="value" class="form-control bg-light border-primary small"
+                                       placeholder="Search for course by name, description, etc."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><hr>
                 <!--Section: Cards-->
                 <section>
 
@@ -82,11 +98,34 @@
                                         View
                                         <i th:style="'margin:2px'" class="fa fa-eye"></i>
                                     </a>
-                                    <a th:href="@{'/courses/delete/' + ${course.id}}"
-                                       class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">
+<!--                                    <a th:href="@{'/courses/delete/' + ${course.id}}"-->
+<!--                                       class="btn btn-dark ml-1 mr-1 mt-1 mb-1" role="button">-->
+<!--                                        Delete-->
+<!--                                        <i th:style="'margin:2px'" class="fa fa-trash"></i>-->
+<!--                                    </a>-->
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-dark mr-1 mb-1 ml-1 mt-1" data-toggle="modal" data-target="#exampleModal">
                                         Delete
                                         <i th:style="'margin:2px'" class="fa fa-trash"></i>
-                                    </a>
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header text-center">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete [[${course.courseName}]] <i th:style="'margin:6px'" class="fa fa-trash"></i></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <a type="button" class="btn btn-danger" th:href="@{'/courses/delete/' + ${course.id}}">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!--/.Card-->
