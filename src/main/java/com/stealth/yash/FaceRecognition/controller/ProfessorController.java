@@ -1,3 +1,10 @@
+/**
+ * ************************** FACIAL RECOGNITION - CAPSTONE************************
+ * Controller - ProfessorController
+ * This Controller is responsible for handling any request that is related to Professor.
+ * @author  STEALTH
+ *
+ */
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Course;
@@ -17,8 +24,11 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
+// Causes lombok to generate a logger field
 @Slf4j
+// Indicates that this class serves the role of a controller
 @Controller
+// Will create the base URI /professors for which the controller will be used
 @RequestMapping("/professors")
 public class ProfessorController {
 
@@ -28,7 +38,13 @@ public class ProfessorController {
     private final CourseSDJpaService courseSDJpaService;
    // private final ExpertiseSDJpaService expertiseSDJpaService;
 
-
+    /**
+     * This is a Professor constructor
+     * @param professorSDJpaService this is an object of type ProfessorSDJpaService service
+     * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
+     * @param  programSDJpaService - an object of type ProgramSDJpaService service
+     * @param courseSDJpaService - an object of type CourseSDJpaService service
+     */
     public ProfessorController(ProfessorSDJpaService professorSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, CourseSDJpaService courseSDJpaService) {
         this.professorSDJpaService = professorSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
@@ -36,7 +52,12 @@ public class ProfessorController {
         this.courseSDJpaService = courseSDJpaService;
     }
 
-    //shows all the professors
+
+    /**
+     * This method shows all the professors
+     * @param model - an object of type Model
+     * @return Professors web page
+     */
     @GetMapping({"", "/"})
     public String getProfessors(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
 
@@ -52,7 +73,13 @@ public class ProfessorController {
         return "professor/professors";
     }
 
-    //shows selected professor
+
+    /**
+     * This method shows selected professor
+     * @param professorId an object of type Long
+     * @param model - an object of type Model
+     * @return info of a particular professor
+     */
     @GetMapping("/get/{professorId}")
     public String showStudentInfo(@PathVariable Long professorId, Model model) {
 
@@ -60,7 +87,12 @@ public class ProfessorController {
         return "professor/professor-info";
     }
 
-
+    /**
+     * This method creates or updates professors
+     * @param professorId an object of type Long
+     * @param model an object of Model type
+     * @return creteOrUpdateProfessor web page
+     */
     @GetMapping({"/update/{professorId}", "/create"})
     public String createOrUpdateProfessor(@PathVariable(required = false) Long professorId, Model model) {
         if (professorId != null) {
@@ -75,6 +107,13 @@ public class ProfessorController {
         return "professor/createOrUpdateProfessor";
     }
 
+    /**
+     * This method processes the updates data in UpdatePofessorForm
+     * @param professor an object of Professor model
+     * @param bindingResult object of interface BindingResult
+     * @param model object of a type Model
+     * @return updated professor info
+     */
     @PostMapping("")
     public String processUpdateProfessorForm(@Valid @ModelAttribute("professor") Professor professor, BindingResult bindingResult, Model model) {
 
@@ -90,6 +129,12 @@ public class ProfessorController {
         return "redirect:/professors/get/" + professor1.getId();
     }
 
+
+    /**
+     * This method deletes professor
+     * @param professorId an object of type Long
+     * @return professor web page
+     */
     @GetMapping("/delete/{professorId}")
     public String deleteStudent(@PathVariable Long professorId) {
 
@@ -103,6 +148,10 @@ public class ProfessorController {
         return "redirect:/professors";
     }
 
+
+    /**
+     * @param departmentId this is an object of type Long
+     **/
     @GetMapping("/by-departmentId")
     @ResponseBody
     public Set<Professor> getProfessorsByDepartmentId(@RequestParam Long departmentId) {
