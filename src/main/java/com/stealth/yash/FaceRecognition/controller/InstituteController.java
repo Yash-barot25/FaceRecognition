@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -51,10 +52,14 @@ public class InstituteController {
 //    }
 
     @GetMapping({"", "/"})
-    public String getInstitutes(Model model) {
+    public String getInstitutes(Model model, @RequestParam(value = "value", required = false, defaultValue = "") String val) {
 
-
-        model.addAttribute("institutes", instituteSDJpaService.findAll());
+        if (val != null && !val.trim().isEmpty()) {
+            List<Institute> institute = instituteSDJpaService.searchInstitute(val);
+            model.addAttribute("institutes", instituteSDJpaService.searchInstitute(val));
+        } else {
+            model.addAttribute("institutes", instituteSDJpaService.findAll());
+        }
 
         return "institute/institutes";
     }

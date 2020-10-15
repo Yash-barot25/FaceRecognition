@@ -7,12 +7,13 @@ import com.stealth.yash.FaceRecognition.service.InstituteService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class InstituteSDJpaService implements InstituteService {
-    
+
     private final InstituteRepository instituteRepository;
 
     public InstituteSDJpaService(InstituteRepository instituteRepository) {
@@ -50,5 +51,18 @@ public class InstituteSDJpaService implements InstituteService {
     public void deleteById(Long aLong) {
         instituteRepository.deleteById(aLong);
 
+    }
+
+    @Override
+    public Institute findByName(String Name) { return instituteRepository.findByName(Name); }
+
+    @Override
+    public List<Institute> findAllByNameLike(String name) {
+        return instituteRepository.findAllByNameLike(name);
+    }
+
+    @Override
+    public List<Institute> searchInstitute(String value) {
+        return instituteRepository.searchInstitute(value);
     }
 }

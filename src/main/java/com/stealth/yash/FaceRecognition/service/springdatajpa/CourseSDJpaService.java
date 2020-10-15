@@ -7,6 +7,7 @@ import com.stealth.yash.FaceRecognition.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,6 +18,31 @@ public class CourseSDJpaService implements CourseService {
 
     public CourseSDJpaService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+    }
+
+    @Override
+    public Course findByCourseName(String name) {
+        return courseRepository.findByCourseName(name);
+    }
+
+    @Override
+    public List<Course> findAllByCourseNameLike(String name) {
+        return courseRepository.findAllByCourseNameLike(name);
+    }
+
+    @Override
+    public Course findByDescription(String value) {
+        return courseRepository.findByDescription(value);
+    }
+
+    @Override
+    public List<Course> findAllByDescriptionLike(String description) {
+        return courseRepository.findAllByDescriptionLike(description);
+    }
+
+    @Override
+    public List<Course> searchCourse(String value) {
+        return courseRepository.searchCourse(value);
     }
 
     @Override
