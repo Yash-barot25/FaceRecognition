@@ -157,7 +157,7 @@ public class StudentController {
             student.setFaceIdAWS(faceid);
             savedStudent = studentService.save(student);
 
-            // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
+          //  emailPasswordToUser(student.getEmail(),student.getStuPasswordEmail());
         }
         assert savedStudent != null;
         return "redirect:/students/get/" + savedStudent.getId();
@@ -234,5 +234,4 @@ public class StudentController {
         accessSDJpaService.save(accessKey);
         return "redirect:/students";
     }
-
 }

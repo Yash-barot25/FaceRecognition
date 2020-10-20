@@ -23,7 +23,8 @@ public interface StudentService extends CrudService<Student, Long> {
     List<Student> findAllByLastNameLike(String lastName);
     // query method for finding student by image
     Page<Student> findPaginated(int pageNo, int pageSize);
-
+    // query method for finding student by email
+    Student findByEmail(String email);
 
 
     List<Student> searchStudent(String value);

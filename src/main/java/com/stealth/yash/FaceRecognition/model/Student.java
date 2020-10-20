@@ -164,4 +164,6 @@ public class Student{
     public void setId(Long id) {
         this.id = id;
     }
+
+    public char getFirstLetterOfFirstName() {return this.firstName.charAt(0);}
 }

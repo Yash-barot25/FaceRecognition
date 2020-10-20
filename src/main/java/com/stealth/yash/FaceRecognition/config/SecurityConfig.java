@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/user/**", "/student**", "/comingsoon**", "/course**", "/department**","/fobaccess", "/fragments**", "/institute**", "/professor**", "/program**").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/user", true).permitAll().
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/student/detail", true).permitAll().
                 and().logout().invalidateHttpSession(true).
                 clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
                 logoutSuccessUrl("/login?logout").permitAll();

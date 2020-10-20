@@ -81,7 +81,16 @@ public class IndexController {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
 
+    @GetMapping("/slogin")
+    public String slogin(){
+        return "slogin";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "student/studentDashboard";
     }
 
 //    @GetMapping("/dashboard")

@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			grantList.add(new SimpleGrantedAuthority(role.getRolename()));
 		}
 
-		UserDetails userDetails= (UserDetails) new User(user.getUsername(), user.getEncryptedPassword(), grantList);
+		UserDetails userDetails= (UserDetails) new User(user.getUseremail(), user.getEncryptedPassword(), grantList);
 		return userDetails;
 
 	}
