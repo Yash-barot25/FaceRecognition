@@ -83,7 +83,7 @@
                 <div class="text-logo">
                     <a href="https://lmpixels.com/wp/leven-wp/">
                         <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}"> </div>
-                        <div class="logo-text" th:text="${student.getFirstName()}"> First name <div th:text="${student.getLastName()}"> </div> </div>
+                        <div class="logo-text" th:text="${student.getFirstName() + ' ' + student.getLastName()}"></div>
                     </a>
                 </div>
                 <!-- /Text Logo -->
@@ -94,7 +94,7 @@
                     <ul id="menu-classic-menu" class="leven-classic-menu site-main-menu"><li id="menu-item-160" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-160">
 
                             <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a th:href="@{/login}" data-hover="1">About Me</a></li>
-                            <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a th:href="@{/login}" data-hover="1">Check your Schedule here</a></li>
+                            <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#" data-hover="1">Check your Schedule here</a></li>
                     </ul>
 
                 </div>
@@ -125,15 +125,15 @@
                                                         <div class="row flex-v-align">
                                                             <div class="col-sm-12 col-md-5 col-lg-5">
                                                                 <div class="home-photo">
-                                                                    <div class="hp-inner"></div>
+                                                                    <div class="hp-inner" th:style="'background:url(' + ${student.getImage()} + ');'"></div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-sm-12 col-md-7 col-lg-7">
                                                                 <div class="home-text hp-left">
-                                                                    <div class="owl-carousel text-rotation">
+                                                                    <div class="">
                                                                         <div class="item">
-                                                                            <h4>Program name</h4>
+                                                                            <h4>Program name - <span th:text="${student.getProgram().getProgramName()}"> </span></h4>
                                                                         </div>
                                                                         <div class="item">
                                                                             <h4> College name </h4>

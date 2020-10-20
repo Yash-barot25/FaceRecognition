@@ -78,7 +78,6 @@ public class StudentPortalController {
     public String getStudentDetail(Principal principal, Model model, Authentication auth) {
         String currentLoggedinUser  = principal.getName();
         Student student = studentService.findByEmail(currentLoggedinUser);
-        System.out.println()
         model.addAttribute("student",student);
         return "student/studentDashboard";
     }
