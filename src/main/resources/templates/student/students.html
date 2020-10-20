@@ -113,7 +113,7 @@
                     <div class="row mb-lg-3">
 
                         <!--Grid column-->
-                        <div class="col-md-3 mb-3 student-card" th:each="student: ${students}">
+                        <div class="col-md-3 mb-3 student-card" th:each="student,stat: ${students}">
 
                             <!--Card-->
                             <div class="card border-dark mb-4">
@@ -143,17 +143,17 @@
 <!--                                        <i th:style="'margin:2px'" class="fa fa-trash"></i>-->
 <!--                                    </a>-->
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-dark mr-1 mb-1 ml-1 mt-1" data-toggle="modal" data-target="#exampleModal">
+                                    <a role="button" th:href="@{'/students/get/'+ ${student.id}}" class="btn btn-dark mr-1 mb-1 ml-1 mt-1" data-toggle="modal" th:data-target="${'#exampleModal'+stat.index}">
                                         Delete
                                         <i th:style="'margin:2px'" class="fa fa-trash"></i>
-                                    </button>
+                                    </a>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="${'exampleModal'+stat.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header text-center">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Delete [[${student.firstName}]] [[${student.lastName}]] <i th:style="'margin:6px'" class="fa fa-trash"></i></h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel" >Delete [[${student.firstName}]] [[${student.lastName}]] <i th:style="'margin:6px'" class="fa fa-trash"></i></h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
