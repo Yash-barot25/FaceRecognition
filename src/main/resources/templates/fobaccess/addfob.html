@@ -68,17 +68,17 @@
 
                         <!-- Edit Form -->
                         <form th:object="${accesskey}"
-                              th:action="@{/addfob}" method="post" >
+                              th:action="@{/fobmanager/savefob}" method="post" >
                             <!-- First row -->
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <div class="md-form mb-0">
                                     <label class="text-success">Add FOB ID:</label><br/>
                                     <input type="text" class="form-control validate"
                                            th:field="*{accessfobid}" name="accessfobid">
                                 </div>
                             </div>
-                                <div class="col-md-6 form-group left">
+                                <div class="col-md-12 form-group left">
                                     <button class="btn btn-primary mr-2" role="button" type="submit">
                                         Save
                                         <i th:style="'margin:5px;'" class="fa fa-save"></i>

@@ -11,7 +11,6 @@ package com.stealth.yash.FaceRecognition.controller;
 import com.stealth.yash.FaceRecognition.model.AWSClient;
 import com.stealth.yash.FaceRecognition.model.AccessKey;
 import com.stealth.yash.FaceRecognition.model.Student;
-import com.stealth.yash.FaceRecognition.repository.AccessRepository;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.AccessSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
@@ -45,7 +44,6 @@ public class StudentController {
 
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
-    private final AccessRepository accessRepository;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final ProgramSDJpaService programSDJpaService;
     private final AWSClient amclient;
@@ -61,14 +59,14 @@ public class StudentController {
      * @param studentSDJpaService
      * @param accessSDJpaService
      */
-    public StudentController(AccessRepository accessRepository,AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, StudentSDJpaService studentSDJpaService, AccessSDJpaService accessSDJpaService) {
+    public StudentController(AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, StudentSDJpaService studentSDJpaService, AccessSDJpaService accessSDJpaService) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.amclient = amclient;
         this.programSDJpaService = programSDJpaService;
         this.accessSDJpaService = accessSDJpaService;
-        this.accessRepository = accessRepository;
+
     }
 
     /**
@@ -117,13 +115,18 @@ public class StudentController {
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
         if (studentId.isPresent()){
             model.addAttribute("student",studentService.findById(studentId.get()));
+            List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
+            accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
+
+            model.addAttribute("accessKeys",accessKeys);
         }else{
             Student student = new Student();
             model.addAttribute("student", student);
+            model.addAttribute("accessKeys",accessSDJpaService.findAccessFobs() );
         }
         model.addAttribute("programs",programService.findAll());
         model.addAttribute("departments",departmentSDJpaService.findAll());
-        model.addAttribute("accessKeys",accessRepository.findAccessFobs() );
+
         return "student/createOrUpdateStudent";
     }
 

@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index", "/about", "contact").permitAll()
 				.antMatchers("/","/static/**", "/js/**", "/css/**", "/images/**","/myerror", "/**").permitAll()
 				.antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/user/**", "/student**", "/comingsoon**", "/course**", "/department**","/fobaccess", "/fragments**", "/institute**", "/professor**", "/program**").hasRole("ADMIN")
+                .antMatchers("/user/**", "/student**", "/comingsoon**", "/course**", "/department**","/fobaccess**", "/fragments**", "/institute**", "/professor**", "/program**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/user", true).permitAll().
                 and().logout().invalidateHttpSession(true).

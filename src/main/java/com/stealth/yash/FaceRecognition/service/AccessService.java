@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface AccessService extends CrudService<AccessKey, Long> {
 
+    List<AccessKey> findAccessFobs();
+
 
 }

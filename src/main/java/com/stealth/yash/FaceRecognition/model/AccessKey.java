@@ -25,5 +25,11 @@ public class AccessKey {
     @Column(name = "access_fob_id")
     private String accessfobid;
 
+//    @CreationTimestamp
+//    private LocalDateTime creationTimeStamp;
+//
+//    @UpdateTimestamp
+//    private LocalDateTime updateTimeStamp;
+
 
 }

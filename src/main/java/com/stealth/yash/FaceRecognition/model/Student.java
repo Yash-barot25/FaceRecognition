@@ -130,6 +130,11 @@ public class Student{
     @JoinColumn(name = "stud_access_id", referencedColumnName = "access_Id")
     private AccessKey accessKey;
 
+//    @CreationTimestamp
+//    private LocalDateTime creationTimeStamp;
+//
+//    @UpdateTimestamp
+//    private LocalDateTime updateTimeStamp;
 
     /**
      * @param o object of type Object
