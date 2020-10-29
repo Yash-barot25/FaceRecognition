@@ -58,19 +58,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr  th:if="${check.size() != 0}"  th:each="student : ${students}">
-                        <td th:text="${student.accessKey.accessfobid}"></td>
-                        <td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>
-                        <td><a class="btn btn-primary text-white">Update</a>
+<!--                    <tr  th:if="${check.size() != 0}"  th:each="student : ${students}">-->
+<!--                        <td th:text="${student.accessKey.accessfobid}"></td>-->
+<!--                        <td th:text="${student.firstName} + ' ' + ${student.lastName}"></td>-->
+<!--                        <td><a class="btn btn-primary text-white">Update</a>-->
 
-                            <a  th:href="@{/fobmanager/deletefob/{id}(id=${student.accessKey.id})}" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    <tr   th:each="fob : ${fobs}">
+<!--                            <a  th:if="${fobs.size() != 0}" th:href="@{/fobmanager/deletefob/{id}(id=${student.accessKey.id})}" class="btn btn-danger">Delete</a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    <tr th:if="${check.size() != 0}"  th:each="fob : ${fobs}">
                         <td th:text="${fob.accessfobid}"></td>
                         <td th:text="'Not Assigned'"></td>
                         <td><a class="btn btn-primary text-white">Update</a>
-                            <a th:href="@{/fobmanager/deletefob/{id}(id = ${fob.id})}" class="btn btn-danger text-white">Delete</a>
+                            <a th:if="${fobs.size() != 0}" th:href="@{/fobmanager/deletefob/{id}(id = ${fob.id})}" class="btn btn-danger text-white">Delete</a>
                         </td>
                     </tr>
 

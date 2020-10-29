@@ -116,7 +116,10 @@ public class StudentController {
         if (studentId.isPresent()){
             model.addAttribute("student",studentService.findById(studentId.get()));
             List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
-            accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
+            if(accessKeys != null){
+                accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
+
+            }
 
             model.addAttribute("accessKeys",accessKeys);
         }else{
