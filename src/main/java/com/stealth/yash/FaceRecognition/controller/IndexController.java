@@ -82,16 +82,17 @@ public class IndexController {
     public String login(){
         return "login";
     }
+    @GetMapping("/studentDashboard")
+    public String studentDashboard(){
+        return "student/studentDashboard";
+    }
 
     @GetMapping("/slogin")
     public String slogin(){
         return "slogin";
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "student/studentDashboard";
-    }
+
 
 //    @GetMapping("/dashboard")
 //    public String showDashboard(Model model){

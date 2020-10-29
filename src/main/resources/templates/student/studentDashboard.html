@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="profile" href="//gmpg.org/xfn/11">
-    <title>About you</title>
+    <title>Profile</title>
     <link rel='dns-prefetch' href='//fonts.googleapis.com' />
     <link rel='dns-prefetch' href='//s.w.org' />
     <link rel="alternate" type="application/rss+xml" title="About you &raquo; Feed" href="https://lmpixels.com/wp/leven-wp/feed/" />
@@ -95,6 +95,7 @@
 
                             <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a th:href="@{/login}" data-hover="1">About Me</a></li>
                             <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#" data-hover="1">Check your Schedule here</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="/slogin" data-hover="1">Log Out</a></li>
                     </ul>
 
                 </div>
@@ -136,12 +137,15 @@
                                                                             <h4>Program name - <span th:text="${student.getProgram().getProgramName()}"> </span></h4>
                                                                         </div>
                                                                         <div class="item">
-                                                                            <h4> College name </h4>
+                                                                            <h4  th:text="${student.getProgram().getDepartment().getInstitute().getName()}">  </h4>
                                                                         </div>
                                                                     </div>
-                                                                    <h1>User name </h1>
-                                                                    <p> display info </p>
+                                                                    <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}"> </h1>
+                                                                    <div class="item">
+                                                                        <i class="linecons linecons-mail" th:text="${' ' + student.getEmail()}"> </i> <br>
+                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -155,7 +159,7 @@
                                                 <div id="col_inner_id-5f8f33f7e99a5" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
 
                                                     <div class="block-title">
-                                                        <h2>Fun Facts</h2>
+                                                        <h2>Details!!</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,10 +172,9 @@
                                                 <div id="col_inner_id-5f8f33f7e9cb9" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
 
                                                     <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-heart"></i>
-                                                        <h4>Happy Clients</h4>
-                                                        <span class="lm-info-block-value">578</span>
-                                                        <span class="lm-info-block-text"></span>
+                                                        <i class="linecons linecons-location"></i>
+                                                        <h4>Address:</h4>
+                                                        <span th:text="${student.getAddress()}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,10 +184,9 @@
                                                 <div id="col_inner_id-5f8f33f7e9f9e" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
 
                                                     <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-clock"></i>
-                                                        <h4>Working Hours</h4>
-                                                        <span class="lm-info-block-value">4,780</span>
-                                                        <span class="lm-info-block-text"></span>
+                                                        <i class="linecons linecons-phone"></i>
+                                                        <h4>Phone Number:</h4>
+                                                        <span th:text="${student.getPhoneNumber()}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,10 +196,9 @@
                                                 <div id="col_inner_id-5f8f33f7ea1a0" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
 
                                                     <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-star"></i>
-                                                        <h4>Awards Won</h4>
-                                                        <span class="lm-info-block-value">15</span>
-                                                        <span class="lm-info-block-text"></span>
+                                                        <i class="linecons linecons-study"></i>
+                                                        <h4>Grade Point Average</h4>
+                                                        <span th:text="${student.getGPA()}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,10 +208,9 @@
                                                 <div id="col_inner_id-5f8f33f7ea357" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
 
                                                     <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-cup"></i>
-                                                        <h4>Coffee Consumed</h4>
-                                                        <span class="lm-info-block-value">1,286</span>
-                                                        <span class="lm-info-block-text"></span>
+                                                        <i class="linecons linecons-calendar"></i>
+                                                        <h4>Current Semester</h4>
+                                                        <span th:text="${student.getCurrentSemester()}"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,28 +226,12 @@
             </div><!-- #main-content -->
         </div>
 
-        <footer class="site-footer clearfix">
-            <div class="footer-social">
-                <ul class="footer-social-links">
-                    <li>
-                        <a href="#" target="_blank">Twitter</a>
-                    </li>
-                    <li>
-                        <a href="#" target="_blank">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#" target="_blank">Instagram</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="footer-copyrights">
-                <p>© 2020 All rights reserved. LMPixels.</p>
-            </div>
-        </footer>
     </div>
 
 </div>
+<footer class="site-footer clearfix" th:replace="fragments/footer.html :: footer">
+</footer>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/modernizr.custom.js?ver=2.8.3' id='modernizr-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/bootstrap.min.js?ver=4.0.0' id='bootstrap-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/owl.carousel.min.js?ver=2.0' id='owl-carousel-js'></script>
