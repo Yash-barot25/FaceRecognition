@@ -237,7 +237,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select id="campus" class="form-control" th:field="*{campus}">
-                                                    <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.model.Campus).values()}"
+                                                    <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.enums.Campus).values()}"
                                                             th:value="${campusValue.name()}"
                                                             th:text="${campusValue.name()}">Campus
                                                     </option>
@@ -251,7 +251,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select id="level" class="form-control" th:field="*{level}">
-                                                    <option th:each="levelValue : ${T(com.stealth.yash.FaceRecognition.model.Level).values()}"
+                                                    <option th:each="levelValue : ${T(com.stealth.yash.FaceRecognition.enums.Level).values()}"
                                                             th:value="${levelValue.name()}"
                                                             th:text="${levelValue.name()}">val
                                                     </option>
@@ -297,7 +297,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <select id="availability" class="form-control" th:field="*{availibility}">
-                                                    <option th:each="availibilityValue : ${T(com.stealth.yash.FaceRecognition.model.Availibility).values()}"
+                                                    <option th:each="availibilityValue : ${T(com.stealth.yash.FaceRecognition.enums.Availibility).values()}"
                                                             th:value="${availibilityValue.name()}"
                                                             th:text="${availibilityValue.name()}">val
                                                     </option>

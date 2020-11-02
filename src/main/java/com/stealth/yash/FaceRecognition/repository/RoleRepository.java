@@ -14,6 +14,5 @@ import com.stealth.yash.FaceRecognition.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role,Long> {
-    //query method for finding role by rolename
-    public Role findByRolename(String rolename);
+
 }

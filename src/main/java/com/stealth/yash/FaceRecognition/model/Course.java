@@ -7,6 +7,7 @@
 package com.stealth.yash.FaceRecognition.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stealth.yash.FaceRecognition.enums.Campus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

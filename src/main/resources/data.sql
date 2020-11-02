@@ -1,3 +1,10 @@
+INSERT IGNORE INTO roles(id,name) VALUES ('1','ADMIN');
+INSERT IGNORE INTO roles(id,name) VALUES ('2','STUDENT');
+
+
+INSERT IGNORE INTO users (id, useremail, password, enabled, role_id)
+VALUES ('1','stealth@sheridan.com','$2a$10$a3A0JC757FLZqHYVvEJq7uNaYz3AW8320IHORzmljQN43Hkmi4T7C', true,'1');
+
 -- INSERT IGNORE INTO dean(dean_id,first_name,last_name, dean_email, dean_contact_number)
 -- values (25252525, 'ak-47', 'akm', 'm416@gmail.com','528529688');
 --
@@ -72,7 +79,7 @@
 
 --
 -- insert ignore into student(first_name, department_id, program_id) values ('yash', null, null);
-# INSERT IGNORE INTO User(useremail,username, encrypted_Password, enabled) VALUES ('stealth@gmail.com','Stealth Security', '$2a$10$1ltibqiyyBJMJQ4hqM7f0OusP6np/IHshkYc4TjedwHnwwNChQZCy', 1);
-#  INSERT IGNORE INTO Role(rolename) VALUES ('ROLE_ADMIN');
-#  INSERT IGNORE INTO User_Roles(users_id, roles_id) VALUES(1, 1);
-drop database if exists mydata;
+# INSERT IGNORE INTO users(useremail,username, encrypted_Password, enabled) VALUES ('stealth@gmail.com','Stealth Security', '$2a$10$1ltibqiyyBJMJQ4hqM7f0OusP6np/IHshkYc4TjedwHnwwNChQZCy', 1);
+# INSERT IGNORE INTO roles(rolename) VALUES ('ADMIN');
+# INSERT IGNORE INTO role_users(users_id, roles_id) VALUES(1, 1);
+drop database if exists face_recognition;

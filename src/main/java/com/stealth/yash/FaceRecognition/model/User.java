@@ -6,22 +6,15 @@
  */
 package com.stealth.yash.FaceRecognition.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 //Generates an all-args constructor
 @AllArgsConstructor
@@ -39,114 +32,76 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Builder
 //Generates a constructor with required arguments
 @RequiredArgsConstructor
-
-public class User {
+@Table(name = "Users")
+public class User implements UserDetails {
 
     //Specifies the primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //username is non null
-    @NonNull
-    private String username;
-    //useremail is non null
+
     @NonNull
     private String useremail;
 
-    /**
-     *getter method for userEmail
-     * @return useremail
-     */
-    public String getUseremail() {
-        return useremail;
-    }
-
-    public void setUseremail(String useremail) {
-        this.useremail = useremail;
-    }
-
     //encryptedPassword is non null
     @NonNull
-    private String encryptedPassword;
+    private String Password;
     @NonNull
-    private byte enabled;
+    private boolean enabled;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 
-    @ManyToMany(cascade=CascadeType.ALL)
-   // Define the fetching strategy used for roles
-    @Fetch(value = FetchMode.SUBSELECT)
-    //Define the fetching strategy used for roles
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Role> roles = new ArrayList<Role>();
+    private List<String> getPrivileges(Role role) {
+        List<String> privileges = new ArrayList<>();
+        privileges.add(role.getName().name());
+        return privileges;
+    }
 
-    /**
-     *getter method for userName
-     * @return username
-     */
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + privilege));
+        }
+        return authorities;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getGrantedAuthorities(getPrivileges(role));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.Password;
+    }
+
+    @Override
     public String getUsername() {
-        return username;
+        return this.useremail;
     }
 
-    /**
-     *setter method for userName
-     *  @param username an object of type String
-     */
-
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    /**
-     *getter method for EncryptedPassword
-     * @return encryptedPassword
-     */
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-
-    /**
-     *setter method for EncryptedPassword
-     *  @param encryptedPassword an object of type swtring
-     */
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    /**
-     *getter method for Enabled
-     * @return enabled
-     */
-    public byte getEnabled() {
+    @Override
+    public boolean isEnabled() {
         return enabled;
     }
-
-    /**
-     *setter method for enabled
-     *  @param enabled an object of type byte
-     */
-
-    public void setEnabled(byte enabled) {
-        this.enabled = enabled;
-    }
-
-    /**
-     *getter method for Roles
-     * @return roles
-     */
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    /**
-     *setter method for Roles
-     *  @param roles an object of type List
-     */
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-
-
 }
