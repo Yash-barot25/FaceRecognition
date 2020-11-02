@@ -64,7 +64,6 @@
                     <tbody>
                     <tr th:each="user : ${users}" >
                         <td th:text="${user.useremail}"></td>
-<!--                        <td th:text="${role.name}"></td>-->
                         <td th:text="${user.enabled}"></td>
                         <td><a th:href="@{/usermanagement/disable/{id}(id = ${user.id})}" class="btn btn-danger text-white">Disable</a>&nbsp;&nbsp;<a th:href="@{/usermanagement/enable/{id}(id = ${user.id})}" class="btn btn-danger text-white">Enable</a></td>
                     </tr>
