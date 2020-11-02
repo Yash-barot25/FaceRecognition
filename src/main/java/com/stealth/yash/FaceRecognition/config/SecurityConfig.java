@@ -47,9 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+
         http
+                .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
                 .antMatchers( "/","/index", "/about", "/contact").permitAll()
                 .antMatchers("/dashboard", "/students/**", "/comingsoon/**", "/courses/**", "/departments/**", "/fobmanager/**","/institutes/**", "/professors/**", "/programs/**")
