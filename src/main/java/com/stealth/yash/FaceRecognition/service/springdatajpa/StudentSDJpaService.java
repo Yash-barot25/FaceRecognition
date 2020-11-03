@@ -59,6 +59,11 @@ public class StudentSDJpaService implements StudentService {
         return studentRepository.findAll(paging);
     }
 
+    @Override
+    public Student findByEmail(String email) {
+        return studentRepository.findByEmail(email);
+    }
+
     /**
      * find all students from repository
      * @return set containing students

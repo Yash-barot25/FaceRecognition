@@ -19,6 +19,29 @@
     <!-- Custom styles for this template-->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    title:{
+                        text: "Users Detected between 7 AM to 10 PM"
+                    },
+                    data: [
+                        {
+                            type: "column",
+                            dataPoints: [
+                                {y: document.getElementById("myvar").innerHTML }
+
+                            ]
+                        }
+                    ]
+                });
+
+            chart.render();
+        }
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -195,6 +218,9 @@
                 </div>
 
 
+                <br>
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                <br>
                 <!-- Content Row -->
 
                 <div class="row">
@@ -322,7 +348,10 @@
                                 <div class="card bg-success text-black shadow">
                                     <div class="card-body">
 
-                                        <div class="text-black-50 medium">Users - Students</div>
+                                        <div class="text-black-50 medium">
+
+                                            <span id="myvar" th:text="${count}"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
