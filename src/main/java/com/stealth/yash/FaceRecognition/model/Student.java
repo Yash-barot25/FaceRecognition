@@ -8,6 +8,7 @@ package com.stealth.yash.FaceRecognition.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stealth.yash.FaceRecognition.enums.Campus;
+import com.stealth.yash.FaceRecognition.enums.Section;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,6 +93,10 @@ public class Student{
     private Long currentSemester;
     @Column(name = "face_id_aws")
     private String faceIdAWS;
+
+    // Specifies that campus should be persisted as a enumerated type
+    @Enumerated(value = EnumType.STRING)
+    private Section section;
 
     // Specifies that campus should be persisted as a enumerated type
     @Enumerated(value = EnumType.STRING)

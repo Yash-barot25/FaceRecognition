@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FaceRecognitionApplication {
 
     public static void main(String[] args) {
-
-
         SpringApplication.run(FaceRecognitionApplication.class, args);
     }
 

@@ -138,7 +138,20 @@
                                                     </div>
                                                 </div>
                                                 <!-- Second column -->
+                                                <div class="row">
                                                 <div class="col-md-6">
+                                                    <div class="md-form mb-0">
+                                                        <label class="text-success">Section </label><br/>
+                                                        <select class="form-control" th:field="*{section}">
+                                                            <option th:each="sectionValue : ${T(com.stealth.yash.FaceRecognition.enums.Section).values()}"
+                                                                    th:value="${sectionValue.name()}"
+                                                                    th:text="${sectionValue.name()}">val
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                    <div class="col-md-6">
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Campus </label><br/>
                                                         <select class="form-control" th:field="*{campus}">
@@ -147,11 +160,10 @@
                                                                     th:text="${campusValue.name()}">val
                                                             </option>
                                                         </select>
-
-
+                                                    </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                </div>
                                             <!-- First row -->
                                             <br/>
 

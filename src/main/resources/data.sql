@@ -3,7 +3,7 @@ INSERT IGNORE INTO roles(id,name) VALUES ('2','STUDENT');
 
 
 INSERT IGNORE INTO users (id, useremail, password, enabled, role_id)
-VALUES ('1','stealth@sheridan.com','$2a$10$a3A0JC757FLZqHYVvEJq7uNaYz3AW8320IHORzmljQN43Hkmi4T7C', true,'1');
+VALUES ('1','stealth@sheridan.com','$2a$10$1ltibqiyyBJMJQ4hqM7f0OusP6np/IHshkYc4TjedwHnwwNChQZCy', true,'1');
 
 -- INSERT IGNORE INTO dean(dean_id,first_name,last_name, dean_email, dean_contact_number)
 -- values (25252525, 'ak-47', 'akm', 'm416@gmail.com','528529688');
