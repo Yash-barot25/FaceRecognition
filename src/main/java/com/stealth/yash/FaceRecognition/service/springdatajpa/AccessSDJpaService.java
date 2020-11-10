@@ -6,6 +6,7 @@ import com.stealth.yash.FaceRecognition.service.AccessService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,7 +48,13 @@ public class AccessSDJpaService implements AccessService {
 
     @Override
     public void deleteById(Long aLong) {
-        accessRepository.findById(aLong);
+        accessRepository.deleteById(aLong);
     }
+
+    @Override
+    public List<AccessKey> findAccessFobs() {
+        return accessRepository.findAccessFobs();
+    }
+
 
 }

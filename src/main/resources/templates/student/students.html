@@ -72,7 +72,7 @@
                     <form th:action="@{/students/}" method="get" class="col-md-4">
                         <select id="campus" class="form-control">
                             <option value="no filter" selected>Campus Filter</option>
-                            <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.model.Campus).values()}"
+                            <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.enums.Campus).values()}"
                                     th:value="${campusValue.name()}"
                                     th:text="${campusValue.name()}">val
                             </option>

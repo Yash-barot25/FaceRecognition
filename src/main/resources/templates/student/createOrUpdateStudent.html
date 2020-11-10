@@ -142,7 +142,7 @@
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Campus </label><br/>
                                                         <select class="form-control" th:field="*{campus}">
-                                                            <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.model.Campus).values()}"
+                                                            <option th:each="campusValue : ${T(com.stealth.yash.FaceRecognition.enums.Campus).values()}"
                                                                     th:value="${campusValue.name()}"
                                                                     th:text="${campusValue.name()}">val
                                                             </option>

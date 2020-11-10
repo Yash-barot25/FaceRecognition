@@ -266,7 +266,7 @@
                                                 <label class="text-success">Access Key</label>
 
                                                 <input type="text" class="form-control text-muted"
-                                                       th:value="${student.accessKey.getAccessfobid()}"
+                                                       th:value="${student.accessKey} ? ${student.accessKey.getAccessfobid()} : 'PLEASE UPDATE ACCESS KEY'"
                                                        readonly    placeholder="Access  Key">
                                             </div>
 

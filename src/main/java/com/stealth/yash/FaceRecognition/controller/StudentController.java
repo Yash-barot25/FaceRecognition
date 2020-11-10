@@ -148,8 +148,8 @@ public class StudentController {
             System.out.println("Not a Proper Image type!!!");
         } else {
 
-            String fob = student.getAccessKey().getAccessfobid();
-            student.setImage(amclient.uploadFile(file,fob));
+            //String fob = student.getAccessKey().getAccessfobid();
+            student.setImage(amclient.uploadFile(file,"fob"));
             student.setStuPasswordEmail(generatePassword());
             String imagetoindex = student.getImage();
             String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
@@ -157,7 +157,7 @@ public class StudentController {
             student.setFaceIdAWS(faceid);
             savedStudent = studentService.save(student);
 
-          //  emailPasswordToUser(student.getEmail(),student.getStuPasswordEmail());
+            // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
         }
         assert savedStudent != null;
         return "redirect:/students/get/" + savedStudent.getId();
@@ -234,4 +234,5 @@ public class StudentController {
         accessSDJpaService.save(accessKey);
         return "redirect:/students";
     }
+
 }

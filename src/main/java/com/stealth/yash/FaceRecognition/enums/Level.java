@@ -4,7 +4,7 @@
  * @author  STEALTH
  *
  */
-package com.stealth.yash.FaceRecognition.model;
+package com.stealth.yash.FaceRecognition.enums;
 
 
 /**

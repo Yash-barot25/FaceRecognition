@@ -9,14 +9,11 @@ package com.stealth.yash.FaceRecognition.controller;
 import com.stealth.yash.FaceRecognition.model.Student;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.*;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -81,58 +78,54 @@ public class IndexController {
     @GetMapping("/login")
     public String login(){
         return "login";
-    }
-    @GetMapping("/studentDashboard")
-    public String studentDashboard(){
-        return "student/studentDashboard";
-    }
 
-    @GetMapping("/slogin")
-    public String slogin(){
-        return "slogin";
+    }
+    @GetMapping("/student")
+    public String student(){
+        return "student";
+
     }
 
 
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model){
 
-//    @GetMapping("/dashboard")
-//    public String showDashboard(Model model){
-//
-//        model.addAttribute("institutes", instituteSDJpaService.findAll());
-//        model.addAttribute("departments", departmentSDJpaService.findAll());
-//        model.addAttribute("programs", programSDJpaService.findAll());
-//        model.addAttribute("professors", professorSDJpaService.findAll());
-//        model.addAttribute("courses", courseSDJpaService.findAll());
-//        model.addAttribute("students", studentSDJpaService.findAll());
-//
-//
-//        return "dashboard";
-//    }
-
-    /**
-     * This method shows main page
-     * @param model an object of type model
-     * @param authentication an object of type Authentication
-     * @return index page
-     */
-    @GetMapping("/user")
-    public String mainPage(Model model, Authentication authentication) {
-
-        String name = authentication.getName();
-        List<String> roles = new ArrayList<String>();
-        for (GrantedAuthority ga: authentication.getAuthorities()) {
-            roles.add(ga.getAuthority());
-        }
-        model.addAttribute("name", name);
-        model.addAttribute("roles", roles);
-        model.addAttribute("programs", programSDJpaService.findAll());
-        model.addAttribute("students", studentSDJpaService.findAll());
-        model.addAttribute("professors", professorSDJpaService.findAll());
-        model.addAttribute("courses", courseSDJpaService.findAll());
         model.addAttribute("institutes", instituteSDJpaService.findAll());
         model.addAttribute("departments", departmentSDJpaService.findAll());
+        model.addAttribute("programs", programSDJpaService.findAll());
+        model.addAttribute("professors", professorSDJpaService.findAll());
+        model.addAttribute("courses", courseSDJpaService.findAll());
+        model.addAttribute("students", studentSDJpaService.findAll());
 
-        return "user/index";
+
+        return "dashboard";
     }
+
+//    /**
+//     * This method shows main page
+//     * @param model an object of type model
+//     * @param authentication an object of type Authentication
+//     * @return index page
+//     */
+//    @GetMapping("/user")
+//    public String mainPage(Model model, Authentication authentication) {
+//
+////        String name = authentication.getName();
+////        List<String> roles = new ArrayList<String>();
+////        for (GrantedAuthority ga: authentication.getAuthorities()) {
+////            roles.add(ga.getAuthority());
+////        }
+////        model.addAttribute("name", name);
+////        model.addAttribute("roles", roles);
+//        model.addAttribute("programs", programSDJpaService.findAll());
+//        model.addAttribute("students", studentSDJpaService.findAll());
+//        model.addAttribute("professors", professorSDJpaService.findAll());
+//        model.addAttribute("courses", courseSDJpaService.findAll());
+//        model.addAttribute("institutes", instituteSDJpaService.findAll());
+//        model.addAttribute("departments", departmentSDJpaService.findAll());
+//
+//        return "user/dashboard";
+//    }
 
     /**
      * This method displays coming soon section on Index page

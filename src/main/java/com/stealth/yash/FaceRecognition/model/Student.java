@@ -7,6 +7,7 @@
 package com.stealth.yash.FaceRecognition.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stealth.yash.FaceRecognition.enums.Campus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -130,6 +131,11 @@ public class Student{
     @JoinColumn(name = "stud_access_id", referencedColumnName = "access_Id")
     private AccessKey accessKey;
 
+//    @CreationTimestamp
+//    private LocalDateTime creationTimeStamp;
+//
+//    @UpdateTimestamp
+//    private LocalDateTime updateTimeStamp;
 
     /**
      * @param o object of type Object

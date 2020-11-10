@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="profile" href="//gmpg.org/xfn/11">
     <title>Profile</title>
     <link rel='dns-prefetch' href='//fonts.googleapis.com' />
     <link rel='dns-prefetch' href='//s.w.org' />
@@ -15,6 +14,9 @@
         !function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}
         function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
     </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel='stylesheet' id='wp-block-library-css'  href='https://lmpixels.com/wp/leven-wp/wp-includes/css/dist/block-library/style.min.css?ver=5.5.1' type='text/css' media='all' />
     <link rel='stylesheet' id='fw-ext-builder-frontend-grid-css'  href='https://lmpixels.com/wp/leven-wp/wp-content/plugins/unyson/framework/extensions/builder/static/css/frontend-grid.css?ver=1.2.12' type='text/css' media='all' />
     <link rel='stylesheet' id='fw-ext-forms-default-styles-css'  href='https://lmpixels.com/wp/leven-wp/wp-content/plugins/unyson/framework/extensions/forms/static/css/frontend.css?ver=2.7.24' type='text/css' media='all' />
@@ -48,14 +50,10 @@
     <link rel='shortlink' href='https://lmpixels.com/wp/leven-wp/' />
     <link rel="alternate" type="application/json+oembed" href="https://lmpixels.com/wp/leven-wp/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flmpixels.com%2Fwp%2Fleven-wp%2F" />
     <link rel="alternate" type="text/xml+oembed" href="https://lmpixels.com/wp/leven-wp/wp-json/oembed/1.0/embed?url=https%3A%2F%2Flmpixels.com%2Fwp%2Fleven-wp%2F&#038;format=xml" />
-    <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="icon" href="https://lmpixels.com/wp/leven-wp/wp-content/uploads/2019/12/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="https://lmpixels.com/wp/leven-wp/wp-content/uploads/2019/12/favicon.ico" sizes="192x192" />
-    <link rel="apple-touch-icon" href="https://lmpixels.com/wp/leven-wp/wp-content/uploads/2019/12/favicon.ico" />
-    <meta name="msapplication-TileImage" content="https://lmpixels.com/wp/leven-wp/wp-content/uploads/2019/12/favicon.ico" />
-
+    <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>   <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/studentDashboard.css}">
 </head>
-<body data-rsssl=1 class="home page-template-default page page-id-157 wp-embed-responsive masthead-fixed full-width grid">
+<body data-rsssl=1 class="home page-template-default page page-id-157 wp-embed-responsive masthead-fixed full-width grid" >
 
 <div class="lm-animated-bg"></div>
 
@@ -69,10 +67,12 @@
 <!-- /Loading animation -->
 
 <!-- Scroll To Top Button -->
-<div class="lmpixels-scroll-to-top"><i class="lnr lnr-chevron-up"></i></div>
+<div class="lmpixels-scroll-to-top">
+    <a title="Go to Top" href="#top"><i class="lnr lnr-chevron-up"></i></a>
+</div>
 <!-- /Scroll To Top Button -->
 
-<div class="page-scroll">
+<div class="page-scroll" id="top">
     <div id="page_container" class="page-container bg-move-effect theme-style-light" data-animation="transition-flip-in-right">
 
         <!-- Header -->
@@ -81,7 +81,7 @@
 
                 <!-- Text Logo -->
                 <div class="text-logo">
-                    <a href="https://lmpixels.com/wp/leven-wp/">
+                    <a href="#">
                         <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}"> </div>
                         <div class="logo-text" th:text="${student.getFirstName() + ' ' + student.getLastName()}"></div>
                     </a>
@@ -93,9 +93,9 @@
                 <div class="site-nav mobile-menu-hide">
                     <ul id="menu-classic-menu" class="leven-classic-menu site-main-menu"><li id="menu-item-160" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-160">
 
-                            <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a th:href="@{/login}" data-hover="1">About Me</a></li>
-                            <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#" data-hover="1">Check your Schedule here</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="/slogin" data-hover="1">Log Out</a></li>
+                            <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a href="#" data-hover="1">About Me</a></li>
+                            <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#schedule" data-hover="1">Check your Schedule here</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a th:action="@{/logout}" href="/logout" data-hover="1">Log Out</a></li>
                     </ul>
 
                 </div>
@@ -126,7 +126,7 @@
                                                         <div class="row flex-v-align">
                                                             <div class="col-sm-12 col-md-5 col-lg-5">
                                                                 <div class="home-photo">
-                                                                    <div class="hp-inner" th:style="'background:url(' + ${student.getImage()} + ');'"></div>
+                                                                    <div class="hp-inner" th:style="'background:url(' + ${student.getImage()} + ')  center center no-repeat;'"></div>
                                                                 </div>
                                                             </div>
 
@@ -225,13 +225,103 @@
                 </div><!-- #primary -->
             </div><!-- #main-content -->
         </div>
+        <br>
+        <br><br><br><br>
+        <div class="container" id="schedule">
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 ">
+                    <div  class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                        <div class="block-title">
+                            <h2>Your Schedule!!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="course:${student.getProgram().getCourses()}">
+                    <td>
+                        <div  class="p-3 mb-2 bg-primary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'MONDAY')}">
+                            <span th:text="${course.getId()}"></span> /
+                            Credits: <span th:text="${course.getCredit()}"></span> <br>
+                            <span th:text="${course.getCampus()}"></span><br>
+                            <span th:text="${course.getCourseName()}"></span><br>
+                            <span th:text="${course.getProfessor().getFirstName()  +' '+ course.getProfessor().getLastName()}"></span><br>
+                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="p-3 mb-2 bg-secondary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'TUESDAY')}">
+                            <span th:text="${course.getId()}"></span> /
+                            Credits: <span th:text="${course.getCredit()}"></span> <br>
+                            <span th:text="${course.getCampus()}"></span><br>
+                            <span th:text="${course.getCourseName()}"></span><br>
+                            <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
+                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div  class="p-3 mb-2 bg-warning text-dark" th:if="${#strings.equals(course.getTimeslot().getDay(),'WEDNESDAY')}">
+                            <span th:text="${course.getId()}"></span> /
+                            Credits: <span th:text="${course.getCredit()}"></span> <br>
+                            <span th:text="${course.getCampus()}"></span><br>
+                            <span th:text="${course.getCourseName()}"></span><br>
+                            <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
+                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="p-3 mb-2 bg-info text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'THURSDAY')}">
+                            <span th:text="${course.getId()}"></span> /
+                            Credits: <span th:text="${course.getCredit()}"></span> <br>
+                            <span th:text="${course.getCampus()}"></span><br>
+                            <span th:text="${course.getCourseName()}"></span><br>
+                            <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
+                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="p-3 mb-2 bg-danger text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'FRIDAY')}">
+                            <span th:text="${course.getId()}"></span> /
+                            Credits: <span th:text="${course.getCredit()}"></span> <br>
+                            <span th:text="${course.getCampus()}"></span><br>
+                            <span th:text="${course.getCourseName()}"></span><br>
+                            <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
+                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
 
 
     </div>
 
 </div>
+
+
 <footer class="site-footer clearfix" th:replace="fragments/footer.html :: footer">
 </footer>
+
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/modernizr.custom.js?ver=2.8.3' id='modernizr-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/bootstrap.min.js?ver=4.0.0' id='bootstrap-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/themes/leven/js/owl.carousel.min.js?ver=2.0' id='owl-carousel-js'></script>

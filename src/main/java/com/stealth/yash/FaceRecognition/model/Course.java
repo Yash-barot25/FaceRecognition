@@ -7,6 +7,7 @@
 package com.stealth.yash.FaceRecognition.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stealth.yash.FaceRecognition.enums.Campus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Objects;
 //Put on any field to make lombok build a standard getter.
 @Getter
@@ -85,12 +87,16 @@ public class Course {
     @JoinColumn(name = "program_id")
     private Program program;
 
+
     @JsonIgnore
     //specifies a single-valued association to another entity class that has many-to-one multiplicity
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     //Specifies a column for joining an entity association or element collection
     @JoinColumn(name = "department_id")
     private Department department;
+
+    @Embedded
+    private Timeslot timeslot;
 
 
     /**
