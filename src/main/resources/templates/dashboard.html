@@ -21,7 +21,8 @@
 
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script th:src="@{/js/highchart/highcharts.js}"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -34,6 +35,19 @@
     <script src="https://www.highcharts.com/samples/static/highslide.config.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="https://www.highcharts.com/samples/static/highslide.css">
     <style>
+
+        #container {
+            height: 400px;
+        }
+
+        #barcontainer {
+            height: 500px;
+        }
+
+
+        #piecontainer {
+            height: 400px;
+        }
 
         .highcharts-figure, .highcharts-data-table table {
             min-width: 360px;
@@ -252,7 +266,29 @@
 
 
                 <!-- Content Row -->
+                <div class="row">
 
+                    <!-- Area Chart -->
+                    <div class="col-xl-9 col-lg-8">
+                        <figure class="highcharts-figure">
+                            <div id="barcontainer"></div>
+                        </figure>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4">
+                        <h2 class="m-2">Controllers</h2>
+                        <div class="m-5">
+                            <button id="plain" class="btn btn-primary">Plain</button>
+                        </div>
+                        <div class="m-5">
+                            <button id="inverted" class="btn btn-primary">Inverted</button>
+                        </div>
+                        <div class="m-5">
+                            <button id="polar" class="btn btn-primary">Polar</button>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="row">
 
                     <!-- Area Chart -->
@@ -465,112 +501,99 @@
 
     /*<![CDATA[*/
     Highcharts.chart('container', {
-
         chart: {
-            scrollablePlotArea: {
-                minWidth: 700
-            }
+            type: 'spline'
         },
-        // 'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/analytics.csv'
-        data: {
-            csvURL: 'https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/analytics.csv',
-            beforeParse: function (csv) {
-                return csv.replace(/\n\n/g, '\n');
-            }
-        },
-
         title: {
-            text: 'Stealth Face Recognition System Users'
+            text: 'User Access per month'
         },
-
         subtitle: {
-            text: 'No.of users vs time frame'
+            text: 'Irregular time data'
         },
-
         xAxis: {
-            tickInterval: 7 * 24 * 3600 * 1000, // one week
-            tickWidth: 0,
-            gridLineWidth: 1,
-            labels: {
-                align: 'left',
-                x: 3,
-                y: -3
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date per month'
             }
         },
-
-        yAxis: [{ // left y axis
+        yAxis: {
             title: {
-                text: null
+                text: 'Users Count'
             },
-            labels: {
-                align: 'left',
-                x: 3,
-                y: 16,
-                format: '{value:.,0f}'
-            },
-            showFirstLabel: false
-        }, { // right y axis
-            linkedTo: 0,
-            gridLineWidth: 0,
-            opposite: true,
-            title: {
-                text: null
-            },
-            labels: {
-                align: 'right',
-                x: -3,
-                y: 16,
-                format: '{value:.,0f}'
-            },
-            showFirstLabel: false
-        }],
-
-        legend: {
-            align: 'left',
-            verticalAlign: 'top',
-            borderWidth: 0
+            min: 0
         },
-
         tooltip: {
-            shared: true,
-            crosshairs: true
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x:%e. %b}: Users => {point.y:.2f} '
         },
 
         plotOptions: {
             series: {
-                cursor: 'pointer',
-                point: {
-                    events: {
-                        click: function (e) {
-                            hs.htmlExpand(null, {
-                                pageOrigin: {
-                                    x: e.pageX || e.clientX,
-                                    y: e.pageY || e.clientY
-                                },
-                                headingText: this.series.name,
-                                maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-                                    this.y + ' sessions',
-                                width: 200
-                            });
-                        }
-                    }
-                },
                 marker: {
-                    lineWidth: 1
+                    enabled: true
                 }
             }
         },
 
+        colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
+
         series: [{
-            name: 'All sessions',
-            lineWidth: 4,
-            marker: {
-                radius: 4
-            }
-        }, {
-            name: 'New users'
-        }]
+            name: "2020-2021",
+            data: [
+                [Date.UTC(2020, 10, 25), 5],
+                [Date.UTC(2020, 11,  6), 25],
+                [Date.UTC(2020, 11, 20), 2],
+                [Date.UTC(2020, 11, 25), 1],
+                [Date.UTC(2021, 0,  1), 2],
+                [Date.UTC(2021, 0, 3), 12],
+                [Date.UTC(2021, 0, 4), 11],
+                [Date.UTC(2021, 0,  6), 2],
+                [Date.UTC(2021, 0, 11), 12],
+                [Date.UTC(2021, 0, 18), 11],
+                [Date.UTC(2021, 1,  4), 3],
+                [Date.UTC(2021, 1, 14), 14],
+                [Date.UTC(2021, 2,  6), 9],
+                [Date.UTC(2021, 2, 14), 11],
+                [Date.UTC(2021, 2, 24), 19],
+                [Date.UTC(2021, 3,  1), 20],
+                [Date.UTC(2021, 3, 11), 7],
+                [Date.UTC(2021, 3, 27), 29],
+                [Date.UTC(2021, 4,  4), 20],
+                [Date.UTC(2021, 4,  9), 0],
+                [Date.UTC(2021, 4, 14), 12],
+                [Date.UTC(2021, 4, 19), 21],
+                [Date.UTC(2021, 5,  4), 2],
+                [Date.UTC(2021, 5,  9), 12],
+                [Date.UTC(2021, 5, 14), 7],
+                [Date.UTC(2021, 5, 19), 1],
+            ]
+
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    plotOptions: {
+                        series: {
+                            marker: {
+                                radius: 2.5
+                            }
+                        }
+                    }
+                }
+            }]
+        }
     });
+
+
+    // piegraph
 
 
     Highcharts.chart('piecontainer', {
@@ -621,6 +644,70 @@
             ]
         }]
     });
+
+
+    // bargraph
+
+    var chart = Highcharts.chart('barcontainer', {
+
+        title: {
+            text: 'System Users Access Count'
+        },
+
+        subtitle: {
+            text: 'Users'
+        },
+
+        xAxis: {
+            categories: [[${studentNames}]]
+        },
+
+        series: [{
+            type: 'column',
+            colorByPoint: true,
+            data: [5,10,7,11,9],
+            showInLegend: false
+        }]
+
+    });
+
+
+    $('#plain').click(function () {
+        chart.update({
+            chart: {
+                inverted: false,
+                polar: false
+            },
+            subtitle: {
+                text: 'Plain'
+            }
+        });
+    });
+
+    $('#inverted').click(function () {
+        chart.update({
+            chart: {
+                inverted: true,
+                polar: false
+            },
+            subtitle: {
+                text: 'Inverted'
+            }
+        });
+    });
+
+    $('#polar').click(function () {
+        chart.update({
+            chart: {
+                inverted: false,
+                polar: true
+            },
+            subtitle: {
+                text: 'Polar'
+            }
+        });
+    });
+
 
     /*]]>*/
 

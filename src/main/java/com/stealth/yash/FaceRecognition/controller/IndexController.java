@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class IndexController {
@@ -89,43 +91,24 @@ public class IndexController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
+        List<String> studentNames = new ArrayList<>();
+        Set<Student> students = studentSDJpaService.findAll();
+        for(Student student :students){
+            studentNames.add(student.getFirstName());
+        }
+
 
         model.addAttribute("institutes", instituteSDJpaService.findAll());
         model.addAttribute("departments", departmentSDJpaService.findAll());
         model.addAttribute("programs", programSDJpaService.findAll());
         model.addAttribute("professors", professorSDJpaService.findAll());
         model.addAttribute("courses", courseSDJpaService.findAll());
-        model.addAttribute("students", studentSDJpaService.findAll());
+        model.addAttribute("students", students);
+        model.addAttribute("studentNames", studentNames);
 
 
         return "dashboard";
     }
-
-//    /**
-//     * This method shows main page
-//     * @param model an object of type model
-//     * @param authentication an object of type Authentication
-//     * @return index page
-//     */
-//    @GetMapping("/user")
-//    public String mainPage(Model model, Authentication authentication) {
-//
-////        String name = authentication.getName();
-////        List<String> roles = new ArrayList<String>();
-////        for (GrantedAuthority ga: authentication.getAuthorities()) {
-////            roles.add(ga.getAuthority());
-////        }
-////        model.addAttribute("name", name);
-////        model.addAttribute("roles", roles);
-//        model.addAttribute("programs", programSDJpaService.findAll());
-//        model.addAttribute("students", studentSDJpaService.findAll());
-//        model.addAttribute("professors", professorSDJpaService.findAll());
-//        model.addAttribute("courses", courseSDJpaService.findAll());
-//        model.addAttribute("institutes", instituteSDJpaService.findAll());
-//        model.addAttribute("departments", departmentSDJpaService.findAll());
-//
-//        return "user/dashboard";
-//    }
 
     /**
      * This method displays coming soon section on Index page
