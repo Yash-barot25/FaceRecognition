@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @NonNull
     private boolean enabled;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "role_id")
     private Role role;
 

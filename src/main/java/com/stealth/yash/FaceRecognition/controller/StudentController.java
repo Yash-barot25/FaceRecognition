@@ -2,21 +2,23 @@
  * ************************** FACIAL RECOGNITION - CAPSTONE************************
  * Controller - StudentController
  * This Controller is responsible for handling any request that is related to Students.
- * @author  STEALTH
  *
+ * @author STEALTH
  */
 
 package com.stealth.yash.FaceRecognition.controller;
 
-import com.stealth.yash.FaceRecognition.model.AWSClient;
-import com.stealth.yash.FaceRecognition.model.AccessKey;
-import com.stealth.yash.FaceRecognition.model.Student;
-import com.stealth.yash.FaceRecognition.repository.AccessRepository;
+import com.stealth.yash.FaceRecognition.enums.Roles;
+import com.stealth.yash.FaceRecognition.model.*;
+import com.stealth.yash.FaceRecognition.repository.RoleRepository;
+import com.stealth.yash.FaceRecognition.repository.TokenRepository;
+import com.stealth.yash.FaceRecognition.repository.UserRepository;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.AccessSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.DepartmentSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.ProgramSDJpaService;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.StudentSDJpaService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
@@ -45,30 +48,37 @@ public class StudentController {
 
     private final StudentSDJpaService studentService;
     private final ProgramSDJpaService programService;
-    private final AccessRepository accessRepository;
     private final DepartmentSDJpaService departmentSDJpaService;
     private final ProgramSDJpaService programSDJpaService;
     private final AWSClient amclient;
-    private  final AccessSDJpaService accessSDJpaService;
+    private final AccessSDJpaService accessSDJpaService;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final TokenRepository tokenRepository;
+
 
     /**
      * This is a student constructor
-     * @param amclient this is an object of type AWSClient model
      * @param studentService - an object of type StudentSDJpaService service
      * @param programService - an object of type ProgramSDJpaService service
      * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
      * @param programSDJpaService - an object of type ProgramSDJpaService service
-     * @param studentSDJpaService
+     * @param amclient this is an object of type AWSClient model
      * @param accessSDJpaService
+     * @param passwordEncoder
      */
-    public StudentController(AccessRepository accessRepository,AWSClient amclient, StudentSDJpaService studentService, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, StudentSDJpaService studentSDJpaService, AccessSDJpaService accessSDJpaService) {
+    public StudentController(StudentSDJpaService studentService,TokenRepository tokenRepository ,ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, AWSClient amclient, AccessSDJpaService accessSDJpaService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
-        this.amclient = amclient;
         this.programSDJpaService = programSDJpaService;
+        this.amclient = amclient;
         this.accessSDJpaService = accessSDJpaService;
-        this.accessRepository = accessRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenRepository = tokenRepository;
     }
 
     /**
@@ -102,7 +112,7 @@ public class StudentController {
     public String showStudentInfo(@PathVariable Long studentId, Model model) throws UnsupportedEncodingException {
         Student student = new Student();
         String image = studentService.findById(studentId).getImage();
-        model.addAttribute("userImage",image);
+        model.addAttribute("userImage", image);
         model.addAttribute("student", studentService.findById(studentId));
         return "student/student-info";
     }
@@ -115,15 +125,20 @@ public class StudentController {
      */
     @GetMapping({"/update/{studentId}", "/create"})
     public String createOrUpdateStudent(@PathVariable Optional<Long> studentId, Model model) {
-        if (studentId.isPresent()){
-            model.addAttribute("student",studentService.findById(studentId.get()));
-        }else{
+        if (studentId.isPresent()) {
+            model.addAttribute("student", studentService.findById(studentId.get()));
+            List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
+            accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
+
+            model.addAttribute("accessKeys", accessKeys);
+        } else {
             Student student = new Student();
             model.addAttribute("student", student);
+            model.addAttribute("accessKeys", accessSDJpaService.findAccessFobs());
         }
-        model.addAttribute("programs",programService.findAll());
-        model.addAttribute("departments",departmentSDJpaService.findAll());
-        model.addAttribute("accessKeys",accessRepository.findAccessFobs() );
+        model.addAttribute("programs", programService.findAll());
+        model.addAttribute("departments", departmentSDJpaService.findAll());
+
         return "student/createOrUpdateStudent";
     }
 
@@ -148,31 +163,52 @@ public class StudentController {
             System.out.println("Not a Proper Image type!!!");
         } else {
 
-            //String fob = student.getAccessKey().getAccessfobid();
-            student.setImage(amclient.uploadFile(file,"fob"));
-            student.setStuPasswordEmail(generatePassword());
-            String imagetoindex = student.getImage();
-            String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
-            String faceid = amclient.addfacetoawscollection(indexingimage);
-            student.setFaceIdAWS(faceid);
-            savedStudent = studentService.save(student);
 
-            // emailPasswordToUser(student1.getEmail(),student1.getStuPasswordEmail());
+            if(studentService.findByEmail(student.getEmail()) != null){
+                System.out.println("Email Exists!!");
+            }else{
+                Token token = new Token();
+                String fob = student.getAccessKey().getAccessfobid();
+                student.setImage(amclient.uploadFile(file, fob));
+                student.setStuPasswordEmail(generatePassword());
+                String imagetoindex = student.getImage();
+                String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
+                String faceid = amclient.addfacetoawscollection(indexingimage);
+                student.setFaceIdAWS(faceid);
+//            student.setStuRole("ROLE_USER");
+                savedStudent = studentService.save(student);
+                User studentUser = new User();
+                Role studentRole = new Role();
+                studentRole.setName(Roles.STUDENT);
+                studentUser.setUseremail(savedStudent.getEmail());
+                studentUser.setEnabled(false);
+                studentUser.setRole(studentRole);
+                studentUser.setPassword(passwordEncoder.encode(student.getStuPasswordEmail()));
+                userRepository.save(studentUser);
+                String confToken = UUID.randomUUID().toString();
+                token.setConfirmationToken(confToken);
+                token.setStudent(student);
+                tokenRepository.save(token);
+                emailTokenToUser(student.getEmail(), confToken);
+            }
+
         }
         assert savedStudent != null;
         return "redirect:/students/get/" + savedStudent.getId();
     }
 
-        /**
-         * This method generated password
-         * @return the generated password
-         *
-         */
-    public String generatePassword(){
+
+
+    /**
+     * This method generated password
+     * @return the generated password
+     *
+     */
+    public String generatePassword() {
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         String password = "";
         int maxlength = 8;
-        for (int i=0; i<maxlength; i++){
+        for (int i = 0; i < maxlength; i++) {
             Random rand = new Random();
             int index = rand.nextInt(str.length());
             password += str.charAt(index);
@@ -180,13 +216,16 @@ public class StudentController {
         return password;
     }
 
+
     /**
      * This method emails passwords to users
      * @param to an object of type String
      * @param password an object of type String
      * @return user's password
      */
-    public String emailPasswordToUser (String to, String password){
+
+
+    public String emailTokenToUser(String to, String confToken) {
 
         String from = "stealtht90@gmail.com";
         String pass = "Sheridan123";
@@ -204,18 +243,17 @@ public class StudentController {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.setRecipients(Message.RecipientType.TO,to);
-            message.setSubject("Login Password - Stealth Admin");
-            message.setText("Your password to access Stealth Admin Portal : " +password + "\n\n\nKind Regards,\n Team Stealth");
+            message.setRecipients(Message.RecipientType.TO, to);
+            message.setSubject("Complete Registration - Stealth Admin");
+            message.setText("To confirm your account, please click here : http://localhost:8080/confirm-account?token=" +confToken);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }
-        catch (MessagingException me) {
+        } catch (MessagingException me) {
             me.printStackTrace();
         }
-        return password;
+        return confToken;
     }
 
     /**
@@ -223,12 +261,19 @@ public class StudentController {
      * @param studentId an object of type Long
      * @return Students web page
      */
+
+
+    @Transactional
     @GetMapping("/delete/{studentId}")
-    public String deleteStudent(@PathVariable Long studentId, AccessKey accessKey){
+    public String deleteStudent(@PathVariable Long studentId, AccessKey accessKey) {
         Student student = new Student();
+
         this.amclient.removeFile(studentService.findById(studentId).getImage());
         this.amclient.deletefacefromawscollection(studentService.findById(studentId).getFaceIdAWS());
         String fobid = studentService.findById(studentId).getAccessKey().getAccessfobid();
+        String userEmail = studentService.findById(studentId).getEmail();
+        userRepository.deleteUserByUseremail(userEmail);
+        tokenRepository.deleteById(studentId);
         studentService.deleteById(studentId);
         accessKey.setAccessfobid(fobid);
         accessSDJpaService.save(accessKey);
