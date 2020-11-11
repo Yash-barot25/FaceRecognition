@@ -24,7 +24,7 @@ public class CustomeSuccessHandler implements AuthenticationSuccessHandler {
         for (GrantedAuthority grantedAuthority : authorities) {
             System.out.println("role " + grantedAuthority.getAuthority());
             if (grantedAuthority.getAuthority().equals("ROLE_STUDENT")) {
-                redirectUrl = "/student";
+                redirectUrl = "student/detail";
                 break;
             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 redirectUrl = "/dashboard";

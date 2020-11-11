@@ -25,7 +25,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAllByLastNameLike(String lastName);
     // query method for finding student by image
     Student findByImage(String image);
-
+    // query for finding Student by email
+    Student findByEmail(String email);
 
     @Query(value = "select  s from Student s where s.firstName like %:val% or  s.lastName like %:val% or s.email like %:val% or s.phoneNumber like %:val% or s.id = :val")
     List<Student> searchStudent(@Param("val") String value);
