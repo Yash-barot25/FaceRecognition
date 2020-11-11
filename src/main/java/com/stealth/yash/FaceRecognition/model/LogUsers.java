@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 //Put on any field to make lombok build a standard getter.
 @Getter
@@ -25,8 +27,10 @@ public class LogUsers {
     private Long id;
     @Column(name = "user_fob_id")
     private String userFobId;
-    @Column(name="accessed_time")
-    private String accessTime;
+    @Column(name="access_date")
+    private LocalDate accessDate;
+    @Column(name="access_time")
+    private LocalTime accessTime;
 
 
 }

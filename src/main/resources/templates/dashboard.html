@@ -500,6 +500,25 @@
 <script th:inline="javascript">
 
     /*<![CDATA[*/
+    function myFunc() {
+        let x = [[${plotter.keySet()}]];
+        let y = [[${plotter.values()}]];
+        // console.log(x[0]);
+        console.log(x, y)
+        let z = [];
+        for (let i = 0; i < x.length; i++) {
+            var dateVar = new Date(x[i]);
+            console.log(dateVar)
+            var a = dateVar.getUTCDate();
+            var b = dateVar.getUTCMonth();
+            var c = dateVar.getUTCFullYear();
+            console.log(a, b, c)
+            z[i] = [Date.UTC(c,b,a), y[i]];
+        }
+        console.log(z);
+        return z;
+    }
+
     Highcharts.chart('container', {
         chart: {
             type: 'spline'
@@ -542,35 +561,40 @@
         colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
 
         series: [{
-            name: "2020-2021",
-            data: [
-                [Date.UTC(2020, 10, 25), 5],
-                [Date.UTC(2020, 11,  6), 25],
-                [Date.UTC(2020, 11, 20), 2],
-                [Date.UTC(2020, 11, 25), 1],
-                [Date.UTC(2021, 0,  1), 2],
-                [Date.UTC(2021, 0, 3), 12],
-                [Date.UTC(2021, 0, 4), 11],
-                [Date.UTC(2021, 0,  6), 2],
-                [Date.UTC(2021, 0, 11), 12],
-                [Date.UTC(2021, 0, 18), 11],
-                [Date.UTC(2021, 1,  4), 3],
-                [Date.UTC(2021, 1, 14), 14],
-                [Date.UTC(2021, 2,  6), 9],
-                [Date.UTC(2021, 2, 14), 11],
-                [Date.UTC(2021, 2, 24), 19],
-                [Date.UTC(2021, 3,  1), 20],
-                [Date.UTC(2021, 3, 11), 7],
-                [Date.UTC(2021, 3, 27), 29],
-                [Date.UTC(2021, 4,  4), 20],
-                [Date.UTC(2021, 4,  9), 0],
-                [Date.UTC(2021, 4, 14), 12],
-                [Date.UTC(2021, 4, 19), 21],
-                [Date.UTC(2021, 5,  4), 2],
-                [Date.UTC(2021, 5,  9), 12],
-                [Date.UTC(2021, 5, 14), 7],
-                [Date.UTC(2021, 5, 19), 1],
-            ]
+            name: [[${timeFrame}]],
+
+            data: myFunc()
+
+
+
+            // data: [
+            //     [Date.UTC(2020, 10, 25), 5],
+            //     [Date.UTC(2020, 11,  6), 25],
+            //     [Date.UTC(2020, 11, 20), 2],
+            //     [Date.UTC(2020, 11, 25), 1],
+            //     [Date.UTC(2021, 0,  1), 2],
+            //     [Date.UTC(2021, 0, 3), 12],
+            //     [Date.UTC(2021, 0, 4), 11],
+            //     [Date.UTC(2021, 0,  6), 2],
+            //     [Date.UTC(2021, 0, 11), 12],
+            //     [Date.UTC(2021, 0, 18), 11],
+            //     [Date.UTC(2021, 1,  4), 3],
+            //     [Date.UTC(2021, 1, 14), 14],
+            //     [Date.UTC(2021, 2,  6), 9],
+            //     [Date.UTC(2021, 2, 14), 11],
+            //     [Date.UTC(2021, 2, 24), 19],
+            //     [Date.UTC(2021, 3,  1), 20],
+            //     [Date.UTC(2021, 3, 11), 7],
+            //     [Date.UTC(2021, 3, 27), 29],
+            //     [Date.UTC(2021, 4,  4), 20],
+            //     [Date.UTC(2021, 4,  9), 0],
+            //     [Date.UTC(2021, 4, 14), 12],
+            //     [Date.UTC(2021, 4, 19), 21],
+            //     [Date.UTC(2021, 5,  4), 2],
+            //     [Date.UTC(2021, 5,  9), 12],
+            //     [Date.UTC(2021, 5, 14), 7],
+            //     [Date.UTC(2021, 5, 19), 1],
+            // ]
 
         }],
 
@@ -659,13 +683,13 @@
         },
 
         xAxis: {
-            categories: [[${studentNames}]]
+            categories: [[${studentAccessMap.keySet()}]]
         },
 
         series: [{
             type: 'column',
             colorByPoint: true,
-            data: [5,10,7,11,9],
+            data: [[${studentAccessMap.values()}]],
             showInLegend: false
         }]
 
