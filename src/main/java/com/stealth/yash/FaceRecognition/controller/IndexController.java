@@ -7,6 +7,8 @@
 package com.stealth.yash.FaceRecognition.controller;
 
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.repository.LogUsersRepository;
+import com.stealth.yash.FaceRecognition.repository.StudentRepository;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,11 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class IndexController {
 
    private final InstituteSDJpaService instituteSDJpaService;
@@ -27,6 +32,8 @@ public class IndexController {
    private final ProfessorSDJpaService professorSDJpaService;
    private final CourseSDJpaService courseSDJpaService;
    private final StudentSDJpaService studentSDJpaService;
+   private final LogUsersRepository logUsersRepository;
+   private final StudentRepository  studentRepository;
 
 
     /**
@@ -35,15 +42,19 @@ public class IndexController {
      * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
      * @param programSDJpaService - an object of type ProgramSDJpaService service
      * @param studentSDJpaService - an object of type StudentSDJpaService service
+     * @param logUsersRepository
+     * @param studentRepository
      */
 
-    public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService) {
+    public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService, LogUsersRepository logUsersRepository, StudentRepository studentRepository) {
         this.instituteSDJpaService = instituteSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.programSDJpaService = programSDJpaService;
         this.professorSDJpaService = professorSDJpaService;
         this.courseSDJpaService = courseSDJpaService;
         this.studentSDJpaService = studentSDJpaService;
+        this.logUsersRepository = logUsersRepository;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -91,10 +102,19 @@ public class IndexController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model){
-        List<String> studentNames = new ArrayList<>();
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+        Map<String, Long> studentAccessMap = new HashMap<>();
         Set<Student> students = studentSDJpaService.findAll();
         for(Student student :students){
-            studentNames.add(student.getFirstName());
+            studentAccessMap.put(student.getFirstName(), logUsersRepository.countAllByUserFobId(student.getAccessKey().getAccessfobid()));
+        }
+
+        Map<LocalDate, Long> myMap = new TreeMap<>();
+       List<LocalDate> dateList = logUsersRepository.getValuesOfDistinctDates();
+        for (LocalDate localDate : dateList) {
+
+            myMap.put(localDate, logUsersRepository.countAllByAccessDate(localDate));
+
         }
 
 
@@ -104,8 +124,10 @@ public class IndexController {
         model.addAttribute("professors", professorSDJpaService.findAll());
         model.addAttribute("courses", courseSDJpaService.findAll());
         model.addAttribute("students", students);
-        model.addAttribute("studentNames", studentNames);
 
+        model.addAttribute("studentAccessMap", studentAccessMap);
+        model.addAttribute("timeFrame", "2020-2021");
+        model.addAttribute("plotter", myMap);
 
         return "dashboard";
     }
