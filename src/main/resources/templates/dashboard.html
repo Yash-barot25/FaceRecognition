@@ -19,6 +19,76 @@
     <!-- Custom styles for this template-->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script th:src="@{/js/highchart/highcharts.js}"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <!-- Additional files for the Highslide popup effect -->
+    <script src="https://www.highcharts.com/samples/static/highslide-full.min.js"></script>
+    <script src="https://www.highcharts.com/samples/static/highslide.config.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="https://www.highcharts.com/samples/static/highslide.css">
+    <style>
+
+        #container {
+            height: 400px;
+        }
+
+        #barcontainer {
+            height: 500px;
+        }
+
+
+        #piecontainer {
+            height: 400px;
+        }
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 360px;
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -196,78 +266,47 @@
 
 
                 <!-- Content Row -->
+                <div class="row">
 
+                    <!-- Area Chart -->
+                    <div class="col-xl-9 col-lg-8">
+                        <figure class="highcharts-figure">
+                            <div id="barcontainer"></div>
+                        </figure>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4">
+                        <h2 class="m-2">Controllers</h2>
+                        <div class="m-5">
+                            <button id="plain" class="btn btn-primary">Plain</button>
+                        </div>
+                        <div class="m-5">
+                            <button id="inverted" class="btn btn-primary">Inverted</button>
+                        </div>
+                        <div class="m-5">
+                            <button id="polar" class="btn btn-primary">Polar</button>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="row">
 
                     <!-- Area Chart -->
                     <div class="col-xl-8 col-lg-7">
-                        <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Access Control Overview</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Actions</div>
-                                        <a class="dropdown-item" href="#">Create Report</a>
-                                        <a class="dropdown-item" href="#">Reset</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Analyze</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card Body -->
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
+                        <figure class="highcharts-figure">
+                            <div id="container"></div>
+                        </figure>
+
+
                     </div>
 
                     <!-- Pie Chart -->
                     <div class="col-xl-4 col-lg-5">
-                        <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Entities</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">Actions</div>
-                                        <a class="dropdown-item" href="#">Create Report</a>
-                                        <a class="dropdown-item" href="#">Reset</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Analyze</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card Body -->
-                            <div class="card-body">
-                                <div class="chart-pie pt-4 pb-2">
-                                    <canvas id="myPieChart"></canvas>
-                                </div>
-                                <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Students
-                    </span>
-                                    <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Professors
-                    </span>
-                                    <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Programs
-                    </span>
-                                </div>
-                            </div>
-                        </div>
+
+
+                        <figure class="highcharts-figure">
+                            <div id="piecontainer"></div>
+                        </figure>
                     </div>
                 </div>
 
@@ -457,6 +496,222 @@
     </div>
 </div>
 
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    Highcharts.chart('container', {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: 'User Access per month'
+        },
+        subtitle: {
+            text: 'Irregular time data'
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date per month'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Users Count'
+            },
+            min: 0
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x:%e. %b}: Users => {point.y:.2f} '
+        },
+
+        plotOptions: {
+            series: {
+                marker: {
+                    enabled: true
+                }
+            }
+        },
+
+        colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
+
+        series: [{
+            name: "2020-2021",
+            data: [
+                [Date.UTC(2020, 10, 25), 5],
+                [Date.UTC(2020, 11,  6), 25],
+                [Date.UTC(2020, 11, 20), 2],
+                [Date.UTC(2020, 11, 25), 1],
+                [Date.UTC(2021, 0,  1), 2],
+                [Date.UTC(2021, 0, 3), 12],
+                [Date.UTC(2021, 0, 4), 11],
+                [Date.UTC(2021, 0,  6), 2],
+                [Date.UTC(2021, 0, 11), 12],
+                [Date.UTC(2021, 0, 18), 11],
+                [Date.UTC(2021, 1,  4), 3],
+                [Date.UTC(2021, 1, 14), 14],
+                [Date.UTC(2021, 2,  6), 9],
+                [Date.UTC(2021, 2, 14), 11],
+                [Date.UTC(2021, 2, 24), 19],
+                [Date.UTC(2021, 3,  1), 20],
+                [Date.UTC(2021, 3, 11), 7],
+                [Date.UTC(2021, 3, 27), 29],
+                [Date.UTC(2021, 4,  4), 20],
+                [Date.UTC(2021, 4,  9), 0],
+                [Date.UTC(2021, 4, 14), 12],
+                [Date.UTC(2021, 4, 19), 21],
+                [Date.UTC(2021, 5,  4), 2],
+                [Date.UTC(2021, 5,  9), 12],
+                [Date.UTC(2021, 5, 14), 7],
+                [Date.UTC(2021, 5, 19), 1],
+            ]
+
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    plotOptions: {
+                        series: {
+                            marker: {
+                                radius: 2.5
+                            }
+                        }
+                    }
+                }
+            }]
+        }
+    });
+
+
+    // piegraph
+
+
+    Highcharts.chart('piecontainer', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: 'System Entities'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Entity Concentration',
+            data: [
+                ['Programs', [[${programs.size()}]]],
+                ['Courses', [[${courses.size()}]]],
+                {
+                    name: 'Students',
+                    y: [[${students.size()}]],
+                    sliced: true,
+                    selected: true
+                },
+                ['Professors', [[${professors.size()}]]],
+                ['Departments', [[${departments.size()}]]]
+            ]
+        }]
+    });
+
+
+    // bargraph
+
+    var chart = Highcharts.chart('barcontainer', {
+
+        title: {
+            text: 'System Users Access Count'
+        },
+
+        subtitle: {
+            text: 'Users'
+        },
+
+        xAxis: {
+            categories: [[${studentNames}]]
+        },
+
+        series: [{
+            type: 'column',
+            colorByPoint: true,
+            data: [5,10,7,11,9],
+            showInLegend: false
+        }]
+
+    });
+
+
+    $('#plain').click(function () {
+        chart.update({
+            chart: {
+                inverted: false,
+                polar: false
+            },
+            subtitle: {
+                text: 'Plain'
+            }
+        });
+    });
+
+    $('#inverted').click(function () {
+        chart.update({
+            chart: {
+                inverted: true,
+                polar: false
+            },
+            subtitle: {
+                text: 'Inverted'
+            }
+        });
+    });
+
+    $('#polar').click(function () {
+        chart.update({
+            chart: {
+                inverted: false,
+                polar: true
+            },
+            subtitle: {
+                text: 'Polar'
+            }
+        });
+    });
+
+
+    /*]]>*/
+
+</script>
 
 </body>
 
