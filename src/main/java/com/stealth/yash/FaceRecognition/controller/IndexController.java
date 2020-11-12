@@ -6,16 +6,26 @@
  */
 package com.stealth.yash.FaceRecognition.controller;
 
+import com.amazonaws.services.cognitoidp.model.UserNotFoundException;
 import com.stealth.yash.FaceRecognition.model.Student;
+import com.stealth.yash.FaceRecognition.model.Token;
+import com.stealth.yash.FaceRecognition.model.User;
 import com.stealth.yash.FaceRecognition.repository.LogUsersRepository;
 import com.stealth.yash.FaceRecognition.repository.StudentRepository;
+import com.stealth.yash.FaceRecognition.repository.TokenRepository;
+import com.stealth.yash.FaceRecognition.repository.UserRepository;
 import com.stealth.yash.FaceRecognition.service.springdatajpa.*;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.time.LocalDate;
@@ -34,6 +44,8 @@ public class IndexController {
    private final StudentSDJpaService studentSDJpaService;
    private final LogUsersRepository logUsersRepository;
    private final StudentRepository  studentRepository;
+   private final UserRepository userRepository;
+   private final TokenRepository tokenRepository;
 
 
     /**
@@ -44,9 +56,11 @@ public class IndexController {
      * @param studentSDJpaService - an object of type StudentSDJpaService service
      * @param logUsersRepository
      * @param studentRepository
+     * @param userRepository
+     * @param tokenRepository
      */
 
-    public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService, LogUsersRepository logUsersRepository, StudentRepository studentRepository) {
+    public IndexController(InstituteSDJpaService instituteSDJpaService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, ProfessorSDJpaService professorSDJpaService, CourseSDJpaService courseSDJpaService, StudentSDJpaService studentSDJpaService, LogUsersRepository logUsersRepository, StudentRepository studentRepository, UserRepository userRepository, TokenRepository tokenRepository) {
         this.instituteSDJpaService = instituteSDJpaService;
         this.departmentSDJpaService = departmentSDJpaService;
         this.programSDJpaService = programSDJpaService;
@@ -55,6 +69,8 @@ public class IndexController {
         this.studentSDJpaService = studentSDJpaService;
         this.logUsersRepository = logUsersRepository;
         this.studentRepository = studentRepository;
+        this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     /**
@@ -131,6 +147,56 @@ public class IndexController {
 
         return "dashboard";
     }
+
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public String confirmUserAccount(@RequestParam("token")String confirmationToken)
+    {
+        Token token = tokenRepository.findByConfirmationToken(confirmationToken);
+        if(token != null)
+        {
+            User studentUser = userRepository.findUserByUseremail(token.getStudent().getEmail()).orElseThrow(() -> new UserNotFoundException("User with  Not found")) ;
+            studentUser.setEnabled(true);
+            userRepository.save(studentUser);
+            emailPasswordToUser(token.getStudent().getEmail(),token.getStudent().getStuPasswordEmail());
+            return "accountVerified";
+        }
+        else
+        {
+            return "error/access-denied";
+        }
+
+    }
+
+    public String emailPasswordToUser(String to, String password) {
+        String from = "stealtht90@gmail.com";
+        String pass = "Sheridan123";
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.enable","true");
+
+        Session session = Session.getDefaultInstance(props);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, to);
+            message.setSubject("Login Password - Stealth Admin");
+            message.setText("Your password to access Stealth Admin Portal : " + password +"\n\n\nKind Regards,\n Team Stealth");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        } catch (MessagingException me) {
+            me.printStackTrace();
+        }
+        return password;
+    }
+
 
     /**
      * This method displays coming soon section on Index page

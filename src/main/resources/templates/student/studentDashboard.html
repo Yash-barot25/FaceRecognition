@@ -143,7 +143,7 @@
                                                                     <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}"> </h1>
                                                                     <div class="item">
                                                                         <i class="linecons linecons-mail" th:text="${' ' + student.getEmail()}"> </i> <br>
-                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>
+<!--                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>-->
 
                                                                     </div>
                                                                 </div>
@@ -250,7 +250,7 @@
                 </thead>
                 <tbody>
 
-                <tr th:each="course:${student.getProgram().getCourses()}">
+               <!-- <tr th:each="course:${student.getProgram().getCourses()}">
                     <td>
                         <div  class="p-3 mb-2 bg-primary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'MONDAY')}">
                             <span th:text="${course.getId()}"></span> /
@@ -307,7 +307,7 @@
                             <span th:text="${course.getTimeslot().getEndTime()}"></span>
                         </div>
                     </td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>

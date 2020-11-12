@@ -231,12 +231,13 @@ public class StudentController {
         String pass = "Sheridan123";
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
-        props.put("mail.smtp.starttls.enable", "true");
+        //props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", from);
         props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.port", "465");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.enable","true");
 
         Session session = Session.getDefaultInstance(props);
 
@@ -245,7 +246,7 @@ public class StudentController {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Complete Registration - Stealth Admin");
-            message.setText("To confirm your account, please click here : http://localhost:8080/confirm-account?token=" +confToken);
+            message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" +confToken);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
