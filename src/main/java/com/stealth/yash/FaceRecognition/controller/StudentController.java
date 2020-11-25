@@ -220,7 +220,7 @@ public class StudentController {
     /**
      * This method emails passwords to users
      * @param to an object of type String
-     * @param password an object of type String
+     * @param confToken an object of type String
      * @return user's password
      */
 

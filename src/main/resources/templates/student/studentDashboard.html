@@ -71,9 +71,12 @@
     <a title="Go to Top" href="#top"><i class="lnr lnr-chevron-up"></i></a>
 </div>
 <!-- /Scroll To Top Button -->
-
+<form th:object="${student}"
+      th:action="@{'/student'}" method="post">
 <div class="page-scroll" id="top">
     <div id="page_container" class="page-container bg-move-effect theme-style-light" data-animation="transition-flip-in-right">
+
+
 
         <!-- Header -->
         <header id="site_header" class="header">
@@ -82,7 +85,8 @@
                 <!-- Text Logo -->
                 <div class="text-logo">
                     <a href="#">
-                        <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}"> </div>
+                        <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}">
+                        </div>
                         <div class="logo-text" th:text="${student.getFirstName() + ' ' + student.getLastName()}"></div>
                     </a>
                 </div>
@@ -95,7 +99,8 @@
 
                             <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a href="#" data-hover="1">About Me</a></li>
                             <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#schedule" data-hover="1">Check your Schedule here</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a th:action="@{/logout}" href="/logout" data-hover="1">Log Out</a></li>
+                             <li id="menu-item-168 class="menu-item menu-item-type-post_type menu-item-object-page ><a href="#" data-hover="1" onclick="onEdit()">Edit Profile</a></li>
+                             <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a th:action="@{/logout}" href="/logout" data-hover="1">Log Out</a></li>
                     </ul>
 
                 </div>
@@ -118,9 +123,9 @@
                                     <div class="fw-container">
                                         <div class="row">
 
-
                                             <div class=" col-xs-12 col-sm-12 ">
                                                 <div id="col_inner_id-5f8f33f7e7e44" class="fw-col-inner" data-paddings="15px 0px 15px 0px">
+                                                    <button type="submit" class="btn btn-primary editable" style="float: right"> Save </button>
 
                                                     <div id="home_content_954218bfd87cb3b458721f4a70135965" class="home-content">
                                                         <div class="row flex-v-align">
@@ -128,9 +133,11 @@
                                                                 <div class="home-photo">
                                                                     <div class="hp-inner" th:style="'background:url(' + ${student.getImage()} + ')  center center no-repeat;'"></div>
                                                                 </div>
+
                                                             </div>
 
                                                             <div class="col-sm-12 col-md-7 col-lg-7">
+
                                                                 <div class="home-text hp-left">
                                                                     <div class="">
                                                                         <div class="item">
@@ -140,11 +147,25 @@
                                                                             <h4  th:text="${student.getProgram().getDepartment().getInstitute().getName()}">  </h4>
                                                                         </div>
                                                                     </div>
-                                                                    <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}"> </h1>
+                                                                    <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}" class="editable-item"> </h1>
+                                                                    <br>
+                                                                    <div class="editable">
+                                                                        <label data-error="wrong" data-success="right"
+                                                                               class="text-primary">First name</label><br/>
+                                                                        <input type="text" style="display: none"
+                                                                               th:field="*{id}">
+                                                                        <input type="text" class="form-control validate"
+                                                                               th:field="*{firstName}" required>
+                                                                        <br>
+                                                                        <label data-error="wrong" data-success="right"
+                                                                               class="text-primary">Last name</label><br/>
+                                                                        <input type="text" class="form-control validate"
+                                                                               th:field="*{lastName}" required>
+                                                                    </div>
+                                                                    <br>
                                                                     <div class="item">
                                                                         <i class="linecons linecons-mail" th:text="${' ' + student.getEmail()}"> </i> <br>
-<!--                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>-->
-
+                                                                        <!--                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -174,7 +195,9 @@
                                                     <div class="lm-info-block gray-default">
                                                         <i class="linecons linecons-location"></i>
                                                         <h4>Address:</h4>
-                                                        <span th:text="${student.getAddress()}"></span>
+                                                        <span th:text="${student.getAddress()}" class="editable-item"></span>
+                                                        <input type="text" class="form-control validate editable"
+                                                               th:field="*{address}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,7 +209,9 @@
                                                     <div class="lm-info-block gray-default">
                                                         <i class="linecons linecons-phone"></i>
                                                         <h4>Phone Number:</h4>
-                                                        <span th:text="${student.getPhoneNumber()}"></span>
+                                                        <span th:text="${student.getPhoneNumber()}" class="editable-item"></span>
+                                                        <input type="text" class="form-control validate editable"
+                                                               th:field="*{phoneNumber}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -225,6 +250,9 @@
                 </div><!-- #primary -->
             </div><!-- #main-content -->
         </div>
+
+
+
         <br>
         <br><br><br><br>
         <div class="container" id="schedule">
@@ -313,12 +341,10 @@
         </div>
 
 
-
     </div>
 
 </div>
-
-
+</form>
 <footer class="site-footer clearfix" th:replace="fragments/footer.html :: footer">
 </footer>
 
@@ -342,5 +368,6 @@
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/plugins/leven-shortcodes/extensions/leven-shortcodes/shortcodes/testimonials-slider/static/js/scripts.js?ver=1' id='leven-shortcode-testimonials-slider-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/plugins/leven-shortcodes/extensions/leven-shortcodes/shortcodes/clients-slider/static/js/scripts.js?ver=1' id='leven-shortcode-clients-slider-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-includes/js/wp-embed.min.js?ver=5.5.1' id='wp-embed-js'></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/studentPortal.js}"></script>
 </body>
 </html>
