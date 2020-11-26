@@ -80,6 +80,7 @@ public class StudentPortalController {
     public String getStudentDetail(Principal principal, Model model, Authentication auth) {
         String currentLoggedinUser  = principal.getName();
         Student student = studentService.findByEmail(currentLoggedinUser);
+        model.addAttribute("userImage",student.getImage());
         model.addAttribute("student",student);
         return "student/studentDashboard";
     }

@@ -12,6 +12,7 @@ package com.stealth.yash.FaceRecognition.service;
 
 import com.stealth.yash.FaceRecognition.model.Student;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public interface StudentService extends CrudService<Student, Long> {
     Page<Student> findPaginated(int pageNo, int pageSize);
     // query method for finding student by email
     Student findByEmail(String email);
+
 
 
     List<Student> searchStudent(String value);
