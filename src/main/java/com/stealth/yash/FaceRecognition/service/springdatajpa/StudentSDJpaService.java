@@ -53,6 +53,7 @@ public class StudentSDJpaService implements StudentService {
     public List<Student> findAllByLastNameLike(String lastName) {
         return studentRepository.findAllByLastNameLike(lastName);
     }
+
     @Override
     public Page<Student> findPaginated(int pageNo, int pageSize) {
         Pageable paging = PageRequest.of(pageNo - 1, pageSize);
