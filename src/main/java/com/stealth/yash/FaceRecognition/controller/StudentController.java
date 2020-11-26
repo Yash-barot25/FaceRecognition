@@ -246,7 +246,7 @@ public class StudentController {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Complete Registration - Stealth Admin");
-            message.setText("To confirm your account, please click here : http://localhost:5000/confirm-account?token=" +confToken);
+            message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" +confToken);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
