@@ -27,4 +27,6 @@ public interface LogUsersRepository extends JpaRepository<LogUsers, Long> {
     @Query("Select distinct accessDate from LogUsers" )
     List<LocalDate>  getValuesOfDistinctDates();
 
+    List<LogUsers> findAllByAccessDate(LocalDate localDate);
+
 }

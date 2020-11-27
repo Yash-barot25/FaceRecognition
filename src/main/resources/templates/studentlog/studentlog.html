@@ -49,21 +49,12 @@
 
                 </div>
 
-                <div class="p-3 mb-2 bg-info text-white"  th:each="alldates : ${allDates}">
-                    <p th:text="${alldates}"></p>
+                <div class="p-3 mb-2 bg-info text-white"  th:each="log : ${logs.keySet()}">
+                    <p th:text="'Date: ' + ${log}"></p>
 
-                 <!--   <div class="card-body text-dark" th:each="student:${students}">
-                        <h5 class="card-title text-center text-dark"><b th:text="${student.firstName}"></b>
-                            <b th:text="${student.lastName}"></b></h5>
-                        <hr>
-                        <img th:src="${student.image}" height="200px" width="200px"
-                             style="max-height: 200px; max-width: 200px"
-                             class="rounded img-thumbnail">
-                        <hr>
-                    </div>-->
-
-                    <div class="p-3 mb-2 bg-success text-white" th:each="allusers: ${users}">
-                        <p th:text="${allusers}"></p>
+                    <div></div>
+                    <div class="p-3 mb-2 bg-success text-white" th:each="log2: ${logs.get(log)}">
+                        <p th:text="${'STUDENT ID: ' + log2[0] + ' STUDENT  NAME: ' + log2[1] + ' ACCESS TIME: ' + log2[2] + ' FOB ID: ' + log2[3]}"></p>
                     </div>
                 </div>
 

@@ -10,6 +10,7 @@
  */
 package com.stealth.yash.FaceRecognition.repository;
 
+import com.stealth.yash.FaceRecognition.model.AccessKey;
 import com.stealth.yash.FaceRecognition.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,6 +41,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Student findFirstByFirstName(String name);
 
 
-
+    Student findByAccessKey(AccessKey accessKey);
 
 }
