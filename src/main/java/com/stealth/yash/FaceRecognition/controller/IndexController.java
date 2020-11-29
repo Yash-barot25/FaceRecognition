@@ -170,14 +170,15 @@ public class IndexController {
     public String emailPasswordToUser(String to, String password) {
         String from = "stealtht90@gmail.com";
         String pass = "Sheridan123";
+
+        String SmtpUsername = "AKIAZOEIQOANFQBBLMHA";
+        String smtpPassword = "BKL6JgIvFG3QBCuXSWh+uuZTdL6ezkkcdGPAL9ceGfxF";
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "465");
+        String host = "email-smtp.ca-central-1.amazonaws.com";
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.port", 587);
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable","true");
 
         Session session = Session.getDefaultInstance(props);
 
@@ -188,7 +189,7 @@ public class IndexController {
             message.setSubject("Login Password - Stealth Admin");
             message.setText("Your password to access Stealth Admin Portal : " + password +"\n\n\nKind Regards,\n Team Stealth");
             Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
+            transport.connect(host, SmtpUsername, smtpPassword);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         } catch (MessagingException me) {

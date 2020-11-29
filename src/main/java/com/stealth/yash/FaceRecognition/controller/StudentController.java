@@ -128,9 +128,10 @@ public class StudentController {
         if (studentId.isPresent()) {
             model.addAttribute("student", studentService.findById(studentId.get()));
             List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
-            accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
+            //accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
 
             model.addAttribute("accessKeys", accessKeys);
+            model.addAttribute("userImage",studentService.findById(studentId.get()).getImage());
         } else {
             Student student = new Student();
             model.addAttribute("student", student);
@@ -159,23 +160,22 @@ public class StudentController {
 
         }
         Student savedStudent = null;
-        if (!Objects.requireNonNull(file.getContentType()).equalsIgnoreCase("image/png")) {
-            System.out.println("Not a Proper Image type!!!");
-        } else {
-
-
             if(studentService.findByEmail(student.getEmail()) != null){
                 System.out.println("Email Exists!!");
             }else{
                 Token token = new Token();
                 String fob = student.getAccessKey().getAccessfobid();
-                student.setImage(amclient.uploadFile(file, fob));
+                if (!Objects.requireNonNull(file.getContentType()).equalsIgnoreCase("image/png")) {
+                    System.out.println("Not a Proper Image type!!!");
+                } else {
+                    student.setImage(amclient.uploadFile(file, fob));
+                }
                 student.setStuPasswordEmail(generatePassword());
                 String imagetoindex = student.getImage();
                 String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
                 String faceid = amclient.addfacetoawscollection(indexingimage);
                 student.setFaceIdAWS(faceid);
-//            student.setStuRole("ROLE_USER");
+ //            student.setStuRole("ROLE_USER");
                 savedStudent = studentService.save(student);
                 User studentUser = new User();
                 Role studentRole = new Role();
@@ -192,7 +192,6 @@ public class StudentController {
                 emailTokenToUser(student.getEmail(), confToken);
             }
 
-        }
         assert savedStudent != null;
         return "redirect:/students/get/" + savedStudent.getId();
     }
@@ -229,15 +228,16 @@ public class StudentController {
 
         String from = "stealtht90@gmail.com";
         String pass = "Sheridan123";
+
+        String SmtpUsername = "AKIAZOEIQOANFQBBLMHA";
+        String smtpPassword = "BKL6JgIvFG3QBCuXSWh+uuZTdL6ezkkcdGPAL9ceGfxF";
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        //props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "465");
+        String host = "email-smtp.ca-central-1.amazonaws.com";
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.port", 587);
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable","true");
+        //props.put("mail.smtp.ssl.enable","true");
 
         Session session = Session.getDefaultInstance(props);
 
@@ -247,8 +247,8 @@ public class StudentController {
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Complete Registration - Stealth Admin");
             message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" +confToken);
-            Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
+            Transport transport = session.getTransport();
+            transport.connect(host, SmtpUsername, smtpPassword);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         } catch (MessagingException me) {
