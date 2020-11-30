@@ -56,7 +56,7 @@ public class StudentController {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository tokenRepository;
-    private static final Role studentRole = new Role();
+//    private static final
 
 
     /**
@@ -157,6 +157,8 @@ public class StudentController {
      */
     @PostMapping(consumes = "multipart/form-data")
     public String processUpdateStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, @RequestPart(value = "file") MultipartFile file, Model model) {
+
+        Long studentID = student.getId();
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
             model.addAttribute("programs", programService.findAll());
@@ -192,7 +194,7 @@ public class StudentController {
             return "student/createOrUpdateStudent";
         }
 
-        if (student.getId() == null){
+        if (student.getId() == null) {
             if (studentService.findByEmail(student.getEmail()) != null) {
                 System.out.println("Email Exists!!");
                 model.addAttribute("programs", programService.findAll());
@@ -223,13 +225,12 @@ public class StudentController {
         String faceid = amclient.addfacetoawscollection(indexingimage);
         student.setFaceIdAWS(faceid);
         Student savedStudent = studentService.save(student);
-        if (savedStudent == null) {
-            log.error("NULL STUDENT PASSED");
-        }
-        if (student.getId() == null && savedStudent != null)  {
-            User studentUser = new User();
 
+        if (studentID == null) {
+            User studentUser = new User();
+            Role studentRole = new Role();
             studentRole.setName(Roles.STUDENT);
+            roleRepository.save(studentRole);
             studentUser.setUseremail(savedStudent.getEmail());
             studentUser.setEnabled(false);
             studentUser.setRole(studentRole);
