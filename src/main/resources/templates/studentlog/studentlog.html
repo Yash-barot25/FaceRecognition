@@ -54,7 +54,7 @@
 
                     <div></div>
                     <div class="p-3 mb-2 bg-success text-white" th:each="log2: ${logs.get(log)}">
-                        <p th:text="${'STUDENT ID: ' + log2[0] + ' STUDENT  NAME: ' + log2[1] + ' ACCESS TIME: ' + log2[2] + ' FOB ID: ' + log2[3]}"></p>
+                        <p th:utext="${' STUDENT ID: ' + log2[0] + '<br>STUDENT  NAME: ' + log2[1] + '<br>ACCESS TIME: ' + log2[2] +  '<br>FOB ID: ' + log2[3]}"></p>
                     </div>
                 </div>
 
