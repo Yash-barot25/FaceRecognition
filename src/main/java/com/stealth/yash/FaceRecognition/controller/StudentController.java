@@ -134,12 +134,13 @@ public class StudentController {
             model.addAttribute("student", studentService.findById(studentId.get()));
             List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
             accessKeys.add(accessSDJpaService.findById(studentService.findById(studentId.get()).getAccessKey().getId()));
-
             model.addAttribute("accessKeys", accessKeys);
+            model.addAttribute("userImage",studentService.findById(studentId.get()).getImage());
         } else {
             Student student = new Student();
             model.addAttribute("student", student);
             model.addAttribute("accessKeys", accessSDJpaService.findAccessFobs());
+
         }
         model.addAttribute("programs", programService.findAll());
         model.addAttribute("departments", departmentSDJpaService.findAll());
@@ -280,15 +281,14 @@ public class StudentController {
 
         String from = "stealtht90@gmail.com";
         String pass = "Sheridan123";
+        String SmtpUsername = "AKIAZOEIQOANFQBBLMHA";
+        String smtpPassword = "BKL6JgIvFG3QBCuXSWh+uuZTdL6ezkkcdGPAL9ceGfxF";
         Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        //props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "465");
+        String host = "email-smtp.ca-central-1.amazonaws.com";
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.port", 587);
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable", "true");
 
         Session session = Session.getDefaultInstance(props);
 
@@ -298,8 +298,8 @@ public class StudentController {
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Complete Registration - Stealth Admin");
             message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" + confToken);
-            Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
+            Transport transport = session.getTransport();
+            transport.connect(host, SmtpUsername, smtpPassword);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         } catch (MessagingException me) {

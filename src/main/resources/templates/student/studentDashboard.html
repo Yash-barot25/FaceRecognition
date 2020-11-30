@@ -12,7 +12,7 @@
     <script type="text/javascript">
         window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/lmpixels.com\/wp\/leven-wp\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.5.1"}};
         !function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}
-        function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+            function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
     </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -71,79 +71,104 @@
     <a title="Go to Top" href="#top"><i class="lnr lnr-chevron-up"></i></a>
 </div>
 <!-- /Scroll To Top Button -->
-
-<div class="page-scroll" id="top">
-    <div id="page_container" class="page-container bg-move-effect theme-style-light" data-animation="transition-flip-in-right">
-
-        <!-- Header -->
-        <header id="site_header" class="header">
-            <div class="header-content clearfix">
-
-                <!-- Text Logo -->
-                <div class="text-logo">
-                    <a href="#">
-                        <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}"> </div>
-                        <div class="logo-text" th:text="${student.getFirstName() + ' ' + student.getLastName()}"></div>
-                    </a>
-                </div>
-                <!-- /Text Logo -->
+<form th:object="${student}"
+      th:action="@{'/student'}" method="post">
+    <div class="page-scroll" id="top">
+        <div id="page_container" class="page-container bg-move-effect theme-style-light" data-animation="transition-flip-in-right">
 
 
-                <!-- Navigation -->
-                <div class="site-nav mobile-menu-hide">
-                    <ul id="menu-classic-menu" class="leven-classic-menu site-main-menu"><li id="menu-item-160" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-160">
+
+            <!-- Header -->
+            <header id="site_header" class="header">
+                <div class="header-content clearfix">
+
+                    <!-- Text Logo -->
+                    <div class="text-logo">
+                        <a href="#">
+                            <div class="logo-symbol" th:text="${student.getFirstLetterOfFirstName()}">
+                            </div>
+                            <div class="logo-text" th:text="${student.getFirstName() + ' ' + student.getLastName()}"></div>
+                        </a>
+                    </div>
+                    <!-- /Text Logo -->
+
+
+                    <!-- Navigation -->
+                    <div class="site-nav mobile-menu-hide">
+                        <ul id="menu-classic-menu" class="leven-classic-menu site-main-menu"><li id="menu-item-160" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-160">
 
                             <li id="menu-item-318" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-157 current_page_item menu-item-318"><a href="#" data-hover="1">About Me</a></li>
                             <li id="menu-item-167" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a href="#schedule" data-hover="1">Check your Schedule here</a></li>
+                            <li id="menu-item-168 class="menu-item menu-item-type-post_type menu-item-object-page ><a href="#" data-hover="1" onclick="onEdit()">Edit Profile</a></li>
                             <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167"><a th:action="@{/logout}" href="/logout" data-hover="1">Log Out</a></li>
-                    </ul>
+                        </ul>
 
+                    </div>
+
+                    <a class="menu-toggle mobile-visible">
+                        <i class="fa fa-bars"></i>
+                    </a>
                 </div>
+            </header>
+            <!-- /Header -->
+            <div id="main" class="site-main">
+                <div id="main-content" class="single-page-content">
+                    <div id="primary" class="content-area">
 
-                <a class="menu-toggle mobile-visible">
-                    <i class="fa fa-bars"></i>
-                </a>
-            </div>
-        </header>
-        <!-- /Header -->
-        <div id="main" class="site-main">
-            <div id="main-content" class="single-page-content">
-                <div id="primary" class="content-area">
+                        <div id="content" class="page-content site-content single-post" role="main">
 
-                    <div id="content" class="page-content site-content single-post" role="main">
+                            <article id="post-157" class="post-157 page type-page status-publish hentry">
+                                <div class="entry-content">
+                                    <div class="fw-page-builder-content"><section class="fw-main-row  "  >
+                                        <div class="fw-container">
+                                            <div class="row">
 
-                        <article id="post-157" class="post-157 page type-page status-publish hentry">
-                            <div class="entry-content">
-                                <div class="fw-page-builder-content"><section class="fw-main-row  "  >
-                                    <div class="fw-container">
-                                        <div class="row">
+                                                <div class=" col-xs-12 col-sm-12 ">
+                                                    <div id="col_inner_id-5f8f33f7e7e44" class="fw-col-inner" data-paddings="15px 0px 15px 0px">
+                                                        <button type="submit" class="btn btn-primary editable" style="float: right"> Save </button>
 
+                                                        <div id="home_content_954218bfd87cb3b458721f4a70135965" class="home-content">
+                                                            <div class="row flex-v-align">
+                                                                <div class="col-sm-12 col-md-5 col-lg-5">
+                                                                    <div class="card-body text-center">
+                                                                        <img class="ml-5"
+                                                                             th:src="${userImage}" width="250" height="250">
 
-                                            <div class=" col-xs-12 col-sm-12 ">
-                                                <div id="col_inner_id-5f8f33f7e7e44" class="fw-col-inner" data-paddings="15px 0px 15px 0px">
-
-                                                    <div id="home_content_954218bfd87cb3b458721f4a70135965" class="home-content">
-                                                        <div class="row flex-v-align">
-                                                            <div class="col-md-6 text-center">
-                                                                <img class="ml-5"
-                                                                     th:src="${userImage}" width="200" height="200">
-                                                            </div>
-
-                                                            <div class="col-sm-12 col-md-7 col-lg-7">
-                                                                <div class="home-text hp-left">
-                                                                    <div class="">
-                                                                        <div class="item">
-                                                                            <h4>Program name - <span th:text="${student.getProgram().getProgramName()}"> </span></h4>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <h4  th:text="${student.getProgram().getDepartment().getInstitute().getName()}">  </h4>
-                                                                        </div>
                                                                     </div>
-                                                                    <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}"> </h1>
-                                                                    <div class="item">
-                                                                        <i class="linecons linecons-mail" th:text="${' ' + student.getEmail()}"> </i> <br>
-<!--                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>-->
 
+                                                                </div>
+
+                                                                <div class="col-sm-12 col-md-7 col-lg-7">
+
+                                                                    <div class="home-text hp-left">
+                                                                        <div class="">
+                                                                            <div class="item">
+                                                                                <h4>Program name - <span th:text="${student.getProgram().getProgramName()}"> </span></h4>
+                                                                            </div>
+                                                                            <div class="item">
+                                                                                <h4  th:text="${student.getProgram().getDepartment().getInstitute().getName()}">  </h4>
+                                                                            </div>
+                                                                        </div>
+                                                                        <h1 th:text="${student.getFirstName() + ' ' + student.getLastName()}" class="editable-item"> </h1>
+                                                                        <br>
+                                                                        <div class="editable">
+                                                                            <label data-error="wrong" data-success="right"
+                                                                                   class="text-primary">First name</label><br/>
+                                                                            <input type="text" style="display: none"
+                                                                                   th:field="*{id}">
+                                                                            <input type="text" class="form-control validate"
+                                                                                   th:field="*{firstName}" readonly>
+                                                                            <br>
+                                                                            <label data-error="wrong" data-success="right"
+                                                                                   class="text-primary">Last name</label><br/>
+                                                                            <input type="text" class="form-control validate"
+                                                                                   th:field="*{lastName}" readonly>
+                                                                        </div>
+                                                                        <br>
+                                                                        <div class="item">
+                                                                            <i class="linecons linecons-mail" th:text="${' ' + student.getEmail()}"> </i> <br>
+                                                                            <!--                                                                        <i class="linecons linecons-user" th:text="${' Student ID: ' + student.getId()}"> </i>-->
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -151,173 +176,176 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class=" col-xs-12 col-sm-12 ">
+                                                    <div id="col_inner_id-5f8f33f7e99a5" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                                                        <div class="block-title">
+                                                            <h2>Details!!</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+
+                                                <div class=" col-xs-12 col-sm-3 ">
+                                                    <div id="col_inner_id-5f8f33f7e9cb9" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                                                        <div class="lm-info-block gray-default">
+                                                            <i class="linecons linecons-location"></i>
+                                                            <h4>Address:</h4>
+                                                            <span th:text="${student.getAddress()}" class="editable-item"></span>
+                                                            <input type="text" class="form-control validate editable"
+                                                                   th:field="*{address}" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class=" col-xs-12 col-sm-3 ">
+                                                    <div id="col_inner_id-5f8f33f7e9f9e" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                                                        <div class="lm-info-block gray-default">
+                                                            <i class="linecons linecons-phone"></i>
+                                                            <h4>Phone Number:</h4>
+                                                            <span th:text="${student.getPhoneNumber()}" class="editable-item"></span>
+                                                            <input type="text" class="form-control validate editable"
+                                                                   th:field="*{phoneNumber}" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class=" col-xs-12 col-sm-3 ">
+                                                    <div id="col_inner_id-5f8f33f7ea1a0" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                                                        <div class="lm-info-block gray-default">
+                                                            <i class="linecons linecons-study"></i>
+                                                            <h4>Grade Point Average</h4>
+                                                            <span th:text="${student.getGPA()}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class=" col-xs-12 col-sm-3 ">
+                                                    <div id="col_inner_id-5f8f33f7ea357" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                                                        <div class="lm-info-block gray-default">
+                                                            <i class="linecons linecons-calendar"></i>
+                                                            <h4>Current Semester</h4>
+                                                            <span th:text="${student.getCurrentSemester()}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
-
-                                        <div class="row">
-                                            <div class=" col-xs-12 col-sm-12 ">
-                                                <div id="col_inner_id-5f8f33f7e99a5" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
-
-                                                    <div class="block-title">
-                                                        <h2>Details!!</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-
-
-                                            <div class=" col-xs-12 col-sm-3 ">
-                                                <div id="col_inner_id-5f8f33f7e9cb9" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
-
-                                                    <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-location"></i>
-                                                        <h4>Address:</h4>
-                                                        <span th:text="${student.getAddress()}"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class=" col-xs-12 col-sm-3 ">
-                                                <div id="col_inner_id-5f8f33f7e9f9e" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
-
-                                                    <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-phone"></i>
-                                                        <h4>Phone Number:</h4>
-                                                        <span th:text="${student.getPhoneNumber()}"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class=" col-xs-12 col-sm-3 ">
-                                                <div id="col_inner_id-5f8f33f7ea1a0" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
-
-                                                    <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-study"></i>
-                                                        <h4>Grade Point Average</h4>
-                                                        <span th:text="${student.getGPA()}"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class=" col-xs-12 col-sm-3 ">
-                                                <div id="col_inner_id-5f8f33f7ea357" class="fw-col-inner" data-paddings="0px 0px 0px 0px">
-
-                                                    <div class="lm-info-block gray-default">
-                                                        <i class="linecons linecons-calendar"></i>
-                                                        <h4>Current Semester</h4>
-                                                        <span th:text="${student.getCurrentSemester()}"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    </section>
                                     </div>
-                                </section>
-                                </div>
-                            </div><!-- .entry-content -->
-                        </article><!-- #post-## -->
-                    </div><!-- #content -->
-                </div><!-- #primary -->
-            </div><!-- #main-content -->
-        </div>
-        <br>
-        <br><br><br><br>
-        <div class="container" id="schedule">
-            <div class="row">
-                <div class=" col-xs-12 col-sm-12 ">
-                    <div  class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+                                </div><!-- .entry-content -->
+                            </article><!-- #post-## -->
+                        </div><!-- #content -->
+                    </div><!-- #primary -->
+                </div><!-- #main-content -->
+            </div>
 
-                        <div class="block-title">
-                            <h2>Your Schedule!!</h2>
+
+
+            <br>
+            <br><br><br><br>
+            <div class="container" id="schedule">
+                <div class="row">
+                    <div class=" col-xs-12 col-sm-12 ">
+                        <div  class="fw-col-inner" data-paddings="0px 0px 0px 0px">
+
+                            <div class="block-title">
+                                <h2>Your Schedule!!</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <!-- <tr th:each="course:${student.getProgram().getCourses()}">
+                         <td>
+                             <div  class="p-3 mb-2 bg-primary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'MONDAY')}">
+                                 <span th:text="${course.getId()}"></span> /
+                                 Credits: <span th:text="${course.getCredit()}"></span> <br>
+                                 <span th:text="${course.getCampus()}"></span><br>
+                                 <span th:text="${course.getCourseName()}"></span><br>
+                                 <span th:text="${course.getProfessor().getFirstName()  +' '+ course.getProfessor().getLastName()}"></span><br>
+                                 <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                                 <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                             </div>
+                         </td>
+                         <td>
+                             <div class="p-3 mb-2 bg-secondary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'TUESDAY')}">
+                                 <span th:text="${course.getId()}"></span> /
+                                 Credits: <span th:text="${course.getCredit()}"></span> <br>
+                                 <span th:text="${course.getCampus()}"></span><br>
+                                 <span th:text="${course.getCourseName()}"></span><br>
+                                 <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
+                                 <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                                 <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                             </div>
+                         </td>
+                         <td>
+                             <div  class="p-3 mb-2 bg-warning text-dark" th:if="${#strings.equals(course.getTimeslot().getDay(),'WEDNESDAY')}">
+                                 <span th:text="${course.getId()}"></span> /
+                                 Credits: <span th:text="${course.getCredit()}"></span> <br>
+                                 <span th:text="${course.getCampus()}"></span><br>
+                                 <span th:text="${course.getCourseName()}"></span><br>
+                                 <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
+                                 <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                                 <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                             </div>
+                         </td>
+                         <td>
+                             <div class="p-3 mb-2 bg-info text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'THURSDAY')}">
+                                 <span th:text="${course.getId()}"></span> /
+                                 Credits: <span th:text="${course.getCredit()}"></span> <br>
+                                 <span th:text="${course.getCampus()}"></span><br>
+                                 <span th:text="${course.getCourseName()}"></span><br>
+                                 <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
+                                 <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                                 <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                             </div>
+                         </td>
+                         <td>
+                             <div class="p-3 mb-2 bg-danger text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'FRIDAY')}">
+                                 <span th:text="${course.getId()}"></span> /
+                                 Credits: <span th:text="${course.getCredit()}"></span> <br>
+                                 <span th:text="${course.getCampus()}"></span><br>
+                                 <span th:text="${course.getCourseName()}"></span><br>
+                                 <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
+                                 <span th:text="${course.getTimeslot().getStartTime()}"></span> -
+                                 <span th:text="${course.getTimeslot().getEndTime()}"></span>
+                             </div>
+                         </td>
+                     </tr>-->
+                    </tbody>
+                </table>
             </div>
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                </tr>
-                </thead>
-                <tbody>
 
-               <!-- <tr th:each="course:${student.getProgram().getCourses()}">
-                    <td>
-                        <div  class="p-3 mb-2 bg-primary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'MONDAY')}">
-                            <span th:text="${course.getId()}"></span> /
-                            Credits: <span th:text="${course.getCredit()}"></span> <br>
-                            <span th:text="${course.getCampus()}"></span><br>
-                            <span th:text="${course.getCourseName()}"></span><br>
-                            <span th:text="${course.getProfessor().getFirstName()  +' '+ course.getProfessor().getLastName()}"></span><br>
-                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
-                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
-                        </div>
 
-                    </td>
-                    <td>
-                        <div class="p-3 mb-2 bg-secondary text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'TUESDAY')}">
-                            <span th:text="${course.getId()}"></span> /
-                            Credits: <span th:text="${course.getCredit()}"></span> <br>
-                            <span th:text="${course.getCampus()}"></span><br>
-                            <span th:text="${course.getCourseName()}"></span><br>
-                            <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
-                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
-                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div  class="p-3 mb-2 bg-warning text-dark" th:if="${#strings.equals(course.getTimeslot().getDay(),'WEDNESDAY')}">
-                            <span th:text="${course.getId()}"></span> /
-                            Credits: <span th:text="${course.getCredit()}"></span> <br>
-                            <span th:text="${course.getCampus()}"></span><br>
-                            <span th:text="${course.getCourseName()}"></span><br>
-                            <span th:text="${course.getProfessor().getFirstName() +' '+ course.getProfessor().getLastName()}"></span><br>
-                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
-                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="p-3 mb-2 bg-info text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'THURSDAY')}">
-                            <span th:text="${course.getId()}"></span> /
-                            Credits: <span th:text="${course.getCredit()}"></span> <br>
-                            <span th:text="${course.getCampus()}"></span><br>
-                            <span th:text="${course.getCourseName()}"></span><br>
-                            <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
-                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
-                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="p-3 mb-2 bg-danger text-white" th:if="${#strings.equals(course.getTimeslot().getDay(),'FRIDAY')}">
-                            <span th:text="${course.getId()}"></span> /
-                            Credits: <span th:text="${course.getCredit()}"></span> <br>
-                            <span th:text="${course.getCampus()}"></span><br>
-                            <span th:text="${course.getCourseName()}"></span><br>
-                            <span th:text="${course.getProfessor().getFirstName() +' '+  course.getProfessor().getLastName()}"></span><br>
-                            <span th:text="${course.getTimeslot().getStartTime()}"></span> -
-                            <span th:text="${course.getTimeslot().getEndTime()}"></span>
-                        </div>
-                    </td>
-                </tr>-->
-                </tbody>
-            </table>
         </div>
 
-
-
     </div>
-
-</div>
-
-
+</form>
 <footer class="site-footer clearfix" th:replace="fragments/footer.html :: footer">
 </footer>
 
@@ -341,5 +369,6 @@
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/plugins/leven-shortcodes/extensions/leven-shortcodes/shortcodes/testimonials-slider/static/js/scripts.js?ver=1' id='leven-shortcode-testimonials-slider-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-content/plugins/leven-shortcodes/extensions/leven-shortcodes/shortcodes/clients-slider/static/js/scripts.js?ver=1' id='leven-shortcode-clients-slider-js'></script>
 <script type='text/javascript' src='https://lmpixels.com/wp/leven-wp/wp-includes/js/wp-embed.min.js?ver=5.5.1' id='wp-embed-js'></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/studentPortal.js}"></script>
 </body>
 </html>

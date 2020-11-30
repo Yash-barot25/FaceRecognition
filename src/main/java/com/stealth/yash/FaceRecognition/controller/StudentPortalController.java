@@ -84,4 +84,13 @@ public class StudentPortalController {
         model.addAttribute("student",student);
         return "student/studentDashboard";
     }
+    @PostMapping("")
+    public String updateStudent(@ModelAttribute("student") Student student, Model model){
+        Student existingStudent = this.studentService.findById(student.getId());
+        existingStudent.setPhoneNumber(student.getPhoneNumber());
+        existingStudent.setAddress(student.getAddress());
+        Student updatedStudent = this.studentService.save(existingStudent);
+        model.addAttribute("student",updatedStudent);
+        return "student/studentDashboard";
+    }
 }

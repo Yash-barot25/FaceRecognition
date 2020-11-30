@@ -188,7 +188,7 @@ public class IndexController {
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Login Password - Stealth Admin");
             message.setText("Your password to access Stealth Admin Portal : " + password +"\n\n\nKind Regards,\n Team Stealth");
-            Transport transport = session.getTransport("smtp");
+            Transport transport = session.getTransport();
             transport.connect(host, SmtpUsername, smtpPassword);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
