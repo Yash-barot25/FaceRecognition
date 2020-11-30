@@ -119,12 +119,17 @@
                                             <!-- First row -->
 
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6"  th:class="${#fields.hasErrors('image')}  ? 'col-md-6 form-group has-error' : 'col-md-6 form-group'">
 
                                                     <div class="md-form mb-0">
                                                         <label class="text-success">Upload Photo</label><br/>
-                                                        <input type="file" name="file">
-
+                                                        <input type="file" name="file" >
+                                                        <span class="help-block" th:if="${#fields.hasErrors('image')}">
+                                                                <ul>
+                                                                    <li class="text-danger"
+                                                                        th:each="err : ${#fields.errors('image')}" th:text="${err}"/>
+                                                                </ul>
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <!-- First column -->

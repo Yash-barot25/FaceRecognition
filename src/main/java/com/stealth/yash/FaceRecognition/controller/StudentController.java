@@ -56,19 +56,21 @@ public class StudentController {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository tokenRepository;
+    private static final Role studentRole = new Role();
 
 
     /**
      * This is a student constructor
-     * @param studentService - an object of type StudentSDJpaService service
-     * @param programService - an object of type ProgramSDJpaService service
+     *
+     * @param studentService         - an object of type StudentSDJpaService service
+     * @param programService         - an object of type ProgramSDJpaService service
      * @param departmentSDJpaService - an object of type DepartmentSDJpaService service
-     * @param programSDJpaService - an object of type ProgramSDJpaService service
-     * @param amclient this is an object of type AWSClient model
+     * @param programSDJpaService    - an object of type ProgramSDJpaService service
+     * @param amclient               this is an object of type AWSClient model
      * @param accessSDJpaService
      * @param passwordEncoder
      */
-    public StudentController(StudentSDJpaService studentService,TokenRepository tokenRepository ,ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, AWSClient amclient, AccessSDJpaService accessSDJpaService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public StudentController(StudentSDJpaService studentService, TokenRepository tokenRepository, ProgramSDJpaService programService, DepartmentSDJpaService departmentSDJpaService, ProgramSDJpaService programSDJpaService, AWSClient amclient, AccessSDJpaService accessSDJpaService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.studentService = studentService;
         this.programService = programService;
         this.departmentSDJpaService = departmentSDJpaService;
@@ -83,6 +85,7 @@ public class StudentController {
 
     /**
      * This method shows all the students
+     *
      * @param model - an object of type Model
      * @return student view
      */
@@ -104,8 +107,9 @@ public class StudentController {
 
     /**
      * This method shows selected student
+     *
      * @param studentId an object for studentID of type Long
-     * @param model an object of Model type
+     * @param model     an object of Model type
      * @return info of a particular student
      */
     @GetMapping("/get/{studentId}")
@@ -119,8 +123,9 @@ public class StudentController {
 
     /**
      * This method creates or updates student
+     *
      * @param studentId an object for studentID of type Long
-     * @param model an object of Model type
+     * @param model     an object of Model type
      * @return creteOrUpdateStudent web page
      */
     @GetMapping({"/update/{studentId}", "/create"})
@@ -144,9 +149,10 @@ public class StudentController {
 
     /**
      * This method processes the data in Student Update form
-     * @param student an object of Student model
+     *
+     * @param student       an object of Student model
      * @param bindingResult object of interface BindingResult
-     * @param file object of a Multipart file
+     * @param file          object of a Multipart file
      * @return updated student info
      */
     @PostMapping(consumes = "multipart/form-data")
@@ -155,54 +161,97 @@ public class StudentController {
             bindingResult.getAllErrors().forEach(error -> log.error(error.toString()));
             model.addAttribute("programs", programService.findAll());
             model.addAttribute("departments", departmentSDJpaService.findAll());
+            if (student.getId() != null) {
+
+                List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
+                accessKeys.add(accessSDJpaService.findById(studentService.findById(student.getId()).getAccessKey().getId()));
+
+                model.addAttribute("accessKeys", accessKeys);
+            } else {
+
+                model.addAttribute("accessKeys", accessSDJpaService.findAccessFobs());
+            }
             return "student/createOrUpdateStudent";
 
         }
-        Student savedStudent = null;
+
         if (!Objects.requireNonNull(file.getContentType()).equalsIgnoreCase("image/png")) {
-            System.out.println("Not a Proper Image type!!!");
-        } else {
+            model.addAttribute("programs", programService.findAll());
+            model.addAttribute("departments", departmentSDJpaService.findAll());
+            if (student.getId() != null) {
 
+                List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
+                accessKeys.add(accessSDJpaService.findById(studentService.findById(student.getId()).getAccessKey().getId()));
 
-            if(studentService.findByEmail(student.getEmail()) != null){
-                System.out.println("Email Exists!!");
-            }else{
-                Token token = new Token();
-                String fob = student.getAccessKey().getAccessfobid();
-                student.setImage(amclient.uploadFile(file, fob));
-                student.setStuPasswordEmail(generatePassword());
-                String imagetoindex = student.getImage();
-                String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
-                String faceid = amclient.addfacetoawscollection(indexingimage);
-                student.setFaceIdAWS(faceid);
-//            student.setStuRole("ROLE_USER");
-                savedStudent = studentService.save(student);
-                User studentUser = new User();
-                Role studentRole = new Role();
-                studentRole.setName(Roles.STUDENT);
-                studentUser.setUseremail(savedStudent.getEmail());
-                studentUser.setEnabled(false);
-                studentUser.setRole(studentRole);
-                studentUser.setPassword(passwordEncoder.encode(student.getStuPasswordEmail()));
-                userRepository.save(studentUser);
-                String confToken = UUID.randomUUID().toString();
-                token.setConfirmationToken(confToken);
-                token.setStudent(student);
-                tokenRepository.save(token);
-                emailTokenToUser(student.getEmail(), confToken);
+                model.addAttribute("accessKeys", accessKeys);
+            } else {
+
+                model.addAttribute("accessKeys", accessSDJpaService.findAccessFobs());
             }
-
+            bindingResult.rejectValue("image", "error.student", "You must upload a PNG image");
+            return "student/createOrUpdateStudent";
         }
+
+        if (student.getId() == null){
+            if (studentService.findByEmail(student.getEmail()) != null) {
+                System.out.println("Email Exists!!");
+                model.addAttribute("programs", programService.findAll());
+                model.addAttribute("departments", departmentSDJpaService.findAll());
+                if (student.getId() != null) {
+
+                    List<AccessKey> accessKeys = accessSDJpaService.findAccessFobs();
+                    accessKeys.add(accessSDJpaService.findById(studentService.findById(student.getId()).getAccessKey().getId()));
+
+                    model.addAttribute("accessKeys", accessKeys);
+                } else {
+
+                    model.addAttribute("accessKeys", accessSDJpaService.findAccessFobs());
+                }
+                bindingResult.rejectValue("email", "error.student", "An email already exist in STEALTH system.");
+
+
+                return "student/createOrUpdateStudent";
+            }
+        }
+
+        Token token = new Token();
+        String fob = student.getAccessKey().getAccessfobid();
+        student.setImage(amclient.uploadFile(file, fob));
+        student.setStuPasswordEmail(generatePassword());
+        String imagetoindex = student.getImage();
+        String indexingimage = imagetoindex.substring(imagetoindex.lastIndexOf("/") + 1);
+        String faceid = amclient.addfacetoawscollection(indexingimage);
+        student.setFaceIdAWS(faceid);
+        Student savedStudent = studentService.save(student);
+        if (savedStudent == null) {
+            log.error("NULL STUDENT PASSED");
+        }
+        if (student.getId() == null && savedStudent != null)  {
+            User studentUser = new User();
+
+            studentRole.setName(Roles.STUDENT);
+            studentUser.setUseremail(savedStudent.getEmail());
+            studentUser.setEnabled(false);
+            studentUser.setRole(studentRole);
+            studentUser.setPassword(passwordEncoder.encode(student.getStuPasswordEmail()));
+            userRepository.save(studentUser);
+            String confToken = UUID.randomUUID().toString();
+            token.setConfirmationToken(confToken);
+            token.setStudent(student);
+            tokenRepository.save(token);
+            emailTokenToUser(student.getEmail(), confToken);
+        }
+
+
         assert savedStudent != null;
         return "redirect:/students/get/" + savedStudent.getId();
     }
 
 
-
     /**
      * This method generated password
-     * @return the generated password
      *
+     * @return the generated password
      */
     public String generatePassword() {
         String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -219,8 +268,9 @@ public class StudentController {
 
     /**
      * This method emails passwords to users
-     * @param to an object of type String
-     * @param password an object of type String
+     *
+     * @param to        an object of type String
+     * @param confToken an object of type String
      * @return user's password
      */
 
@@ -237,7 +287,7 @@ public class StudentController {
         props.put("mail.smtp.password", pass);
         props.put("mail.smtp.port", "465");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable","true");
+        props.put("mail.smtp.ssl.enable", "true");
 
         Session session = Session.getDefaultInstance(props);
 
@@ -246,7 +296,7 @@ public class StudentController {
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Complete Registration - Stealth Admin");
-            message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" +confToken);
+            message.setText("To confirm your account, please click here : http://stealthsecurity.ca-central-1.elasticbeanstalk.com/confirm-account?token=" + confToken);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
@@ -259,6 +309,7 @@ public class StudentController {
 
     /**
      * This method deletes a student
+     *
      * @param studentId an object of type Long
      * @return Students web page
      */
