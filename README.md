@@ -1,18 +1,1 @@
-# FaceRecognition
-CAPSTONE PROJECT
 
-This is a admin-protal for FACE-RECOGNITION capstone project.
--Spring boot V2.0
--MySql Database/H2
--Sprng seurity
--Thymeleaf
-
-samplrejbsjdbjs kjsdf
-sdkhjbsdjhhb kdsf
-
-jhdsgafbkjsfnksdf
-jsdvjhdbjsbjsbfjsd
-jhdbjhsfbhjsfhjbsdghjbds
-
-samplrejbsjdbjs kjsdf
-sdkhjbsdjhhb kdsf
